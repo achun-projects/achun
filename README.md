@@ -1,7 +1,21 @@
 # achun
 
-#### 介绍
-阿蠢 - 个人文件Web应用。致力于更好的管理我们各种类型的文件。比如图片，视频，音乐，文本文件等。
+小阿蠢是一个文件助手。
+
+文件助手应该是什么样子的？
+我暂时还没有具体的答案，但我想，它应该是好用的，智能的，能帮我管理好文件的，而不只是帮我存储文件。
+
+
+## 介绍
+
+做这个项目完全是自己兴趣驱动的，所有的需求都来自于我自己。
+之所以自己来做也是因为没有找到合适的，好用的文件管理工具。
+而网盘之类的，本质上还是在解决存储的问题，而且，不是基于本地的。会存在成本问题导致使用不佳或者其他的问题。
+
+## 规划
+
+目前这个项目实现的功能有：相册管理，视频管理。之后会继续优化这两个功能。
+也会再继续添加音乐播放，文档管理，文本阅读等模块。
 
 #### 软件架构
 
@@ -15,15 +29,12 @@
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+需要自己打包，等项目成熟后，会提供docker安装。
+等待更新
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+等待更新
 
 #### 参与贡献
 
@@ -31,13 +42,3 @@
 2.  新建 Feat_xxx 分支
 3.  提交代码
 4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
