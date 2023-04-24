@@ -10,10 +10,10 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("${spring.mapper.scan}")
 @ComponentScan("site.achun")
 @EnableDubbo
-public class TemplateApplication {
+public class FileApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TemplateApplication.class, args);
+        SpringApplication.run(FileApplication.class, args);
     }
 
 }
