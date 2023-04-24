@@ -25,7 +25,7 @@ public class StorageConvert {
 
     private final BucketService bucketService;
     private final BucketConvert bucketConvert;
-    public List<StorageResponse> batchConvert(Collection<Storage> storages){
+    public List<StorageResponse> toResponseList(Collection<Storage> storages){
         if(CollUtil.isEmpty(storages)) return new ArrayList<>();
         List<String> bucketCodes = storages.stream()
                 .map(Storage::getBucketCode)

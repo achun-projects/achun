@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import site.achun.file.api.modules.storage.enums.StorageStatus;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class Storage implements Serializable {
     /**
      * 1. 正常，2.禁用
      */
-    private Integer status;
+    private StorageStatus status;
 
     /**
      * 额外信息

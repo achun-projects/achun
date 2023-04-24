@@ -3,9 +3,11 @@ package site.achun.file.api.modules.storage.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import site.achun.file.api.modules.bucket.response.BucketResponse;
+import site.achun.file.api.modules.storage.enums.StorageStatus;
 
 import java.io.Serializable;
 
+@Schema(description = "存储信息")
 @Data
 @ToString
 @Builder
@@ -31,5 +33,5 @@ public class StorageResponse implements Serializable {
     private String accessPrefix;
 
     @Schema(description = "1. 正常，2.禁用")
-    private Integer status;
+    private StorageStatus status;
 }

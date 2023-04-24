@@ -16,11 +16,10 @@ import java.util.List;
 public class StorageQueryService {
 
     private final StorageService storageService;
-
+    private final StorageConvert storageConvert;
     public List<StorageResponse> queryStorages(){
         List<Storage> storages = storageService.lambdaQuery()
                 .list();
-        List<StorageResponse> list = BeanUtil.copyToList(storages, StorageResponse.class);
-        return null;
+        return storageConvert.toResponseList(storages);
     }
 }
