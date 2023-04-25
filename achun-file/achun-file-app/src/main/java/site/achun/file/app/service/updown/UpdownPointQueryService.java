@@ -9,6 +9,7 @@ import site.achun.file.app.generator.domain.Storage;
 import site.achun.file.app.generator.service.StorageService;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -16,16 +17,13 @@ import java.util.List;
 public class UpdownPointQueryService {
 
     private final StorageService storageService;
+    public final static Map<String,String> POINT_MAP = Map.of(
+            "updown1","http://localhost:8081",
+            "updown2","http://localhost:8082",
+            "updown3","http://localhost:8083"
+    );
 
-    public UpdownPointInfo queryOneAvailablePoint(String bucketCode){
-        // 查询出所有可用storage，用storageCode查询可用节点。
-        List<Storage> availableStorages = storageService.lambdaQuery()
-                .eq(Storage::getBucketCode, bucketCode)
-                .eq(Storage::getStatus, StorageStatus.AVAILABLE)
-                .list();
-
-        // 询问updown，看是否有可用节点
-        return null;
-
+    public String queryOneAvailablePoint(String bucketCode){
+        return POINT_MAP.get(bucketCode);
     }
 }

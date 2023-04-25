@@ -7,10 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import site.achun.file.api.modules.file.FileHashCheck;
+import site.achun.file.api.modules.file.request.FileHashCheck;
+import site.achun.file.app.service.updown.UpdownPointQueryService;
 
 @Tag(name = "文件检查")
 @Order(21)
@@ -19,11 +20,11 @@ import site.achun.file.api.modules.file.FileHashCheck;
 @RequiredArgsConstructor
 public class FileCheckController {
 
+    private final UpdownPointQueryService updownPointQueryService;
 
     @Operation(summary = "验证文件是否存在-使用文件hash")
-    @GetMapping("/file/file-check/check-hash")
+    @PostMapping("/file/file-check/check-hash")
     public Rsp<String> checkHashCode(@RequestBody FileHashCheck request){
-
-        return null;
+        return Rsp.success(updownPointQueryService.queryOneAvailablePoint(request.getBucket()));
     }
 }

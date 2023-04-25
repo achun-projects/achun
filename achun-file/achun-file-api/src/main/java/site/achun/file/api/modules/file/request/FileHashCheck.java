@@ -1,11 +1,11 @@
-package site.achun.file.api.modules.file;
+package site.achun.file.api.modules.file.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.io.Serializable;
 
-@Schema(description = "Bucket信息")
+@Schema(description = "hash检测")
 @Data
 @ToString
 @Builder
