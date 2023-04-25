@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Bucket更新")
-@Order(2)
+@Tag(name = "Storage更新")
+@Order(32)
 @Slf4j
 @RestController
 @RequiredArgsConstructor

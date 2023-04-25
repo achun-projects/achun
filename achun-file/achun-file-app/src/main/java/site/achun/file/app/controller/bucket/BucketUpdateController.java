@@ -7,7 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Bucket更新")
-@Order(2)
+@Order(12)
 @Slf4j
 @RestController
 @RequiredArgsConstructor

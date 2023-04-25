@@ -14,7 +14,7 @@ import site.achun.file.app.service.bucket.BucketQueryService;
 import java.util.List;
 
 @Tag(name = "Bucket查询")
-@Order(1)
+@Order(11)
 @Slf4j
 @RestController
 @RequiredArgsConstructor

@@ -14,7 +14,7 @@ import site.achun.file.app.service.storage.StorageQueryService;
 import java.util.List;
 
 @Tag(name = "存储查询")
-@Order(3)
+@Order(31)
 @Slf4j
 @RestController
 @RequiredArgsConstructor

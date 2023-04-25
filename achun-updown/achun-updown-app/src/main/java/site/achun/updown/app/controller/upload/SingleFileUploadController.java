@@ -5,8 +5,10 @@ import cn.virde.common.pojo.rsp.Rsp;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Tag(name = "单文件上传")
 @Slf4j
@@ -14,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SingleFileUploadController {
 
-    @GetMapping("/updown/single-file-upload")
-    public Rsp<String> upload(){
-        log.info("调用成功");
+    @PostMapping("/updown/single-file-upload")
+    public Rsp<String> upload(RedirectAttributes redirectAttributes){
+        log.info("调用成功:"+redirectAttributes.getAttribute("msg"));
         return Rsp.success("哈哈哈啊哈");
     }
 }
