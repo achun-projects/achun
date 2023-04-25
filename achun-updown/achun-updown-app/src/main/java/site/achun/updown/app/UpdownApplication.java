@@ -13,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class UpdownApplication {
 
     public static void main(String[] args) {
+        System.out.println("my args:"+args[0]);
         SpringApplication.run(UpdownApplication.class, args);
     }
 
