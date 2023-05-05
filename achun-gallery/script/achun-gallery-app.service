@@ -1,0 +1,13 @@
+[Unit]
+Description=Achun gallery Application
+After=syslog.target network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/workspace/gitee/achun/achun-gallery/achun-gallery-app/target
+ExecStart=/root/workspace/gitee/achun/achun-gallery/script/start-achun-gallery-app.sh
+SuccessExitStatus=143
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
