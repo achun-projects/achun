@@ -1,5 +1,6 @@
 package site.achun.file.app.service.file;
 
+import com.alibaba.fastjson2.JSON;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,13 @@ public class FileUpdateService implements FileRemoveFacade {
 
     @Override
     public Rsp<DeleteFileResponse> removeFile(String fileCode) {
+        log.info("removeFile: {}", fileCode);
         return null;
     }
 
     @Override
     public Rsp<List<DeleteFileResponse>> removeFile(Collection<String> fileCodes) {
+        log.info("removeFiles: {}", JSON.toJSONString(fileCodes));
         return null;
     }
 
