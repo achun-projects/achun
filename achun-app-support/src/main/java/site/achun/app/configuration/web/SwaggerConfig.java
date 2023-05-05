@@ -27,13 +27,13 @@ public class SwaggerConfig {
     @Bean
     public GlobalOpenApiCustomizer orderGlobalOpenApiCustomizer() {
         return openApi -> {
-            if (openApi.getTags()!=null){
-                openApi.getTags().forEach(tag -> {
-                    Map<String,Object> map=new HashMap<>();
-                    map.put("x-order", RandomUtil.randomInt(0,100));
-                    tag.setExtensions(map);
-                });
-            }
+//            if (openApi.getTags()!=null){
+//                openApi.getTags().forEach(tag -> {
+//                    Map<String,Object> map=new HashMap<>();
+//                    map.put("x-order", RandomUtil.randomInt(0,100));
+//                    tag.setExtensions(map);
+//                });
+//            }
             if(openApi.getPaths()!=null){
                 openApi.addExtension("x-test123","333");
                 openApi.getPaths().addExtension("x-abb",RandomUtil.randomInt(1,100));
