@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
 
 @SpringBootApplication
 @MapperScan("${spring.mapper.scan}")
@@ -20,6 +21,7 @@ public class FileApplication {
     }
 
     @Bean
+    @Primary
     public OpenAPI openAPIConfiguration() {
         return new OpenAPI().info(new Info()
                 .title("文件系统API")
