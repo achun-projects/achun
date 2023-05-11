@@ -7,7 +7,7 @@ import site.achun.file.client.module.request.CreateFileInfo;
 import site.achun.file.client.module.response.FileResponse;
 import site.achun.support.api.response.Rsp;
 
-@FeignClient(name = "FileCreateV4Client", url="file.apiv4.achun.site")
+@FeignClient(name = "virde-file-web", contextId = "FileCreateV4Client")
 public interface FileCreateV4Client {
 
     /**
