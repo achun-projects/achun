@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.file.generator.mapper.FileDownloadRecordMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.file.generator.domain.FileDownloadRecord">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="fileCode" column="file_code" jdbcType="VARCHAR"/>
+            <result property="groupCode" column="group_code" jdbcType="VARCHAR"/>
+            <result property="bucketCode" column="bucket_code" jdbcType="VARCHAR"/>
+            <result property="bucketLocalDir" column="bucket_local_dir" jdbcType="VARCHAR"/>
+            <result property="filePath" column="file_path" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="override" column="override" jdbcType="TINYINT"/>
+            <result property="proxyHost" column="proxy_host" jdbcType="VARCHAR"/>
+            <result property="proxyPort" column="proxy_port" jdbcType="INTEGER"/>
+            <result property="costTime" column="cost_time" jdbcType="INTEGER"/>
+            <result property="fileSize" column="file_size" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="mark" column="mark" jdbcType="VARCHAR"/>
+            <result property="httpStatus" column="http_status" jdbcType="INTEGER"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="existsLocalFile" column="exists_local_file" jdbcType="TINYINT"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+            <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,file_code,group_code,
+        bucket_code,bucket_local_dir,file_path,
+        url,override,proxy_host,
+        proxy_port,cost_time,file_size,
+        status,mark,http_status,
+        description,exists_local_file,ctime,
+        utime
+    </sql>
+</mapper>

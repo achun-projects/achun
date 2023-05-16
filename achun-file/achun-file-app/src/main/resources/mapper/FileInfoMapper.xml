@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.file.generator.mapper.FileInfoMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.file.generator.domain.FileInfo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="fileCode" column="file_code" jdbcType="VARCHAR"/>
+            <result property="thirdId" column="third_id" jdbcType="VARCHAR"/>
+            <result property="md5" column="md5" jdbcType="VARCHAR"/>
+            <result property="storageCode" column="storage_code" jdbcType="VARCHAR"/>
+            <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+            <result property="unitCode" column="unit_code" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="suffix" column="suffix" jdbcType="VARCHAR"/>
+            <result property="inStoragePath" column="in_storage_path" jdbcType="VARCHAR"/>
+            <result property="cover" column="cover" jdbcType="VARCHAR"/>
+            <result property="size" column="size" jdbcType="INTEGER"/>
+            <result property="width" column="width" jdbcType="INTEGER"/>
+            <result property="height" column="height" jdbcType="INTEGER"/>
+            <result property="wh" column="wh" jdbcType="INTEGER"/>
+            <result property="duration" column="duration" jdbcType="INTEGER"/>
+            <result property="hidden" column="hidden" jdbcType="INTEGER"/>
+            <result property="origin" column="origin" jdbcType="OTHER"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+            <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
+            <result property="atime" column="atime" jdbcType="TIMESTAMP"/>
+            <result property="lineTime" column="line_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,file_code,third_id,
+        md5,storage_code,file_name,
+        unit_code,type,suffix,
+        in_storage_path,cover,size,
+        width,height,wh,
+        duration,hidden,origin,
+        deleted,ctime,utime,
+        atime,line_time
+    </sql>
+</mapper>

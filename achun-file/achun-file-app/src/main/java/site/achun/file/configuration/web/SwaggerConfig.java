@@ -1,4 +1,4 @@
-package site.achun.file.configuration;
+package site.achun.file.configuration.web;
 
 import cn.hutool.core.util.RandomUtil;
 import io.swagger.v3.oas.models.OpenAPI;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.file.generator.mapper.BucketMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.file.generator.domain.Bucket">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="bucketCode" column="bucket_code" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+            <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,bucket_code,name,
+        ctime,utime
+    </sql>
+</mapper>

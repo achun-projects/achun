@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.file.generator.mapper.FileImagePhashMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.file.generator.domain.FileImagePhash">
+            <id property="id" column="id" jdbcType="OTHER"/>
+            <result property="fileCode" column="file_code" jdbcType="VARCHAR"/>
+            <result property="phash" column="phash" jdbcType="VARCHAR"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,file_code,phash,
+        ctime
+    </sql>
+</mapper>

@@ -4,7 +4,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.file.client.module.file.request.CreateFileInfo;
-import site.achun.file.client.module.file.response.FileResponse;
 import site.achun.support.api.response.Rsp;
 
 @FeignClient(name = "virde-file-web", contextId = "FileCreateV4Client")
