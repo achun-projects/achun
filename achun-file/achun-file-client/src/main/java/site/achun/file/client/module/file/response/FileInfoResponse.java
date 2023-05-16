@@ -36,18 +36,6 @@ public class FileInfoResponse<T extends Detail> implements Serializable {
     @Schema(description = "文件大小，以单位KB计算")
     private Integer size;
 
-    @Schema(description = "宽度，图片视频等格式特有")
-    private Integer width;
-
-    @Schema(description = "高度，图片视频等格式特有")
-    private Integer height;
-
-    @Schema(description = "宽高比，乘100的整数")
-    private Integer wh;
-
-    @Schema(description = "持续时长，视频音频等格式特有")
-    private Integer duration;
-
     @Schema(description = "修改时间")
     private LocalDateTime utime;
 

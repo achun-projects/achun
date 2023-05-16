@@ -10,4 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface StorageService extends IService<Storage> {
 
+    default Storage getStorage(String storageCode){
+        return this.lambdaQuery().eq(Storage::getStorageCode, storageCode).one();
+    }
 }

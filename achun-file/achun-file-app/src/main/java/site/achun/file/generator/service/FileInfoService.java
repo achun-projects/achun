@@ -10,4 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface FileInfoService extends IService<FileInfo> {
 
+    default FileInfo getByCode(String fileCode){
+        return this.lambdaQuery().eq(FileInfo::getFileCode, fileCode).one();
+    }
 }

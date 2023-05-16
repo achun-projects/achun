@@ -1,4 +1,9 @@
 package site.achun.file.client.module.file.response.detail;
 
-public class Video extends Detail{
+import io.swagger.v3.oas.annotations.media.Schema;
+
+public class Video extends Image{
+    @Schema(description = "持续时长，视频音频等格式特有")
+    private Integer duration;
+
 }

@@ -13,6 +13,7 @@ import site.achun.file.client.module.file.request.QueryByUnitCodes;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.service.FileInfoService;
+import site.achun.file.service.file.FileQueryService;
 import site.achun.support.api.response.Rsp;
 
 import java.util.List;
@@ -24,14 +25,10 @@ import java.util.Map;
 @RestController
 public class FileQueryController implements FileQueryClient {
 
-    private final FileInfoService fileInfoService;
+    private final FileQueryService fileQueryService;
     @Override
     public Rsp<FileInfoResponse> queryFile(QueryByFileCode queryByFileCode) {
-        FileInfo fileInfo = fileInfoService.lambdaQuery()
-                .eq(FileInfo::getFileCode, queryByFileCode.getFileCode())
-                .one();
-        FileInfoResponse resp = BeanUtil.toBean(fileInfo, FileInfoResponse.class);
-        return Rsp.success(resp);
+        return Rsp.success(fileQueryService.queryByCode(queryByFileCode.getFileCode()));
     }
 
     @Override
