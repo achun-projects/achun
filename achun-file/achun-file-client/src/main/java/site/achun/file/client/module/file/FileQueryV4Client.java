@@ -1,9 +1,9 @@
-package site.achun.file.client.module;
+package site.achun.file.client.module.file;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import site.achun.file.client.module.response.FileResponse;
+import site.achun.file.client.module.file.response.FileResponse;
 import site.achun.support.api.response.Rsp;
 
 @FeignClient(name = "virde-file-web", contextId = "FileQueryV4Client")

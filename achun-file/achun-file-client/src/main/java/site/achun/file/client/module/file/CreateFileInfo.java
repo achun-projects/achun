@@ -1,4 +1,4 @@
-package site.achun.file.client.module.request;
+package site.achun.file.client.module.file.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
