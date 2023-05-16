@@ -1,7 +1,9 @@
 package site.achun.file.client.module.file.response.detail;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
+@Data
 public class Image extends Detail{
 
     @Schema(description = "宽度，图片视频等格式特有")
