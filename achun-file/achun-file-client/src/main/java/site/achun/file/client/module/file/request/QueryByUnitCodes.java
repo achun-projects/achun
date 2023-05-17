@@ -15,5 +15,5 @@ import java.util.Collection;
 public class QueryByUnitCodes implements Serializable {
 
     @Schema(description = "组编码集合")
-    private Collection<String> unitCode;
+    private Collection<String> unitCodes;
 }

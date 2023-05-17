@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 
 public class FileAuthUtil {
-    private final static String KEY = "FKXIAOJUDAYBYDAY";
+    private final static String KEY = "THISISFILEAUTHUT";
     private final static Integer TIMEOUT = 1;
     private final static TemporalUnit TIMEOUT_UNIT = ChronoUnit.HOURS;
 

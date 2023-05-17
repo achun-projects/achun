@@ -1,6 +1,6 @@
 package site.achun.file.controller.file;
 
-import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +11,13 @@ import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.request.QueryByUnitCode;
 import site.achun.file.client.module.file.request.QueryByUnitCodes;
 import site.achun.file.client.module.file.response.FileInfoResponse;
-import site.achun.file.generator.domain.FileInfo;
-import site.achun.file.generator.service.FileInfoService;
 import site.achun.file.service.file.FileQueryService;
 import site.achun.support.api.response.Rsp;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Tag(name = "文件查询")
@@ -33,31 +33,49 @@ public class FileQueryController implements FileQueryClient {
 
     @Override
     public Rsp<Map<String, FileInfoResponse>> queryFileMap(QueryByFileCodes queryByFileCodes) {
-        return null;
+        List<FileInfoResponse> list = fileQueryService.queryByCodes(queryByFileCodes.getFileCodes());
+        if(CollUtil.isEmpty(list)){
+            return Rsp.success(null);
+        }
+        Map<String, FileInfoResponse> map = list.stream()
+                .collect(Collectors.toMap(FileInfoResponse::getFileCode, Function.identity(), (k1, k2) -> k1));
+        return Rsp.success(map);
     }
 
     @Override
     public Rsp<Map<String, FileInfoResponse>> queryFileMap(QueryByUnitCodes queryByUnitCodes) {
-        return null;
+        List<FileInfoResponse> list = fileQueryService.queryByUnitCodes(queryByUnitCodes.getUnitCodes());
+        if(CollUtil.isEmpty(list)){
+            return Rsp.success(null);
+        }
+        Map<String, FileInfoResponse> map = list.stream()
+                .collect(Collectors.toMap(FileInfoResponse::getFileCode, Function.identity(), (k1, k2) -> k1));
+        return Rsp.success(map);
     }
 
     @Override
     public Rsp<Map<String, FileInfoResponse>> queryFileMap(QueryByUnitCode queryByUnitCode) {
-        return null;
+        List<FileInfoResponse> list = fileQueryService.queryByUnitCode(queryByUnitCode.getUnitCode());
+        if(CollUtil.isEmpty(list)){
+            return Rsp.success(null);
+        }
+        Map<String, FileInfoResponse> map = list.stream()
+                .collect(Collectors.toMap(FileInfoResponse::getFileCode, Function.identity(), (k1, k2) -> k1));
+        return Rsp.success(map);
     }
 
     @Override
     public Rsp<List<FileInfoResponse>> queryFileList(QueryByFileCodes queryByFileCodes) {
-        return null;
+        return Rsp.success(fileQueryService.queryByCodes(queryByFileCodes.getFileCodes()));
     }
 
     @Override
     public Rsp<List<FileInfoResponse>> queryFileList(QueryByUnitCode queryByUnitCode) {
-        return null;
+        return Rsp.success(fileQueryService.queryByUnitCode(queryByUnitCode.getUnitCode()));
     }
 
     @Override
     public Rsp<List<FileInfoResponse>> queryFileList(QueryByUnitCodes queryByUnitCodes) {
-        return null;
+        return Rsp.success(fileQueryService.queryByUnitCodes(queryByUnitCodes.getUnitCodes()));
     }
 }
