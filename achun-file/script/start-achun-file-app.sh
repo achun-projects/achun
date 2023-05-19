@@ -16,4 +16,5 @@ else
     echo "No new updates, skipping Maven build and package."
 fi
 
+cd /home/luokong/workspace/achun/achun-file/achun-file-app
 java -jar ./target/achun-file-app.jar
