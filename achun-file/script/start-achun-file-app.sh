@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 cd /root/buckets/workspace/gitee/achun/achun-file
 git reset --hard origin/master
