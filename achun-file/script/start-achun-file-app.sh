@@ -17,4 +17,7 @@ else
 fi
 
 cd /home/luokong/workspace/achun/achun-file/achun-file-app
-java -jar ./target/achun-file-app.jar
+
+nohup java -jar /home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar &
+
+tail -f nohup.out
