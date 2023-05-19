@@ -18,6 +18,4 @@ fi
 
 cd /home/luokong/workspace/achun/achun-file/achun-file-app
 
-nohup java -jar /home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar &
-
-tail -f nohup.out
+java -jar /home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar
