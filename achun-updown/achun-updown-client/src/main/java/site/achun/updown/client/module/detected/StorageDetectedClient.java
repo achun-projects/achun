@@ -10,7 +10,7 @@ import site.achun.updown.client.module.detected.request.QueryFileExist;
 @FeignClient(name = "achun-updown-app", contextId = "FileDetectedClient")
 public interface StorageDetectedClient {
 
-    @Operation(summary = "根据单位唯一标识查询文件Map")
+    @Operation(summary = "探测文件是否存在")
     @PostMapping("/updown/detected/file-exist")
     Rsp<Boolean> fileExist(@RequestBody QueryFileExist query);
 
