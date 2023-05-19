@@ -76,6 +76,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>achun-updown-app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
