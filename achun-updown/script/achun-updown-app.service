@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 User=root
 WorkingDirectory=/home/luokong/workspace/achun/achun-updown
-ExecStart=ExecStart=java -jar /home/luokong/workspace/achun/achun-updown/achun-updown-app/target/achun-updown-app.jar
+ExecStart=java -jar /home/luokong/workspace/achun/achun-updown/achun-updown-app/target/achun-updown-app.jar
 SuccessExitStatus=143
 Restart=always
 
