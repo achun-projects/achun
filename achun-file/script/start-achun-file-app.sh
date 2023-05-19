@@ -7,4 +7,4 @@ mvn clean install -DskipTests
 cd achun-file-app
 mvn clean package -DskipTests
 
-java -jar ./target/achun-file-app.jar
+java -jar ./target/achun-file-app-0.0.1-SNAPSHOT.jar
