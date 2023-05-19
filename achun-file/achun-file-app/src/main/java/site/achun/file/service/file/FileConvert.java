@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import site.achun.file.beans.file.FileOrigin;
 import site.achun.file.client.enums.Type;
 import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.file.response.detail.Image;
 import site.achun.file.client.module.file.response.detail.Video;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.domain.Storage;
 import site.achun.file.generator.service.StorageService;
+import site.achun.file.service.storage.StorageConvert;
 import site.achun.file.util.FileAuthUtil;
 
 import java.util.List;
@@ -27,7 +29,26 @@ import java.util.stream.Collectors;
 public class FileConvert {
 
     private final StorageService storageService;
+    private final StorageConvert storageConvert;
 
+    public List<FileLocalInfoResponse> toFileLocalInfoResponse(List<FileInfo> fileInfoList){
+        if(CollUtil.isEmpty(fileInfoList)) return null;
+        return fileInfoList.stream()
+                .map(file -> FileLocalInfoResponse.builder()
+                        .cover(file.getCover())
+                        .storageCode(file.getStorageCode())
+                        .storage(storageConvert.toResponse(storageService.getStorage(file.getStorageCode())))
+                        .inStoragePath(file.getInStoragePath())
+                        .thirdId(file.getThirdId())
+                        .fileName(file.getFileName())
+                        .unitCode(file.getUnitCode())
+                        .utime(file.getUtime())
+                        .fileCode(file.getFileCode())
+                        .size(file.getSize())
+                        .type(file.getType())
+                        .build())
+                .collect(Collectors.toList());
+    }
     public List<FileInfoResponse> toFileResponse(List<FileInfo> fileInfoList){
         if(CollUtil.isEmpty(fileInfoList)) return null;
         return fileInfoList.stream()

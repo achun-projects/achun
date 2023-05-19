@@ -6,13 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.file.FileQueryClient;
-import site.achun.file.client.module.file.request.QueryByFileCode;
-import site.achun.file.client.module.file.request.QueryByFileCodes;
-import site.achun.file.client.module.file.request.QueryByUnitCode;
-import site.achun.file.client.module.file.request.QueryByUnitCodes;
+import site.achun.file.client.module.file.request.*;
 import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.service.file.FileQueryService;
 import site.achun.support.api.response.Rsp;
+import site.achun.support.api.response.RspPage;
 
 import java.util.List;
 import java.util.Map;
@@ -77,5 +76,10 @@ public class FileQueryController implements FileQueryClient {
     @Override
     public Rsp<List<FileInfoResponse>> queryFileList(QueryByUnitCodes queryByUnitCodes) {
         return Rsp.success(fileQueryService.queryByUnitCodes(queryByUnitCodes.getUnitCodes()));
+    }
+
+    @Override
+    public Rsp<RspPage<FileLocalInfoResponse>> queryFileLocalInfoPage(QueryFilePage query) {
+        return Rsp.success(fileQueryService.queryFileLocalInfoPage(query));
     }
 }

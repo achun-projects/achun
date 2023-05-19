@@ -3,9 +3,9 @@ package site.achun.updown.app.service.module.detected;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import site.achun.file.client.module.FileCreateV4Client;
-import site.achun.file.client.module.FileQueryV4Client;
-import site.achun.file.client.module.response.FileResponse;
+import site.achun.file.client.module.file.FileCreateV4Client;
+import site.achun.file.client.module.file.FileQueryV4Client;
+import site.achun.file.client.module.file.FileResponse;
 import site.achun.support.api.response.Rsp;
 
 @SpringBootTest

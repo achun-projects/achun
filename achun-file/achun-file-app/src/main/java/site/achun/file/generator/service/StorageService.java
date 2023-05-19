@@ -30,4 +30,5 @@ public interface StorageService extends IService<Storage> {
                 .eq(Storage::getStorageCode, code)
                 .one();
     }
+
 }

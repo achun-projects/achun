@@ -2,17 +2,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.example</groupId>
+    <groupId>site.achun.updown</groupId>
     <artifactId>achun-updown</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
 
-  <groupId>org.example</groupId>
+  <groupId>site.achun.updown</groupId>
   <artifactId>achun-updown-client</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Archetype - achun-updown-client</name>
+  <name>achun-updown-client</name>
   <url>http://maven.apache.org</url>
 
 

@@ -1,12 +1,18 @@
 package site.achun.file.service.file;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.module.file.request.QueryFilePage;
 import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.service.FileInfoService;
+import site.achun.file.util.PageUtil;
 import site.achun.support.api.enums.Deleted;
+import site.achun.support.api.response.RspPage;
 
 import java.util.Collection;
 import java.util.List;
@@ -40,5 +46,13 @@ public class FileQueryService {
                 .eq(FileInfo::getDeleted, Deleted.NO.getStatus())
                 .list();
         return fileConvert.toFileResponse(fileInfoList);
+    }
+
+    public RspPage<FileLocalInfoResponse> queryFileLocalInfoPage(QueryFilePage query){
+        Page<FileInfo> pageResult = fileInfoService.lambdaQuery()
+                .eq(StrUtil.isNotBlank(query.getStorageCode()), FileInfo::getStorageCode, query.getStorageCode())
+                .orderByDesc(FileInfo::getCtime)
+                .page(Page.of(query.getPage(), query.getSize()));
+        return PageUtil.batchParse(pageResult,query,fileConvert::toFileLocalInfoResponse);
     }
 }

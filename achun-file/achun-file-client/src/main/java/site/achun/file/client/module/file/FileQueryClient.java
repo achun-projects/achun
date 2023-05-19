@@ -4,12 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import site.achun.file.client.module.file.request.QueryByFileCode;
-import site.achun.file.client.module.file.request.QueryByFileCodes;
-import site.achun.file.client.module.file.request.QueryByUnitCode;
-import site.achun.file.client.module.file.request.QueryByUnitCodes;
+import site.achun.file.client.module.file.request.*;
 import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.support.api.response.Rsp;
+import site.achun.support.api.response.RspPage;
 
 import java.util.List;
 import java.util.Map;
@@ -37,4 +36,7 @@ public interface FileQueryClient {
     @Operation(summary = "根据单位唯一标识集合查询文件List")
     @PostMapping("/file/query/query-file-list-by-unit-codes")
     Rsp<List<FileInfoResponse>> queryFileList(@RequestBody QueryByUnitCodes queryByUnitCodes);
+    @Operation(summary = "查询文件分页")
+    @PostMapping("/file/query/query-file-local-info-page")
+    Rsp<RspPage<FileLocalInfoResponse>> queryFileLocalInfoPage(@RequestBody QueryFilePage query);
 }

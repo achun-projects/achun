@@ -1,14 +1,11 @@
 package site.achun.updown.app.controller;
 
-import cn.virde.common.pojo.rsp.Rsp;
-import cn.virde.file.api.module.file.response.FileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
+import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.support.api.response.Rsp;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,7 +13,7 @@ public class FileInfoQueryController {
 
 
     @GetMapping("/file/info")
-    Rsp<FileResponse> fileInfo(@RequestParam("code") @Valid @NotEmpty String code){
+    Rsp<FileInfoResponse> fileInfo(@RequestParam("code") String code){
         return null;
     }
 }
