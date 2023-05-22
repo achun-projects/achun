@@ -17,12 +17,6 @@ public class FileDetectedController {
 
     private final LocalFileDetectedByDatabaseService localFileDetectedByDatabaseService;
 
-    @PostMapping("/updown/detected/local-detected-start")
-    public Rsp<Object> localDetectedStart(@RequestBody LocalDetectedStart request){
-        localFileDetectedService.detected(request);
-        return Rsp.success(null);
-    }
-
 
     @PostMapping("/updown/detected/detected-by-database")
     public Rsp<Object> detectedByDatabase(){

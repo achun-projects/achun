@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.client.module.detected.request.QueryFileExist;
+import site.achun.updown.client.module.detected.request.RequestLoopFies;
 
 @FeignClient(name = "achun-updown-app", contextId = "FileDetectedClient")
 public interface StorageDetectedClient {
@@ -13,5 +14,8 @@ public interface StorageDetectedClient {
     @Operation(summary = "探测文件是否存在")
     @PostMapping("/updown/detected/file-exist")
     Rsp<Boolean> fileExist(@RequestBody QueryFileExist query);
+
+
+    void asyncLoopAllFiles(@RequestBody RequestLoopFies request);
 
 }

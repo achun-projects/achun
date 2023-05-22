@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-@Tag(name = "文件查询")
+@Tag(name = "文件自动探测服务")
 @RequiredArgsConstructor
 @RestController
 public class FileAutoDetectedController {
