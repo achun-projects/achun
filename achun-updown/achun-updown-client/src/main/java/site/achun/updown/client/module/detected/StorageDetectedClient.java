@@ -17,7 +17,7 @@ public interface StorageDetectedClient {
 
 
     @Operation(summary = "探测文件以初始化")
-    @PostMapping("/updown/detected/file-exist")
+    @PostMapping("/updown/detected/async-loop-and-init-files")
     void asyncLoopAndInitFiles(@RequestBody RequestLoopAndInitFiles request);
 
 }
