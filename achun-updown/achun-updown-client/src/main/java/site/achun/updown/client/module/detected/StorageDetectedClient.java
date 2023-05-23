@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.client.module.detected.request.QueryFileExist;
-import site.achun.updown.client.module.detected.request.RequestLoopFies;
+import site.achun.updown.client.module.detected.request.RequestLoopAndInitFiles;
 
 @FeignClient(name = "achun-updown-app", contextId = "FileDetectedClient")
 public interface StorageDetectedClient {
@@ -16,6 +16,8 @@ public interface StorageDetectedClient {
     Rsp<Boolean> fileExist(@RequestBody QueryFileExist query);
 
 
-    void asyncLoopAllFiles(@RequestBody RequestLoopFies request);
+    @Operation(summary = "探测文件以初始化")
+    @PostMapping("/updown/detected/file-exist")
+    void asyncLoopAndInitFiles(@RequestBody RequestLoopAndInitFiles request);
 
 }

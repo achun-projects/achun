@@ -51,6 +51,18 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.18</version>
         </dependency>
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <!-- 视频处理工具类 -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>1.5.8</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2 -->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>

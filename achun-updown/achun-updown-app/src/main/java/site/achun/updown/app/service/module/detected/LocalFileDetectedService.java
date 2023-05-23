@@ -1,7 +1,6 @@
 package site.achun.updown.app.service.module.detected;
 
 import cn.hutool.core.io.FileUtil;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,8 +9,7 @@ import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.transfer.FileTransferService;
-import site.achun.updown.client.module.detected.request.LocalDetectedStart;
-import site.achun.updown.client.module.detected.request.RequestLoopFies;
+import site.achun.updown.client.module.detected.request.RequestLoopAndInitFiles;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,7 +30,7 @@ public class LocalFileDetectedService {
     public Boolean existFile(String pathString){
         return FileUtil.exist(pathString);
     }
-    public void detected(RequestLoopFies request) {
+    public void detected(RequestLoopAndInitFiles request) {
         LoopGetHaveFilePaths loopGet = new LoopGetHaveFilePaths();
         Path path = Path.of(request.getLocalPath());
         List<Path> haveFilePaths = loopGet.apply(path);

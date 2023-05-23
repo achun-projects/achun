@@ -3,16 +3,16 @@ package site.achun.updown.app.service.module.detected;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import site.achun.file.client.module.file.FileCreateV4Client;
 import site.achun.file.client.module.file.FileQueryV4Client;
 import site.achun.file.client.module.file.FileResponse;
+import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.support.api.response.Rsp;
 
 @SpringBootTest
 public class FileCreateTest {
 
     @Autowired
-    private FileCreateV4Client fileCreateV4Client;
+    private FileUpdateV4Client fileUpdateV4Client;
 
     @Autowired
     private FileQueryV4Client fileQueryV4Client;

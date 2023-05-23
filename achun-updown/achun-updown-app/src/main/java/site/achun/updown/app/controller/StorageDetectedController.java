@@ -8,7 +8,7 @@ import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.detected.LocalFileDetectedService;
 import site.achun.updown.client.module.detected.StorageDetectedClient;
 import site.achun.updown.client.module.detected.request.QueryFileExist;
-import site.achun.updown.client.module.detected.request.RequestLoopFies;
+import site.achun.updown.client.module.detected.request.RequestLoopAndInitFiles;
 
 @Slf4j
 @Tag(name = "存储文件发现服务", description = "存储检测")
@@ -25,7 +25,7 @@ public class StorageDetectedController implements StorageDetectedClient {
     }
 
     @Override
-    public void asyncLoopAllFiles(RequestLoopFies request) {
+    public void asyncLoopAndInitFiles(RequestLoopAndInitFiles request) {
         localFileDetectedService.detected(request);
     }
 }

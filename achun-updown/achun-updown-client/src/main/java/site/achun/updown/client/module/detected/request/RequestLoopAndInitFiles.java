@@ -11,10 +11,11 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestLoopFies implements Serializable {
+public class RequestLoopAndInitFiles implements Serializable {
 
     @Schema(description = "本地绝对路径")
     private String localPath;
 
+    @Schema(description = "storage编码")
     private String storageCode;
 }
