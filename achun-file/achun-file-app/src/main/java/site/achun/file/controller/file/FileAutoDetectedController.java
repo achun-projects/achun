@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.file.request.QueryFilePage;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
@@ -32,8 +33,7 @@ public class FileAutoDetectedController {
 
     @Async
     @GetMapping("/file/detected/test")
-    public void sendMessageTest(){
-        String storageCode = "226206d8c9be4bd8a33791e03df1ef33";
+    public void sendMessageTest(@RequestParam("storage") String storageCode){
         Integer page = 1;
         while(true){
             QueryFilePage query = new QueryFilePage();

@@ -17,6 +17,7 @@ public interface FileUpdateClient {
     Rsp<InitFileInfoResponse> initFileInfo(@RequestBody InitFileInfo init);
 
 
+    @PostMapping("/file/update/update-file-info")
     Rsp<FileLocalInfoResponse> updateFileInfo(@RequestBody UpdateFileRequest request);
 
 }
