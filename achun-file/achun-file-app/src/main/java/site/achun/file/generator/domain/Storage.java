@@ -6,14 +6,21 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
+
+import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
+import lombok.*;
+import site.achun.file.client.module.storage.beans.StorageExtra;
 
 /**
  * 
  * @TableName storage
  */
-@TableName(value ="storage")
 @Data
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName(value ="storage",autoResultMap = true)
 public class Storage implements Serializable {
     /**
      * ID
@@ -54,7 +61,9 @@ public class Storage implements Serializable {
     /**
      * 额外信息
      */
-    private Object extra;
+
+    @TableField(typeHandler = FastjsonTypeHandler.class)
+    private StorageExtra extra;
 
     /**
      * 创建时间

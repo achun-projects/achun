@@ -27,6 +27,10 @@ public class LogicException extends RuntimeException{
         this.rspCodeInfo.setMark(mark);
         this.rspCodeInfo.setInfo(info);
     }
+    public LogicException(String info) {
+        this.rspCodeInfo = new RspCodeInfo();
+        this.rspCodeInfo.setInfo(info);
+    }
 
     public RspCodeInfo getRspCodeInfo() {
         return rspCodeInfo;

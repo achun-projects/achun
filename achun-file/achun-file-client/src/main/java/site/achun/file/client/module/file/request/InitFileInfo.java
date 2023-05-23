@@ -13,11 +13,21 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class InitFileInfo implements Serializable {
 
+    private String unitCode;
+
+    @Schema(name = "文件仓库标识")
     private String storageCode;
+
     private String absolutePath;
+
+    @Schema(description = "文件名")
     private String fileName;
     private String md5;
-    private String size;
+
+    @Schema(description = "文件大小，以单位KB计算")
+    private Integer size;
+
+    @Schema(description = "文件类型, 0. 其他 1. 图片(jpg,jpeg,gif,png) 2. 视频(mp4,flv) 3. 音频(mp3)")
     private Integer type;
 
 }

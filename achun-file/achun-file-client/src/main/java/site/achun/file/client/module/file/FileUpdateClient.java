@@ -5,6 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.file.client.module.file.request.InitFileInfo;
+import site.achun.file.client.module.file.request.UpdateFileRequest;
+import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.support.api.response.Rsp;
 
@@ -13,5 +15,8 @@ public interface FileUpdateClient {
 
     @PostMapping("/file/update/init-file-info")
     Rsp<InitFileInfoResponse> initFileInfo(@RequestBody InitFileInfo init);
+
+
+    Rsp<FileLocalInfoResponse> updateFileInfo(@RequestBody UpdateFileRequest request);
 
 }
