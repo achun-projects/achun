@@ -3,6 +3,7 @@ package site.achun.updown.app.service.module.detected;
 import cn.hutool.core.io.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.InitFileInfo;
@@ -30,6 +31,7 @@ public class LocalFileDetectedService {
     public Boolean existFile(String pathString){
         return FileUtil.exist(pathString);
     }
+    @Async
     public void detected(RequestLoopAndInitFiles request) {
         LoopGetHaveFilePaths loopGet = new LoopGetHaveFilePaths();
         Path path = Path.of(request.getLocalPath());

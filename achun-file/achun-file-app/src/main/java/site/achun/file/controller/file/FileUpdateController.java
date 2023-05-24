@@ -20,7 +20,7 @@ public class FileUpdateController implements FileUpdateClient {
     @Override
     public Rsp<InitFileInfoResponse> initFileInfo(InitFileInfo init) {
         log.info("initFileInfo: {}", init);
-        return null;
+        return Rsp.success(null,"代码未实现");
     }
 
     @Override
