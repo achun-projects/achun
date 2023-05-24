@@ -49,16 +49,17 @@ public class StorageUpdateService {
                 .build();
         storageService.save(storage);
         // 触发文件探测服务
-        RequestLoopAndInitFiles requestLoopAndInitFiles = RequestLoopAndInitFiles.builder().build();
+        RequestLoopAndInitFiles requestLoopAndInitFiles = RequestLoopAndInitFiles.builder()
+                .storageCode(storage.getStorageCode())
+                .localPath(storage.getPath())
+                .build();
         storageDetectedClient.asyncLoopAndInitFiles(requestLoopAndInitFiles);
         return storageConvert.toResponse(storage);
     }
 
-
     public static String generatorStorageCode(String bucketCode,String storageName){
         return bucketCode + "_" + MD5.create().digestHex(bucketCode+"_"+storageName).substring(0,5);
     }
-
 
     private static StorageExtra defaultStorageExtra(String path){
         StorageExtra.Env defaultEnv = new StorageExtra.Env();

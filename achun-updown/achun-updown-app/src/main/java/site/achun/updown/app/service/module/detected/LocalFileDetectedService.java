@@ -41,7 +41,8 @@ public class LocalFileDetectedService {
         List<InitFileInfoResponse> result = haveFilePaths.stream()
                 .map(haveFilePath -> {
                     InitFileInfo init = InitFileInfo.builder()
-
+                            .absolutePath(haveFilePath.toAbsolutePath().toString())
+                            .fileName(haveFilePath.getFileName().toString())
                             .build();
                     Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfo(init);
                     return rsp.getData();
