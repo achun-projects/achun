@@ -72,9 +72,19 @@ public class LocalFileDetectedService {
                     .type(Type.parse(suffix).getCode())
                     .suffix(suffix)
                     .build();
-            Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfo(init);
-            fileTransferService.transfer(rsp.getData());
+            InitFileInfoResponse fileInfoResponse = requestInitFileInfo(init);
+            fileTransferService.transfer(fileInfoResponse);
         }
+    }
+
+    private InitFileInfoResponse requestInitFileInfo(InitFileInfo initFileInfo){
+        try{
+            Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfo(initFileInfo);
+            return rsp.getData();
+        }catch (Exception ex){
+            log.error("requestInitFileInfo error,initFileInfo:{}",initFileInfo,ex);
+        }
+        return null;
     }
 
     /**
