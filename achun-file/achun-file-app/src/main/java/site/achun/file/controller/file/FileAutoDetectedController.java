@@ -13,7 +13,7 @@ import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.service.file.FileQueryService;
 import site.achun.gallery.client.module.album_record.AlbumRecordUpdateV4Client;
 import site.achun.support.api.response.RspPage;
-import site.achun.updown.client.module.detected.StorageDetectedClient;
+import site.achun.updown.client.module.detected.UpdownDetectedClient;
 import site.achun.updown.client.module.detected.request.QueryFileExist;
 
 import java.util.HashSet;
@@ -25,7 +25,7 @@ import java.util.Set;
 @RestController
 public class FileAutoDetectedController {
 
-    private final StorageDetectedClient storageDetectedClient;
+    private final UpdownDetectedClient updownDetectedClient;
 
     private final FileQueryService fileQueryService;
 
@@ -51,7 +51,7 @@ public class FileAutoDetectedController {
                         .storageRootPath(row.getStorage().getPath())
                         .inStoragePath(row.getInStoragePath())
                         .build();
-                Boolean exist = storageDetectedClient.fileExist(queryFileExist).getData();
+                Boolean exist = updownDetectedClient.fileExist(queryFileExist).getData();
                 log.info("{}文件是否存在：{}", row.getFileCode(),exist);
 
                 if(!exist){

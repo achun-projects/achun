@@ -11,7 +11,6 @@ import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.generator.domain.Storage;
 import site.achun.file.generator.service.StorageService;
 import site.achun.support.api.exception.LogicException;
-import site.achun.updown.client.module.detected.StorageDetectedClient;
 import site.achun.updown.client.module.detected.request.RequestLoopAndInitFiles;
 
 import java.time.LocalDateTime;
@@ -26,7 +25,6 @@ public class StorageUpdateService {
     private final StorageQueryService storageQueryService;
     private final StorageService storageService;
     private final StorageConvert storageConvert;
-    private final StorageDetectedClient storageDetectedClient;
 
     public StorageResponse createStorageWithDetected(CreateStorage create) {
         log.info("createStorageWithDetected: {}", create);
@@ -53,7 +51,6 @@ public class StorageUpdateService {
                 .storageCode(storage.getStorageCode())
                 .localPath(storage.getPath())
                 .build();
-        storageDetectedClient.asyncLoopAndInitFiles(requestLoopAndInitFiles);
         return storageConvert.toResponse(storage);
     }
 
