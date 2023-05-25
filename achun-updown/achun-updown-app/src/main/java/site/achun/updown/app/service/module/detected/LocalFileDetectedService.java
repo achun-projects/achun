@@ -75,7 +75,6 @@ public class LocalFileDetectedService {
             Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfo(init);
             fileTransferService.transfer(rsp.getData());
         }
-
     }
 
     /**
