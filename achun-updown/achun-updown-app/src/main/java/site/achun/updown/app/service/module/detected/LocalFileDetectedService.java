@@ -1,10 +1,12 @@
 package site.achun.updown.app.service.module.detected;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.crypto.digest.MD5;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.enums.Type;
 import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
@@ -12,6 +14,7 @@ import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.transfer.FileTransferService;
 import site.achun.updown.client.module.detected.request.RequestLoopAndInitFiles;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,28 +36,51 @@ public class LocalFileDetectedService {
     }
     @Async
     public void detected(RequestLoopAndInitFiles request) {
+        // 获取到所有包含文件的目录
         LoopGetHaveFilePaths loopGet = new LoopGetHaveFilePaths();
         Path path = Path.of(request.getLocalPath());
         List<Path> haveFilePaths = loopGet.apply(path);
 
-        haveFilePaths.stream().forEach(p -> System.out.println(p.toAbsolutePath()));
-        log.info("LocalFileDetectedService detected");
-
-        List<InitFileInfoResponse> result = haveFilePaths.stream()
-                .map(haveFilePath -> {
-                    InitFileInfo init = InitFileInfo.builder()
-                            .absolutePath(haveFilePath.toAbsolutePath().toString())
-                            .fileName(haveFilePath.getFileName().toString())
-                            .build();
-                    Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfo(init);
-                    return rsp.getData();
-                }).collect(Collectors.toList());
-        log.info("LocalFileDetectedService detected result: {}", result);
-        // 进一步处理File
-        // 各种文件类型的handler
-        result.stream().forEach(fileInfo -> fileTransferService.transfer(fileInfo));
+        log.info("detected dirs count:{}", haveFilePaths.size());
+        for (Path haveFilePath : haveFilePaths) {
+            String unitCode = MD5.create().digestHex(request.getStorageCode()+"::"+haveFilePath.toAbsolutePath().toString());
+            dealOneUnitFiles(request.getStorageCode(),unitCode,haveFilePath);
+        }
     }
 
+    private void dealOneUnitFiles(String storageCode,String unitCode,Path path){
+        List<Path> subFilePathList = null;
+        try {
+            subFilePathList = Files.list(path)
+                    .filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            log.error("dealOneUnitFiles error,unitCodes:{},path:{}",unitCode,path,e);
+        }
+
+        for (Path subFilePath : subFilePathList) {
+            File subFile = subFilePath.toFile();
+            log.info("UnitFiles,[{}]({})",unitCode,subFile.getAbsolutePath());
+            String suffix = FileUtil.getSuffix(subFile);
+            InitFileInfo init = InitFileInfo.builder()
+                    .absolutePath(subFile.getAbsolutePath())
+                    .fileName(subFile.getName())
+                    .size(subFile.length() / 1024)
+                    .md5(MD5.create().digestHex(subFile))
+                    .unitCode(unitCode)
+                    .storageCode(storageCode)
+                    .type(Type.parse(suffix).getCode())
+                    .suffix(suffix)
+                    .build();
+            Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfo(init);
+            fileTransferService.transfer(rsp.getData());
+        }
+
+    }
+
+    /**
+     * 递归获取所有包含文件的目录
+     */
     private static class LoopGetHaveFilePaths implements Function<Path,List<Path>>{
         private List<Path> haveFilePaths = null;
 
@@ -69,8 +95,10 @@ public class LocalFileDetectedService {
             if(!Files.isDirectory(path)) return;
             try {
                 if(Files.list(path).anyMatch(file->!Files.isDirectory(file))){
+                    // 如果路径下有文件，则加入数组
                     haveFilePaths.add(path);
                 }
+                // 递归
                 Files.list(path).filter(Files::isDirectory).forEach(this::loopDirectory);
             } catch (IOException e) {
                 e.printStackTrace();

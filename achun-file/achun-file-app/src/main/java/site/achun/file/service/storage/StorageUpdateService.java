@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.storage.beans.StorageExtra;
 import site.achun.file.client.module.storage.enums.StorageStatus;
-import site.achun.file.client.module.storage.request.CreateStorageWithDetected;
+import site.achun.file.client.module.storage.request.CreateStorage;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.generator.domain.Storage;
 import site.achun.file.generator.service.StorageService;
@@ -28,7 +28,7 @@ public class StorageUpdateService {
     private final StorageConvert storageConvert;
     private final StorageDetectedClient storageDetectedClient;
 
-    public StorageResponse createStorageWithDetected(CreateStorageWithDetected create) {
+    public StorageResponse createStorageWithDetected(CreateStorage create) {
         log.info("createStorageWithDetected: {}", create);
         // 校验storage是否已存在
         StorageResponse exitStorage = storageQueryService.queryStorage(create.getBucketCode(), create.getStorageName());

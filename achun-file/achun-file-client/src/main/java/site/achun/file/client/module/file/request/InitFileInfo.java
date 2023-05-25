@@ -25,9 +25,12 @@ public class InitFileInfo implements Serializable {
     private String md5;
 
     @Schema(description = "文件大小，以单位KB计算")
-    private Integer size;
+    private Long size;
 
     @Schema(description = "文件类型, 0. 其他 1. 图片(jpg,jpeg,gif,png) 2. 视频(mp4,flv) 3. 音频(mp3)")
     private Integer type;
+
+    @Schema(description = "后缀名")
+    private String suffix;
 
 }

@@ -15,18 +15,18 @@ public enum Type {
     ,IMAGE(1,"图片","jpg,jpeg,gif,png")
     ,VIDEO(2,"视频","mp4,flv,mov")
     ,AUDIO(3,"音频","mp3");
-    private Integer status;
+    private Integer code;
     private String desc;
     private String suffix;
 
-    Type(Integer status, String desc, String suffix) {
-        this.status = status;
+    Type(Integer code, String desc, String suffix) {
+        this.code = code;
         this.desc = desc;
         this.suffix = suffix;
     }
 
-    public static Optional<Type> parse(Integer status){
-        return EnumUtil.parse(Type.values(),Type::getStatus,status);
+    public static Optional<Type> parse(Integer code){
+        return EnumUtil.parse(Type.values(),Type::getCode,code);
     }
 
     public static Type parse(String suffix){
@@ -38,12 +38,12 @@ public enum Type {
         return OTHER;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setCode(Integer status) {
+        this.code = code;
     }
 
     public String getDesc() {

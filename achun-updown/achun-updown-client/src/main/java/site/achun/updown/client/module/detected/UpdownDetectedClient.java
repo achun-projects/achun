@@ -8,8 +8,8 @@ import site.achun.support.api.response.Rsp;
 import site.achun.updown.client.module.detected.request.QueryFileExist;
 import site.achun.updown.client.module.detected.request.RequestLoopAndInitFiles;
 
-@FeignClient(name = "achun-updown-app", contextId = "FileDetectedClient")
-public interface StorageDetectedClient {
+@FeignClient(name = "achun-updown-app", contextId = "UpdownDetectedClient")
+public interface UpdownDetectedClient {
 
     @Operation(summary = "探测文件是否存在")
     @PostMapping("/updown/detected/file-exist")

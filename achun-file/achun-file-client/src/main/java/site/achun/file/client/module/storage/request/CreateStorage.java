@@ -5,13 +5,13 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Schema(description = "创建Storage并探测文件")
+@Schema(description = "创建Storage")
 @Data
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateStorageWithDetected implements Serializable {
+public class CreateStorage implements Serializable {
     private String storageRootPath;
     private String bucketCode;
     private String storageName;

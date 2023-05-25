@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.storage.StorageUpdateClient;
-import site.achun.file.client.module.storage.request.CreateStorageWithDetected;
+import site.achun.file.client.module.storage.request.CreateStorage;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.service.storage.StorageUpdateService;
 import site.achun.support.api.response.Rsp;
@@ -17,8 +17,9 @@ import site.achun.support.api.response.Rsp;
 public class StorageUpdateController implements StorageUpdateClient {
 
     private final StorageUpdateService storageUpdateService;
+
     @Override
-    public Rsp<StorageResponse> createStorageWithDetected(CreateStorageWithDetected create) {
+    public Rsp<StorageResponse> createStorage(CreateStorage create) {
         return Rsp.success(storageUpdateService.createStorageWithDetected(create));
     }
 }
