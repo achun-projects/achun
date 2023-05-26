@@ -49,7 +49,7 @@ public class LocalFileDetectedService {
         }
     }
 
-    private void dealOneUnitFiles(String thirdCode,String storageCode,String unitCode,Path path){
+    private void dealOneUnitFiles(String thirdId,String storageCode,String unitCode,Path path){
         List<Path> subFilePathList = null;
         try {
             subFilePathList = Files.list(path)
@@ -64,7 +64,7 @@ public class LocalFileDetectedService {
             log.info("UnitFiles,[{}]({})",unitCode,subFile.getAbsolutePath());
             String suffix = FileUtil.getSuffix(subFile);
             InitFileInfo init = InitFileInfo.builder()
-                    .thirdCode(thirdCode)
+                    .thirdId(thirdId)
                     .absolutePath(subFile.getAbsolutePath())
                     .fileName(subFile.getName())
                     .size(subFile.length() / 1024)

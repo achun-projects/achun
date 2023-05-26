@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class InitFileInfo implements Serializable {
 
     private String unitCode;
-    private String thirdCode;
+    private String thirdId;
 
     @Schema(name = "文件仓库标识")
     private String storageCode;
