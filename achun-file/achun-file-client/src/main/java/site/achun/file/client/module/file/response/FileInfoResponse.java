@@ -34,7 +34,7 @@ public class FileInfoResponse<T extends Detail> implements Serializable {
     private String cover;
 
     @Schema(description = "文件大小，以单位KB计算")
-    private Integer size;
+    private Long size;
 
     @Schema(description = "修改时间")
     private LocalDateTime utime;

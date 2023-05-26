@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class InitFileInfoResponse extends InitFileInfo implements Serializable {
 
-
     @Schema(name = "文件编码")
     private String fileCode;
 
@@ -24,7 +23,6 @@ public class InitFileInfoResponse extends InitFileInfo implements Serializable {
 
     @Schema(description = "文件封面")
     private String cover;
-
 
     @Schema(description = "修改时间")
     private LocalDateTime utime;

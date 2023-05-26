@@ -28,6 +28,7 @@ public class StorageDetectedController implements StorageDetectedClient {
         RequestLoopAndInitFiles requestLoopAndInitFiles = RequestLoopAndInitFiles.builder()
                 .storageCode(request.storageCode)
                 .localPath(localPath.toString())
+                .thirdId(request.getThirdId())
                 .build();
         updownDetectedClient.asyncLoopAndInitFiles(requestLoopAndInitFiles);
     }

@@ -45,11 +45,11 @@ public class LocalFileDetectedService {
         log.info("detected dirs count:{}", haveFilePaths.size());
         for (Path haveFilePath : haveFilePaths) {
             String unitCode = MD5.create().digestHex(request.getStorageCode()+"::"+haveFilePath.toAbsolutePath().toString());
-            dealOneUnitFiles(request.getStorageCode(),unitCode,haveFilePath);
+            dealOneUnitFiles(request.getThirdId(),request.getStorageCode(),unitCode,haveFilePath);
         }
     }
 
-    private void dealOneUnitFiles(String storageCode,String unitCode,Path path){
+    private void dealOneUnitFiles(String thirdCode,String storageCode,String unitCode,Path path){
         List<Path> subFilePathList = null;
         try {
             subFilePathList = Files.list(path)
@@ -64,6 +64,7 @@ public class LocalFileDetectedService {
             log.info("UnitFiles,[{}]({})",unitCode,subFile.getAbsolutePath());
             String suffix = FileUtil.getSuffix(subFile);
             InitFileInfo init = InitFileInfo.builder()
+                    .thirdCode(thirdCode)
                     .absolutePath(subFile.getAbsolutePath())
                     .fileName(subFile.getName())
                     .size(subFile.length() / 1024)
@@ -73,19 +74,28 @@ public class LocalFileDetectedService {
                     .type(Type.parse(suffix).getCode())
                     .suffix(suffix)
                     .build();
-            InitFileInfoResponse fileInfoResponse = requestInitFileInfo(init);
-            fileTransferService.transfer(new FileTransferInfo());
+            FileTransferInfo transfer = requestInitFileInfo(init);
+            if(transfer == null){
+                fileTransferService.transfer(transfer);
+            }
         }
     }
 
-    private InitFileInfoResponse requestInitFileInfo(InitFileInfo initFileInfo){
-        try{
+    private FileTransferInfo requestInitFileInfo(InitFileInfo initFileInfo){
+        InitFileInfoResponse response = null;
+        try {
             Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfo(initFileInfo);
-            return rsp.getData();
+            response = rsp.getData();
         }catch (Exception ex){
             log.error("requestInitFileInfo error,initFileInfo:{}",initFileInfo,ex);
+            return null;
         }
-        return null;
+        FileTransferInfo transfer = new FileTransferInfo();
+        transfer.setFileCode(response.getFileCode());
+        transfer.setInStoragePath(response.getInStoragePath());
+        transfer.setStorage(response.getStorage());
+        transfer.setFile(Path.of(response.getStorage().getPath(),response.getInStoragePath()).toFile());
+        return transfer;
     }
 
     /**

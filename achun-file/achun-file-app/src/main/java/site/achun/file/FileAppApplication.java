@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController
 @EnableDiscoveryClient
 @SpringBootApplication
 @MapperScan("${spring.mapper.scan}")
@@ -23,11 +22,4 @@ public class FileAppApplication {
         SpringApplication.run(FileAppApplication.class, args);
     }
 
-
-    @Autowired
-    private DemoFeignFacade demoFeignFacade;
-    @GetMapping("/hi")
-    public String hi(){
-        return demoFeignFacade.sayHello();
-    }
 }

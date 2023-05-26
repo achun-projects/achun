@@ -20,6 +20,7 @@ public class RequestDetectedInStorage implements Serializable {
     @Schema(description = "Storage编码")
     public String storageCode;
 
-
-
+    @Schema(description = "第三方编码")
+    public String thirdId;
+    
 }

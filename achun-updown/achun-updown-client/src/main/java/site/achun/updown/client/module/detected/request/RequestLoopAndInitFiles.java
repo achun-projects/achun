@@ -18,4 +18,7 @@ public class RequestLoopAndInitFiles implements Serializable {
 
     @Schema(description = "storage编码")
     private String storageCode;
+
+    @Schema(description = "第三方编码")
+    public String thirdId;
 }

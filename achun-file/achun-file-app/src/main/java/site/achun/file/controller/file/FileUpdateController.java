@@ -9,6 +9,7 @@ import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
+import site.achun.file.service.file.FileCreateService;
 import site.achun.support.api.response.Rsp;
 
 @Slf4j
@@ -17,10 +18,10 @@ import site.achun.support.api.response.Rsp;
 @RestController
 public class FileUpdateController implements FileUpdateClient {
 
+    private final FileCreateService fileCreateService;
     @Override
     public Rsp<InitFileInfoResponse> initFileInfo(InitFileInfo init) {
-        log.info("initFileInfo: {}", init);
-        return Rsp.success(null,"代码未实现");
+        return Rsp.success(fileCreateService.initFileInfo(init));
     }
 
     @Override

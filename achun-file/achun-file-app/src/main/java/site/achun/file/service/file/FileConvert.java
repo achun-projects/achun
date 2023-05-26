@@ -1,5 +1,6 @@
 package site.achun.file.service.file;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
@@ -8,8 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.beans.file.FileOrigin;
 import site.achun.file.client.enums.Type;
+import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
+import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.file.client.module.file.response.detail.Image;
 import site.achun.file.client.module.file.response.detail.Video;
 import site.achun.file.generator.domain.FileInfo;
@@ -19,8 +22,6 @@ import site.achun.file.service.storage.StorageConvert;
 import site.achun.file.util.FileAuthUtil;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -59,6 +60,15 @@ public class FileConvert {
                 .collect(Collectors.toList());
     }
 
+    public InitFileInfoResponse toInitFileInfoResponse(FileInfo fileInfo, InitFileInfo init){
+        InitFileInfoResponse response = BeanUtil.toBean(init, InitFileInfoResponse.class);
+        response.setFileCode(fileInfo.getFileCode());
+        response.setInStoragePath(fileInfo.getInStoragePath());
+        response.setCover(fileInfo.getCover());
+        response.setUtime(fileInfo.getUtime());
+        response.setStorage(storageConvert.toResponse(storageService.getStorage(fileInfo.getStorageCode())));
+        return response;
+    }
     public FileInfoResponse toFileResponse(FileInfo fileInfo){
         if(fileInfo == null) return null;
 

@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface FileInfoMapper extends BaseMapper<FileInfo> {
 
+    int replaceInto(FileInfo fileInfo);
+
 }
 
 

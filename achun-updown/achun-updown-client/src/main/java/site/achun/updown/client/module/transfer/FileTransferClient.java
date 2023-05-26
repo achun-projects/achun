@@ -14,7 +14,7 @@ public interface FileTransferClient {
     @PostMapping("/updown/transfer/transfer-file")
     void transferFile(@RequestBody RequestTransferFile request);
 
-    @Operation(summary = "处理文件")
+    @Operation(summary = "处理文件（批量）")
     @PostMapping("/updown/transfer/batch-transfer-file")
     void transferFiles(@RequestBody RequestTransferFiles request);
 
