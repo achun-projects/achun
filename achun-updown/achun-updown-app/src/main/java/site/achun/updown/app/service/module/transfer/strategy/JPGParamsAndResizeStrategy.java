@@ -4,8 +4,10 @@ import cn.hutool.core.img.ImgUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import site.achun.file.client.module.file.FileResponse;
 import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
+import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferStrategy;
 import site.achun.updown.app.service.module.transfer.TransferType;
@@ -81,6 +83,7 @@ public class JPGParamsAndResizeStrategy implements FileTransferStrategy {
         }
         updateFile.setMediumUrl(mediumPicUrl);
         updateFile.setSmallUrl(smallPicUrl);
-        fileUpdateV4Client.updateByFileCode(updateFile);
+        Rsp<FileResponse> rsp = fileUpdateV4Client.updateByFileCode(updateFile);
+        log.info("updateFile:{}",rsp);
     }
 }
