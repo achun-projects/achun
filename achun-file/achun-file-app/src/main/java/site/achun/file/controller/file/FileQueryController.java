@@ -82,4 +82,9 @@ public class FileQueryController implements FileQueryClient {
     public Rsp<RspPage<FileLocalInfoResponse>> queryFileLocalInfoPage(QueryFilePage query) {
         return Rsp.success(fileQueryService.queryFileLocalInfoPage(query));
     }
+
+    @Override
+    public Rsp<FileLocalInfoResponse> queryFileLocalInfo(QueryByFileCode query) {
+        return Rsp.success(fileQueryService.queryFileLocalInfo(query));
+    }
 }

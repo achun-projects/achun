@@ -31,8 +31,8 @@ public class GifParamsStrategy implements FileTransferStrategy {
     private final FileUpdateV4Client fileUpdateV4Client;
 
     @Override
-    public boolean match(FileTransferInfo file) {
-        return file.getFileName().toLowerCase().endsWith("gif");
+    public boolean match(FileTransferInfo transfer) {
+        return transfer.getFile().getName().toLowerCase().endsWith("gif");
     }
 
     @Override

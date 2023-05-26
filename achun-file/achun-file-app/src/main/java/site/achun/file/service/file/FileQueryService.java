@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.module.file.request.QueryByFileCode;
+import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.request.QueryFilePage;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
@@ -54,5 +56,10 @@ public class FileQueryService {
                 .orderByDesc(FileInfo::getCtime)
                 .page(Page.of(query.getPage(), query.getSize()));
         return PageUtil.batchParse(pageResult,query,fileConvert::toFileLocalInfoResponse);
+    }
+
+    public FileLocalInfoResponse queryFileLocalInfo(QueryByFileCode query){
+        FileInfo fileInfo = fileInfoService.getByCode(query.getFileCode());
+        return fileConvert.toFileLocalInfoResponse(fileInfo);
     }
 }

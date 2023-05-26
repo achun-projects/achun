@@ -5,6 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.file.FileQueryClient;
+import site.achun.file.client.module.file.request.QueryByFileCode;
+import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.support.api.response.Rsp;
+import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.client.module.transfer.FileTransferClient;
 import site.achun.updown.client.module.transfer.request.RequestTransferFile;
 
@@ -19,6 +23,13 @@ public class FileTransferController implements FileTransferClient {
 
     @Override
     public void transferFile(RequestTransferFile request) {
+        var queryByFileCode = QueryByFileCode.builder()
+                .fileCode(request.getFileCode())
+                .build();
+        var fileResponse = fileQueryClient.queryFile(queryByFileCode).getData();
 
+        fileResponse
+        FileTransferInfo transfer = new FileTransferInfo();
+        transfer.setFile(new java.io.File(fileResponse.getFilePath()));
     }
 }

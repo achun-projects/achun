@@ -39,4 +39,7 @@ public interface FileQueryClient {
     @Operation(summary = "查询文件分页")
     @PostMapping("/file/query/query-file-local-info-page")
     Rsp<RspPage<FileLocalInfoResponse>> queryFileLocalInfoPage(@RequestBody QueryFilePage query);
+    @Operation(summary = "查询文件本地信息")
+    @PostMapping("/file/query/query-file-local-info-by-code")
+    Rsp<FileLocalInfoResponse> queryFileLocalInfo(@RequestBody QueryByFileCode query);
 }
