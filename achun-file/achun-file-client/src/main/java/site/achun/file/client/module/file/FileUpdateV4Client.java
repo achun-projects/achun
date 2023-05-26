@@ -8,7 +8,7 @@ import site.achun.file.client.module.file.request.CreateFileInfo;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
 import site.achun.support.api.response.Rsp;
 
-@FeignClient(url = "http://file.apiv4.achun.site", contextId = "FileCreateV4Client")
+@FeignClient(name="virde-file-web",url = "http://file.apiv4.achun.site", contextId = "FileCreateV4Client")
 public interface FileUpdateV4Client {
 
     @Operation(summary = "新增一条文件记录")
