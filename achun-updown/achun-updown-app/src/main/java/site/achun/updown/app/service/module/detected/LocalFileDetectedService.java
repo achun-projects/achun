@@ -41,7 +41,6 @@ public class LocalFileDetectedService {
         LoopGetHaveFilePaths loopGet = new LoopGetHaveFilePaths();
         Path path = Path.of(request.getLocalPath());
         List<Path> haveFilePaths = loopGet.apply(path);
-
         log.info("detected dirs count:{}", haveFilePaths.size());
         for (Path haveFilePath : haveFilePaths) {
             String unitCode = MD5.create().digestHex(request.getStorageCode()+"::"+haveFilePath.toAbsolutePath().toString());
