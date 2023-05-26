@@ -19,6 +19,7 @@ public enum TransferType {
 
     GIF_PARAMS(1,"GIF文件参数"),
     JPG_PARAMS_AND_RESIZE(2,"JPG参数和缩略图"),
+    PNG_TRANSFER(6,"PNG文件转换"),
     MP4_PARAMS(3,"MP4参数"),
     PHASH_CAL(4,"图片PHASH计算"),
 
