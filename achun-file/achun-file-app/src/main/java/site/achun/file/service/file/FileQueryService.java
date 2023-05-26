@@ -62,4 +62,8 @@ public class FileQueryService {
         FileInfo fileInfo = fileInfoService.getByCode(query.getFileCode());
         return fileConvert.toFileLocalInfoResponse(fileInfo);
     }
+
+    public List<FileLocalInfoResponse> queryFileLocalInfoList(QueryByFileCodes query){
+        return fileConvert.toFileLocalInfoResponse(fileInfoService.getByCodes(query.getFileCodes()));
+    }
 }
