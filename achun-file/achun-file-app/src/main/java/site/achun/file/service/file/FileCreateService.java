@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.enums.Hidden;
 import site.achun.file.client.module.file.request.InitFileInfo;
-import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.file.client.util.FileCodeGenerator;
 import site.achun.file.generator.domain.FileInfo;
@@ -54,7 +53,7 @@ public class FileCreateService {
     private FileInfo toFileInfo(InitFileInfo initFileInfo){
         FileInfo fileInfo = new FileInfo();
         fileInfo.setUnitCode(initFileInfo.getUnitCode());
-        fileInfo.setThirdId(initFileInfo.getThirdCode());
+        fileInfo.setThirdId(initFileInfo.getThirdId());
         fileInfo.setStorageCode(initFileInfo.getStorageCode());
         fileInfo.setFileName(initFileInfo.getFileName());
         fileInfo.setMd5(initFileInfo.getMd5());
