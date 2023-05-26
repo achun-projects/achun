@@ -74,7 +74,7 @@ public class LocalFileDetectedService {
                     .suffix(suffix)
                     .build();
             FileTransferInfo transfer = requestInitFileInfo(init);
-            if(transfer == null){
+            if(transfer != null){
                 fileTransferService.transfer(transfer);
             }
         }
