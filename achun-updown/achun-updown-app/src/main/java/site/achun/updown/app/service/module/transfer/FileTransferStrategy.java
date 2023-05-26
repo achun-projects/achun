@@ -9,7 +9,7 @@ public interface FileTransferStrategy {
      * @param file
      * @return
      */
-    boolean match(InitFileInfoResponse file);
+    boolean match(FileTransferInfo file);
 
     /**
      * 获取转换类型
@@ -21,5 +21,5 @@ public interface FileTransferStrategy {
      * 转换工作
      * @param file
      */
-    void handler(InitFileInfoResponse file);
+    void handler(FileTransferInfo file);
 }

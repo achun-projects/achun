@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
+import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferStrategy;
 import site.achun.updown.app.service.module.transfer.TransferType;
 
@@ -23,8 +24,8 @@ public class VideoTranscodeStrategy implements FileTransferStrategy {
     private final FileUpdateV4Client fileUpdateV4Client;
 
     @Override
-    public boolean match(InitFileInfoResponse file) {
-        return file.getFileName().toLowerCase().endsWith("flv");
+    public boolean match(FileTransferInfo transfer) {
+        return transfer.getFile().getName().toLowerCase().endsWith("flv");
     }
 
     @Override
@@ -33,7 +34,7 @@ public class VideoTranscodeStrategy implements FileTransferStrategy {
     }
 
     @Override
-    public void handler(InitFileInfoResponse file) {
+    public void handler(FileTransferInfo transfer) {
 
 //        try {
 //            File newFile = VideoTranscodeUtil.convertToMp4(file.getFile());

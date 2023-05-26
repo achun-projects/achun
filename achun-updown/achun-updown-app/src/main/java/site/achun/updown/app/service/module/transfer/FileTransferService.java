@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 public class FileTransferService {
 
 
-    public void transfer(InitFileInfoResponse fileInfo){
+    public void transfer(FileTransferInfo fileInfo){
+        // 判空
 //        transfer(fileTransferInfo,TransferType.ALL);
     }
 

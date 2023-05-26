@@ -9,6 +9,7 @@ import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.support.api.response.Rsp;
+import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferStrategy;
 import site.achun.updown.app.service.module.transfer.TransferType;
 import site.achun.updown.app.util.video.VideoUtil;
@@ -30,8 +31,8 @@ public class MP4ParamsStrategy implements FileTransferStrategy {
     private final FileUpdateV4Client fileUpdateV4Client;
 
     @Override
-    public boolean match(InitFileInfoResponse file) {
-        return file.getFileName().toLowerCase().endsWith("mp4");
+    public boolean match(FileTransferInfo transfer) {
+        return transfer.getFile().getName().toLowerCase().endsWith("mp4");
     }
 
     @Override
@@ -40,18 +41,17 @@ public class MP4ParamsStrategy implements FileTransferStrategy {
     }
 
     @Override
-    public void handler(InitFileInfoResponse fileInfo) {
+    public void handler(FileTransferInfo transfer) {
         try {
-            File file = new File(fileInfo.getAbsolutePath());
             // 同目录下生成封面图，并获取视频信息
-            VideoUtil.VideoInfo info = VideoUtil.parse(file);
+            VideoUtil.VideoInfo info = VideoUtil.parse(transfer.getFile());
             UpdateFileRequest update = new UpdateFileRequest();
-            update.setFileCode(fileInfo.getFileCode());
+            update.setFileCode(transfer.getFileCode());
             update.setDuration(info.getDuration().intValue());
             update.setHeight(info.getHeight());
             update.setWidth(info.getWidth());
             update.setWh((int) (((float)info.getWidth()/(float)info.getHeight())*100f));
-            update.setCover(fileInfo.getInStoragePath().replace(".mp4",".cover.jpg").replace(".MP4",".cover.jpg"));
+            update.setCover(transfer.getInStoragePath().replace(".mp4",".cover.jpg").replace(".MP4",".cover.jpg"));
             Rsp<FileResponse> updateRsp = fileUpdateV4Client.updateByFileCode(update);
             log.info("Update Response:{}", JSONObject.toJSONString(updateRsp));
         } catch (IOException e) {

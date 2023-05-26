@@ -11,6 +11,7 @@ import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.support.api.response.Rsp;
+import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferService;
 import site.achun.updown.client.module.detected.request.RequestLoopAndInitFiles;
 
@@ -73,7 +74,7 @@ public class LocalFileDetectedService {
                     .suffix(suffix)
                     .build();
             InitFileInfoResponse fileInfoResponse = requestInitFileInfo(init);
-            fileTransferService.transfer(fileInfoResponse);
+            fileTransferService.transfer(new FileTransferInfo());
         }
     }
 

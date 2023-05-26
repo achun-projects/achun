@@ -1,14 +1,15 @@
 package site.achun.updown.app.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.detected.LocalFileDetectedByDatabaseService;
 import site.achun.updown.app.service.module.detected.LocalFileDetectedService;
-import site.achun.updown.client.module.detected.request.LocalDetectedStart;
-
+@Slf4j
+@Tag(name = "文件探测", description = "文件探测")
 @RestController
 @RequiredArgsConstructor
 public class FileDetectedController {

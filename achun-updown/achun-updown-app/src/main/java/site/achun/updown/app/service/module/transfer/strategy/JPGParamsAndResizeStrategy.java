@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
-import site.achun.file.client.module.file.response.InitFileInfoResponse;
+import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferStrategy;
 import site.achun.updown.app.service.module.transfer.TransferType;
 import site.achun.updown.app.util.ImageResizeUtil;
@@ -32,9 +32,9 @@ public class JPGParamsAndResizeStrategy implements FileTransferStrategy {
 
 
     @Override
-    public boolean match(InitFileInfoResponse file) {
+    public boolean match(FileTransferInfo transfer) {
         List<String> suffixList = Arrays.asList("jpg", "png", "jpeg");
-        return suffixList.stream().anyMatch(suffix -> file.getFileName().toLowerCase().endsWith(suffix));
+        return suffixList.stream().anyMatch(suffix -> transfer.getFile().getName().toLowerCase().endsWith(suffix));
     }
 
     @Override
@@ -43,42 +43,41 @@ public class JPGParamsAndResizeStrategy implements FileTransferStrategy {
     }
 
     @Override
-    public void handler(InitFileInfoResponse fileInfo) {
-        File file = new File(fileInfo.getAbsolutePath());
-        BufferedImage img = ImgUtil.read(file);
+    public void handler(FileTransferInfo transfer) {
+        BufferedImage img = ImgUtil.read(transfer.getFile());
         UpdateFileRequest updateFile = new UpdateFileRequest();
-        updateFile.setFileCode(fileInfo.getFileCode());
+        updateFile.setFileCode(transfer.getFileCode());
         updateFile.setWidth(img.getWidth());
         updateFile.setHeight(img.getHeight());
         updateFile.setWh((int) (((float)img.getWidth()/(float)img.getHeight())*100f));
         updateFile.setDuration(0);
 
         // 生成缩略图
-        String smallPicUrl = fileInfo.getInStoragePath();
-        if(file.length() > 500*1024){
-            String bucketPath = fileInfo.getStorage().getPath();
-            smallPicUrl = "_small/"+fileInfo.getInStoragePath();
+        String smallPicUrl = transfer.getInStoragePath();
+        if(transfer.getFile().length() > 500*1024){
+            String bucketPath = transfer.getStorage().getPath();
+            smallPicUrl = "_small/"+transfer.getInStoragePath();
             File smallPicFile = new File(bucketPath + smallPicUrl);
             if(!smallPicFile.exists()){
-                ImageResizeUtil.scalr(file,new File(bucketPath+smallPicUrl),560);
+                ImageResizeUtil.scalr(transfer.getFile(),new File(bucketPath+smallPicUrl),560);
             }else{
                 log.info("smallPicFile exists:{}",smallPicFile.getAbsolutePath());
             }
         }
 
         // 生成中级预览图
-        String mediumPicUrl = fileInfo.getInStoragePath();
-        if(file.length() > 1000 * 1024){
-            String bucketPath = fileInfo.getStorage().getPath();
-            mediumPicUrl = "_medium/"+fileInfo.getInStoragePath();
+        String mediumPicUrl = transfer.getInStoragePath();
+        if(transfer.getFile().length() > 1000 * 1024){
+            String bucketPath = transfer.getStorage().getPath();
+            mediumPicUrl = "_medium/"+transfer.getInStoragePath();
             File mediumPicFile = new File(bucketPath + mediumPicUrl);
             if(!mediumPicFile.exists()){
-                ImageResizeUtil.scalr(file,new File(bucketPath + mediumPicUrl),1080);
+                ImageResizeUtil.scalr(transfer.getFile(),new File(bucketPath + mediumPicUrl),1080);
             }else{
                 log.info("mediumPicFile exists:{}",mediumPicFile.getAbsolutePath());
             }
         }else{
-            log.info("文件大小符合预期，不需要中级缩略图,fileLength:{},File:{}",file.length(),file.getName());
+            log.info("文件大小符合预期，不需要中级缩略图,fileLength:{},File:{}",transfer.getFile().length(),transfer.getFile().getName());
         }
         updateFile.setMediumUrl(mediumPicUrl);
         updateFile.setSmallUrl(smallPicUrl);
