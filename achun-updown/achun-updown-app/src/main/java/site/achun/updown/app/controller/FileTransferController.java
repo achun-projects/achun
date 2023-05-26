@@ -6,12 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.file.FileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCode;
+import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferService;
 import site.achun.updown.client.module.transfer.FileTransferClient;
 import site.achun.updown.client.module.transfer.request.RequestTransferFile;
+import site.achun.updown.client.module.transfer.request.RequestTransferFiles;
 
 import java.nio.file.Path;
 
@@ -38,5 +40,22 @@ public class FileTransferController implements FileTransferClient {
         transfer.setStorage(fileResponse.getStorage());
         transfer.setInStoragePath(fileResponse.getInStoragePath());
         fileTransferService.transfer(transfer);
+    }
+
+    @Override
+    public void transferFiles(RequestTransferFiles request) {
+        var queryByFileCodes = QueryByFileCodes.builder()
+                .fileCodes(request.getFileCodes())
+                .build();
+        var fileResponse = fileQueryClient.queryFileLocalInfoList(queryByFileCodes).getData();
+        fileResponse.forEach(fileInfoResponse -> {
+            var localFilePath = Path.of(fileInfoResponse.getStorage().getPath(), fileInfoResponse.getInStoragePath());
+            FileTransferInfo transfer = new FileTransferInfo();
+            transfer.setFile(localFilePath.toFile());
+            transfer.setFileCode(fileInfoResponse.getFileCode());
+            transfer.setStorage(fileInfoResponse.getStorage());
+            transfer.setInStoragePath(fileInfoResponse.getInStoragePath());
+            fileTransferService.transfer(transfer);
+        });
     }
 }

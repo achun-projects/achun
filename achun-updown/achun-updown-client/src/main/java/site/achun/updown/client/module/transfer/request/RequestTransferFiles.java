@@ -1,9 +1,11 @@
 package site.achun.updown.client.module.transfer.request;
 
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @Schema(description = "请求处理文件")
 @Data
@@ -11,8 +13,7 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestTransferFile implements Serializable {
+public class RequestTransferFiles implements Serializable {
 
-    private String fileCode;
-
+    private Collection<String> fileCodes;
 }
