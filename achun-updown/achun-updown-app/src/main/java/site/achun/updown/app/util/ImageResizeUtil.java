@@ -15,7 +15,7 @@ public class ImageResizeUtil {
 
     public static void scalr(File sourceFile,File targetFile,int width){
         try {
-            targetFile.mkdirs();
+            targetFile.getParentFile().mkdirs();
             BufferedImage image = ImageIO.read(sourceFile);
             BufferedImage target = Scalr.resize(image, width);
             ImageIO.write(target,"jpg",targetFile);

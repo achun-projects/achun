@@ -57,11 +57,11 @@ public class JPGParamsAndResizeStrategy implements FileTransferStrategy {
         // 生成缩略图
         String smallPicUrl = transfer.getInStoragePath();
         if(transfer.getFile().length() > 500*1024){
-            String bucketPath = transfer.getStorage().getPath();
+            String storagePath = transfer.getStorage().getPath();
             smallPicUrl = "_small/"+transfer.getInStoragePath();
-            File smallPicFile = new File(bucketPath + smallPicUrl);
+            File smallPicFile = new File(storagePath + smallPicUrl);
             if(!smallPicFile.exists()){
-                ImageResizeUtil.scalr(transfer.getFile(),new File(bucketPath+smallPicUrl),560);
+                ImageResizeUtil.scalr(transfer.getFile(),smallPicFile,560);
             }else{
                 log.info("smallPicFile exists:{}",smallPicFile.getAbsolutePath());
             }
