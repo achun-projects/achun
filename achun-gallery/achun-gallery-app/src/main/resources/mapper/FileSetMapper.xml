@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.gallery.app.generator.mapper.FileSetMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.gallery.app.generator.domain.FileSet">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="code" column="code" jdbcType="VARCHAR"/>
+            <result property="userCode" column="user_code" jdbcType="VARCHAR"/>
+            <result property="personCode" column="person_code" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="author" column="author" jdbcType="VARCHAR"/>
+            <result property="viewLevel" column="view_level" jdbcType="INTEGER"/>
+            <result property="orgin" column="orgin" jdbcType="OTHER"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+            <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code,user_code,
+        person_code,name,author,
+        view_level,orgin,ctime,
+        utime,deleted
+    </sql>
+</mapper>

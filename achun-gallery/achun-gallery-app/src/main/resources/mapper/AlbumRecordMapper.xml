@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.gallery.app.generator.mapper.AlbumRecordMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.gallery.app.generator.domain.AlbumRecord">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="albumCode" column="album_code" jdbcType="VARCHAR"/>
+            <result property="setCode" column="set_code" jdbcType="VARCHAR"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,album_code,set_code,
+        ctime
+    </sql>
+</mapper>

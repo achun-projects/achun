@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.gallery.app.generator.mapper.PicturesMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.gallery.app.generator.domain.Pictures">
+            <id property="id" column="id" jdbcType="OTHER"/>
+            <result property="fileCode" column="file_code" jdbcType="VARCHAR"/>
+            <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+            <result property="setCode" column="set_code" jdbcType="VARCHAR"/>
+            <result property="suffix" column="suffix" jdbcType="VARCHAR"/>
+            <result property="size" column="size" jdbcType="INTEGER"/>
+            <result property="width" column="width" jdbcType="INTEGER"/>
+            <result property="height" column="height" jdbcType="INTEGER"/>
+            <result property="wh" column="wh" jdbcType="INTEGER"/>
+            <result property="duration" column="duration" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+            <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
+            <result property="atime" column="atime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,file_code,file_name,
+        set_code,suffix,size,
+        width,height,wh,
+        duration,deleted,ctime,
+        utime,atime
+    </sql>
+</mapper>
