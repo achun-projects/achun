@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.*;
 import site.achun.file.client.module.storage.beans.StorageExtra;
 
@@ -62,7 +63,7 @@ public class Storage implements Serializable {
      * 额外信息
      */
 
-    @TableField(typeHandler = FastjsonTypeHandler.class)
+    @TableField(typeHandler = JacksonTypeHandler.class)
     private StorageExtra extra;
 
     /**
