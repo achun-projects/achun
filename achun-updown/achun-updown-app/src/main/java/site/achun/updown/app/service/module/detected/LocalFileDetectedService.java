@@ -10,6 +10,8 @@ import site.achun.file.client.enums.Type;
 import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
+import site.achun.file.client.module.unit.UnitUpdateClient;
+import site.achun.file.client.module.unit.request.UpdateUnit;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferService;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 public class LocalFileDetectedService {
 
     private final FileUpdateClient fileUpdateClient;
+    private final UnitUpdateClient unitUpdateClient;
     private final FileTransferService fileTransferService;
 
     public Boolean existFile(String pathString){
@@ -57,6 +60,11 @@ public class LocalFileDetectedService {
         } catch (IOException e) {
             log.error("dealOneUnitFiles error,unitCodes:{},path:{}",unitCode,path,e);
         }
+        String unitName = path.getFileName().toString();
+        UpdateUnit unit = new UpdateUnit();
+        unit.setUnitCode(unitCode);
+        unit.setUnitName(unitName);
+        unitUpdateClient.saveOrUpdateUnit(unit);
 
         for (Path subFilePath : subFilePathList) {
             File subFile = subFilePath.toFile();
@@ -69,7 +77,7 @@ public class LocalFileDetectedService {
                     .size(subFile.length() / 1024)
                     .md5(MD5.create().digestHex(subFile))
                     .unitCode(unitCode)
-                    .unitName(path.getFileName().toString())
+                    .unitName(unitName)
                     .storageCode(storageCode)
                     .type(Type.parse(suffix).getCode())
                     .suffix(suffix)
