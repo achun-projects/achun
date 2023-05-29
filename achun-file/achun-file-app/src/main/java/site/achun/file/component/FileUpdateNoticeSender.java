@@ -1,14 +1,11 @@
 package site.achun.file.component;
 
-import com.alibaba.fastjson.JSON;
-import com.netflix.discovery.converters.Auto;
-import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * Description
@@ -21,14 +18,10 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class FileUpdateNoticeSender {
 
-//    @Autowired
-//    private RocketMQTemplate rocketMQTemplate;
-//
-//
-//    private static final String TOPIC = "REMOVE-FILE-TOPIC";
-//
-//    public void sendMessage(String fileCode){
-//        SendResult result = rocketMQTemplate.syncSend(TOPIC, fileCode);
-//        log.info("TOPIC:{},fileCode:{},result:{}",TOPIC,fileCode, JSON.toJSONString(result));
-//    }
+    private static final String TOPIC = "REMOVE-FILE-TOPIC";
+
+    private final AmqpTemplate amqpTemplate;
+    public void sendMessage(String fileCode){
+       amqpTemplate.convertAndSend("FILE_UPDATE_FANOUT_EXCHANGE","",fileCode);
+    }
 }

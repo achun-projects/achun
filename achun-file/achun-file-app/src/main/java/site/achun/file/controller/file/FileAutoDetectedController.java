@@ -1,6 +1,7 @@
 package site.achun.file.controller.file;
 
 import cn.hutool.core.collection.CollUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class FileAutoDetectedController {
     private final AlbumRecordUpdateV4Client albumRecordUpdateV4Client;
 
     @Async
+    @Operation(summary = "")
     @GetMapping("/file/detected/test")
     public void sendMessageTest(@RequestParam("storage") String storageCode){
         Integer page = 1;
