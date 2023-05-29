@@ -22,7 +22,6 @@ public enum TransferType {
     PNG_TRANSFER(6,"PNG文件转换"),
     MP4_PARAMS(3,"MP4参数"),
     PHASH_CAL(4,"图片PHASH计算"),
-
     VIDEO_TRANSCODE(5,"视频转码");
 
     public final static Collection<TransferType> ALL = Arrays.stream(TransferType.values()).collect(Collectors.toList());

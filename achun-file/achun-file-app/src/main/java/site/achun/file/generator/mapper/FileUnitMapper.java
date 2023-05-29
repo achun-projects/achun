@@ -1,5 +1,6 @@
 package site.achun.file.generator.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import site.achun.file.generator.domain.FileUnit;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -11,6 +12,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface FileUnitMapper extends BaseMapper<FileUnit> {
 
+
+    int replaceInto(@Param("fu") FileUnit fileUnit);
 }
 
 
