@@ -69,6 +69,7 @@ public class LocalFileDetectedService {
                     .size(subFile.length() / 1024)
                     .md5(MD5.create().digestHex(subFile))
                     .unitCode(unitCode)
+                    .unitName(path.getFileName().toString())
                     .storageCode(storageCode)
                     .type(Type.parse(suffix).getCode())
                     .suffix(suffix)
