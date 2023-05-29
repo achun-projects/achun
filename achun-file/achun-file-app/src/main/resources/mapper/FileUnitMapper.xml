@@ -26,7 +26,7 @@
 
 
     <insert id="replaceInto" parameterType="site.achun.file.generator.domain.FileUnit">
-        INSERT INTO `file_unit`
+        REPLACE INTO `file_unit`
             (`unit_code`, `unit_name`,`ctime`, `utime`, `deleted`)
         VALUES
             (#{fu.unitCode},#{fu.unitName},#{fu.ctime},#{fu.utime},#{fu.deleted});
