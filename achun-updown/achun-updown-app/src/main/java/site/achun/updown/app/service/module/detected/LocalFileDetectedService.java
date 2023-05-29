@@ -41,7 +41,7 @@ public class LocalFileDetectedService {
         LoopGetHaveFilePaths loopGet = new LoopGetHaveFilePaths();
         Path path = Path.of(request.getLocalPath());
         List<Path> haveFilePaths = loopGet.apply(path);
-        log.info("detected dirs count:{}", haveFilePaths.size());
+        log.info("detected dirs count:{}，path:{}", haveFilePaths.size(),request.getLocalPath());
         for (Path haveFilePath : haveFilePaths) {
             String unitCode = MD5.create().digestHex(request.getStorageCode()+"::"+haveFilePath.toAbsolutePath().toString());
             dealOneUnitFiles(request.getThirdId(),request.getStorageCode(),unitCode,haveFilePath);
@@ -112,7 +112,9 @@ public class LocalFileDetectedService {
         }
 
         private void loopDirectory(Path path){
-            if(!Files.isDirectory(path)) return;
+            if(!Files.isDirectory(path)) {
+                return;
+            }
             try {
                 if(Files.list(path).anyMatch(file->!Files.isDirectory(file))){
                     // 如果路径下有文件，则加入数组
