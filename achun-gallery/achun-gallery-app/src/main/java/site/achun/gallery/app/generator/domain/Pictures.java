@@ -45,7 +45,7 @@ public class Pictures implements Serializable {
     /**
      * 文件大小，以单位KB计算
      */
-    private Integer size;
+    private Long size;
 
     /**
      * 宽度，图片视频等格式特有

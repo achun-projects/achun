@@ -15,4 +15,12 @@
         id,album_code,set_code,
         ctime
     </sql>
+
+    <insert id="replaceInto" parameterType="site.achun.gallery.app.generator.domain.AlbumRecord">
+        REPLACE INTO `album_record`
+            (`album_code`, `set_code`, `ctime`)
+            VALUES
+            (#{ar.albumCode}, #{ar.setCode}, now());
+    </insert>
+
 </mapper>

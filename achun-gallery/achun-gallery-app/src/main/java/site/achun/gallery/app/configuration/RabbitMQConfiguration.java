@@ -25,8 +25,6 @@ public class RabbitMQConfiguration {
         return BindingBuilder.bind(fileUpdateQueue).to(fileUpdateExchange);
     }
 
-
-
     @Bean
     public FanoutExchange unitUpdateExchange(){
         return new FanoutExchange("UNIT_UPDATE_FANOUT_EXCHANGE");

@@ -1,5 +1,6 @@
 package site.achun.gallery.app.generator.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import site.achun.gallery.app.generator.domain.AlbumRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface AlbumRecordMapper extends BaseMapper<AlbumRecord> {
 
+    int replaceInto(@Param("ar") AlbumRecord record);
 }
 
 
