@@ -1,4 +1,4 @@
-package site.achun.file.component;
+package site.achun.file.mq.sender;
 
 import com.alibaba.fastjson2.JSON;
 import lombok.AllArgsConstructor;

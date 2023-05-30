@@ -18,10 +18,11 @@ import java.io.IOException;
 @AllArgsConstructor
 public class FileUpdateNoticeSender {
 
-    private static final String TOPIC = "REMOVE-FILE-TOPIC";
-
     private final AmqpTemplate amqpTemplate;
     public void sendMessage(String fileCode){
        amqpTemplate.convertAndSend("FILE_UPDATE_FANOUT_EXCHANGE","",fileCode);
     }
+
+
+
 }

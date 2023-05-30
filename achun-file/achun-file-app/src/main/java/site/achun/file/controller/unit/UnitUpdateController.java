@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.unit.UnitUpdateClient;
 import site.achun.file.client.module.unit.request.UpdateUnit;
 import site.achun.file.client.module.unit.response.UnitResponse;
-import site.achun.file.component.UnitUpdateSender;
+import site.achun.file.mq.sender.UnitUpdateSender;
 import site.achun.support.api.response.Rsp;
 
 @Slf4j
