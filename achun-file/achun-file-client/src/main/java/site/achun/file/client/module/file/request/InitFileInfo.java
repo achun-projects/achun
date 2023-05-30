@@ -13,6 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class InitFileInfo implements Serializable {
 
+    private String fileCode;
     private String unitCode;
     private String unitName;
     private String thirdId;

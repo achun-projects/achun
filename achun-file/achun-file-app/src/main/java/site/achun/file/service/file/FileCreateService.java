@@ -7,13 +7,11 @@ import org.springframework.stereotype.Service;
 import site.achun.file.client.enums.Hidden;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
-import site.achun.file.client.util.FileCodeGenerator;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.domain.FileUnit;
 import site.achun.file.generator.domain.Storage;
 import site.achun.file.generator.mapper.FileInfoMapper;
 import site.achun.file.generator.mapper.FileUnitMapper;
-import site.achun.file.generator.service.FileUnitService;
 import site.achun.file.generator.service.StorageService;
 import site.achun.support.api.enums.Deleted;
 
@@ -32,7 +30,6 @@ public class FileCreateService {
 
     public InitFileInfoResponse initFileInfo(InitFileInfo initFileInfo) {
         FileInfo fileInfo = toFileInfo(initFileInfo);
-        fileInfo.setFileCode(FileCodeGenerator.make().toString());
         Storage storage = storageService.getStorage(initFileInfo.getStorageCode());
         fileInfo.setInStoragePath(initFileInfo.getAbsolutePath().replace(storage.getPath(),""));
         fileInfo.setAtime(LocalDateTime.now());
@@ -66,6 +63,7 @@ public class FileCreateService {
 
     private FileInfo toFileInfo(InitFileInfo initFileInfo){
         FileInfo fileInfo = new FileInfo();
+        fileInfo.setFileCode(initFileInfo.getFileCode());
         fileInfo.setUnitCode(initFileInfo.getUnitCode());
         fileInfo.setThirdId(initFileInfo.getThirdId());
         fileInfo.setStorageCode(initFileInfo.getStorageCode());
@@ -76,4 +74,5 @@ public class FileCreateService {
         fileInfo.setType(initFileInfo.getType());
         return fileInfo;
     }
+
 }
