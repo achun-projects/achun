@@ -76,6 +76,7 @@ public class FileConvert {
         FileInfoResponse rsp = FileInfoResponse.builder()
                 .fileCode(fileInfo.getFileCode())
                 .fileName(fileInfo.getFileName())
+                .suffix(fileInfo.getSuffix())
                 .thirdId(fileInfo.getThirdId())
                 .unitCode(fileInfo.getUnitCode())
                 .type(fileInfo.getType())
@@ -84,7 +85,10 @@ public class FileConvert {
                 .build();
 
         // 请求链接
-        FileOrigin origin = JSON.parseObject(fileInfo.getOrigin().toString(),FileOrigin.class);
+        FileOrigin origin = new FileOrigin();
+        if(fileInfo.getOrigin()!=null && StrUtil.isNotEmpty(fileInfo.getOrigin().toString())){
+            origin = JSON.parseObject(fileInfo.getOrigin().toString(),FileOrigin.class);
+        }
         // 获取网图和缩略图链接，（因为2021-09之前的图没有这俩url，所以需要判断）
         String mediumUrl = StrUtil.isEmpty(origin.getMedium_url()) ? fileInfo.getInStoragePath() : origin.getMedium_url();
         String smallUrl = StrUtil.isEmpty(origin.getSmall_url()) ? fileInfo.getInStoragePath() : origin.getSmall_url();

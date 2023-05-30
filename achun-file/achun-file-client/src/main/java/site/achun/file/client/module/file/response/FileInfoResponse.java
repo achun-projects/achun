@@ -26,6 +26,8 @@ public class FileInfoResponse<T extends Detail> implements Serializable {
 
     @Schema(description = "文件名")
     private String fileName;
+    @Schema(description = "后缀名")
+    private String suffix;
 
     @Schema(description = "文件类型, 0. 其他 1. 图片(jpg,jpeg,gif,png) 2. 视频(mp4,flv) 3. 音频(mp3)")
     private Integer type;
