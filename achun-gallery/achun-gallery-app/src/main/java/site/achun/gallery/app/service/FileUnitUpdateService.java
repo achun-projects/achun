@@ -29,6 +29,7 @@ public class FileUnitUpdateService {
             fileUnit.setName(update.getUnitName());
             fileUnit.setDeleted(Deleted.NO.getStatus());
             fileUnit.setCtime(LocalDateTime.now());
+            fileUnit.setUserCode("1");
             fileUnit.setUtime(LocalDateTime.now());
             fileSetService.save(fileUnit);
         }else{

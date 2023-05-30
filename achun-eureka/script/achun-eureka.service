@@ -1,0 +1,13 @@
+[Unit]
+Description=Achun Eureka Application
+After=syslog.target network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/luokong/workspace/achun/achun-eureka
+ExecStart=ExecStart=java -jar /home/luokong/workspace/achun/achun-eureka/target/achun-eureka.jar
+SuccessExitStatus=143
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
