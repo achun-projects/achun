@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import site.achun.file.client.module.file.FileResponse;
+import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
@@ -28,7 +29,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class MP4ParamsStrategy implements FileTransferStrategy {
 
-    private final FileUpdateV4Client fileUpdateV4Client;
+    private final FileUpdateClient fileUpdateClient;
 
     @Override
     public boolean match(FileTransferInfo transfer) {
@@ -52,8 +53,7 @@ public class MP4ParamsStrategy implements FileTransferStrategy {
             update.setWidth(info.getWidth());
             update.setWh((int) (((float)info.getWidth()/(float)info.getHeight())*100f));
             update.setCover(transfer.getInStoragePath().replace(".mp4",".cover.jpg").replace(".MP4",".cover.jpg"));
-            Rsp<FileResponse> updateRsp = fileUpdateV4Client.updateByFileCode(update);
-            log.info("Update Response:{}", JSONObject.toJSONString(updateRsp));
+            fileUpdateClient.updateFileInfo(update);
         } catch (IOException e) {
             e.printStackTrace();
         }

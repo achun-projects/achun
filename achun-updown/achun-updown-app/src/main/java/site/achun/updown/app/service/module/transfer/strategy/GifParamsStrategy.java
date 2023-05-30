@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
@@ -28,7 +29,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class GifParamsStrategy implements FileTransferStrategy {
 
-    private final FileUpdateV4Client fileUpdateV4Client;
+    private final FileUpdateClient fileUpdateClient;
 
     @Override
     public boolean match(FileTransferInfo transfer) {
@@ -56,6 +57,6 @@ public class GifParamsStrategy implements FileTransferStrategy {
             log.error("获取gif图片帧数时发生异常,fileCode:{},filePath:{}",transfer.getFileCode(),transfer.getInStoragePath(),ex);
             ex.printStackTrace();
         }
-        fileUpdateV4Client.updateByFileCode(updateFile);
+        fileUpdateClient.updateFileInfo(updateFile);
     }
 }

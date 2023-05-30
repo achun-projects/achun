@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import site.achun.file.client.module.file.FileResponse;
+import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
 import site.achun.support.api.response.Rsp;
@@ -21,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PNGTransferStrategy implements FileTransferStrategy {
 
-    private final FileUpdateV4Client fileUpdateV4Client;
+    private final FileUpdateClient fileUpdateClient;
 
     @Override
     public boolean match(FileTransferInfo transfer) {
@@ -50,7 +51,6 @@ public class PNGTransferStrategy implements FileTransferStrategy {
         String mediumPicUrl = transfer.getInStoragePath();
         updateFile.setMediumUrl(mediumPicUrl);
         updateFile.setSmallUrl(smallPicUrl);
-        Rsp<FileResponse> rsp = fileUpdateV4Client.updateByFileCode(updateFile);
-        log.info("updateFile:{}",rsp);
+        fileUpdateClient.updateFileInfo(updateFile);
     }
 }
