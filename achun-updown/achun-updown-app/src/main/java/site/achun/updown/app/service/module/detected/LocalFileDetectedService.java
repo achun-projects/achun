@@ -70,12 +70,14 @@ public class LocalFileDetectedService {
             File subFile = subFilePath.toFile();
             log.info("UnitFiles,[{}]({})",unitCode,subFile.getAbsolutePath());
             String suffix = FileUtil.getSuffix(subFile);
+            String md5 = MD5.create().digestHex(subFile);
             InitFileInfo init = InitFileInfo.builder()
+                    .fileCode(MD5.create().digestHex(md5,unitCode))
                     .thirdId(thirdId)
                     .absolutePath(subFile.getAbsolutePath())
                     .fileName(subFile.getName())
                     .size(subFile.length() / 1024)
-                    .md5(MD5.create().digestHex(subFile))
+                    .md5(md5)
                     .unitCode(unitCode)
                     .unitName(unitName)
                     .storageCode(storageCode)
