@@ -1,11 +1,11 @@
 [Unit]
-Description=Achun gallery Application
+Description=Achun File Application
 After=syslog.target network.target
 
 [Service]
 User=root
-WorkingDirectory=/root/workspace/gitee/achun/achun-gallery/achun-gallery-app/target
-ExecStart=/root/workspace/gitee/achun/achun-gallery/script/start-achun-gallery-app.sh
+WorkingDirectory=/home/luokong/workspace/achun/achun-gallery
+ExecStart=java -jar /home/luokong/workspace/achun/achun-gallery/achun-gallery-app/target/achun-gallery-app.jar
 SuccessExitStatus=143
 Restart=always
 
