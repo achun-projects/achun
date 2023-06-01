@@ -18,7 +18,7 @@ public interface PicturesMapper extends BaseMapper<Pictures> {
 //
 //    IPage<TimelineResponse> selectTimelinePage(Page<?> page);
 
-    void replaceInto(Pictures pictures);
+    int replaceInto(Pictures pictures);
 
 //    @MapKey("code")
 //    Map<String,ListFileCount> selectAlbumsFileCount(@Param("query") QueryByListCodes listCodes);

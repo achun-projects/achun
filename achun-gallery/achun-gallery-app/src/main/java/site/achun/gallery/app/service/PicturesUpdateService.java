@@ -53,7 +53,8 @@ public class PicturesUpdateService {
         pic.setAtime(LocalDateTime.now());
         pic.setCtime(LocalDateTime.now());
         pic.setUtime(LocalDateTime.now());
-        picturesMapper.replaceInto(pic);
+        int result = picturesMapper.replaceInto(pic);
+        log.info("fileCode:{},replaceInto picture:{}",pic.getFileCode(),result);
 
         // 创建关联关系
         if(StrUtil.isNotBlank(fileInfo.getThirdId())
@@ -63,7 +64,9 @@ public class PicturesUpdateService {
             AlbumRecord albumRecord = new AlbumRecord();
             albumRecord.setAlbumCode(fileInfo.getThirdId());
             albumRecord.setSetCode(fileInfo.getUnitCode());
-            albumRecordMapper.replaceInto(albumRecord);
+            result = albumRecordMapper.replaceInto(albumRecord);
+            log.info("fileCode:{},replaceInto album_record:{},albumCode:{},unitCode:{}",
+                    pic.getFileCode(),result,fileInfo.getThirdId(),fileInfo.getUnitCode());
         }
     }
 
