@@ -14,6 +14,11 @@ import java.util.List;
 */
 public interface FileInfoService extends IService<FileInfo> {
 
+    default List<FileInfo> getByUnitCode(String unitCode){
+        return this.lambdaQuery()
+                .eq(FileInfo::getUnitCode,unitCode)
+                .list();
+    }
     default FileInfo getByCode(String fileCode){
         return this.lambdaQuery()
                 .eq(FileInfo::getFileCode, fileCode)

@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.file.FileUpdateClient;
-import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.file.mq.sender.FileUpdateSender;
 import site.achun.file.service.file.FileCreateService;
+import site.achun.file.service.file.FileUpdateService;
 import site.achun.support.api.response.Rsp;
 
 @Slf4j
@@ -23,7 +23,7 @@ public class FileUpdateController implements FileUpdateClient {
     private final FileCreateService fileCreateService;
 
     private final FileUpdateSender fileUpdateSender;
-    private final FileUpdateV4Client fileUpdateV4Client;
+    private final FileUpdateService fileUpdateService;
 
     @Override
     public Rsp<InitFileInfoResponse> initFileInfo(InitFileInfo init) {
@@ -32,7 +32,7 @@ public class FileUpdateController implements FileUpdateClient {
 
     @Override
     public Rsp<FileLocalInfoResponse> updateFileInfo(UpdateFileRequest request) {
-        fileUpdateV4Client.updateByFileCode(request);
+        fileUpdateService.updateByCode(request);
         fileUpdateSender.sendMessage(request);
         return Rsp.success(null);
     }
