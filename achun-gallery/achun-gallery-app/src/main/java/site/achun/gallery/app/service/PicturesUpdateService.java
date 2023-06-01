@@ -1,5 +1,6 @@
 package site.achun.gallery.app.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,13 +39,13 @@ public class PicturesUpdateService {
         Type type = Type.parse(fileInfo.getType()).get();
         switch (type){
             case IMAGE:
-                Image image = (Image) fileInfo.getDetail();
+                Image image = BeanUtil.toBean(fileInfo.getDetail(),Image.class);
                 pic.setWidth(image.getWidth());
                 pic.setHeight(image.getHeight());
                 pic.setWh(image.getWh());
                 break;
             case VIDEO:
-                Video video = (Video) fileInfo.getDetail();
+                Video video = BeanUtil.toBean(fileInfo.getDetail(),Video.class);
                 pic.setWidth(video.getWidth());
                 pic.setHeight(video.getHeight());
                 pic.setWh(video.getWh());
