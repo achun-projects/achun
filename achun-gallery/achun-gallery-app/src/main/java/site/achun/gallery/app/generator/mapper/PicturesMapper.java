@@ -1,8 +1,12 @@
 package site.achun.gallery.app.generator.mapper;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
 import site.achun.gallery.app.generator.domain.Pictures;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import site.achun.gallery.client.module.pictures.request.QueryFilesByListCodes;
 
 /**
 * @author Administrator
@@ -25,6 +29,9 @@ public interface PicturesMapper extends BaseMapper<Pictures> {
 //
 //    @MapKey("code")
 //    Map<String,ListFileCount> selectBoardFileCount(@Param("query") QueryByListCodes listCodes);
+
+
+    IPage<Pictures> selectFilesByListCodes(Page<?> page, @Param("query") QueryFilesByListCodes query);
 }
 
 

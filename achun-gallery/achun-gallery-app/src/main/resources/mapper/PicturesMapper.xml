@@ -62,7 +62,29 @@
         );
     </update>
 
-<!--    <select id="selectAlbumFiles" resultType="cn.virde.gallery.app.autocode.generator.Pictures"-->
+    <select id="selectFilesByListCodes" resultType="site.achun.gallery.app.generator.domain.Pictures">
+        SELECT
+            p.*
+        FROM
+            pictures p INNER JOIN board_record br ON br.file_code = p.file_code
+        WHERE
+            br.board_code IN
+            <foreach item="code" index="index" collection="query.listCodes" open="(" separator="," close=")">
+                #{code}
+            </foreach>
+        UNION
+        SELECT
+            p.*
+        FROM
+            pictures p INNER JOIN album_record ar ON ar.set_code = p.set_code
+        WHERE
+            ar.album_code IN
+            <foreach item="code" index="index" collection="query.listCodes" open="(" separator="," close=")">
+                #{code}
+            </foreach>
+    </select>
+
+    <!--    <select id="selectAlbumFiles" resultType="cn.virde.gallery.app.autocode.generator.Pictures"-->
 <!--            parameterType="cn.virde.gallery.api.bean.request.QueryRecord">-->
 <!--        SELECT-->
 <!--        pi.*-->
