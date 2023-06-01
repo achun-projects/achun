@@ -94,6 +94,7 @@ public class FileConvert {
         String smallUrl = StrUtil.isEmpty(origin.getSmall_url()) ? fileInfo.getInStoragePath() : origin.getSmall_url();
         // 设置网图，缩略图，原文件的访问链接
         Storage storage = storageService.getStorage(fileInfo.getStorageCode());
+        rsp.setBucketCode(storage.getBucketCode());
         String domain = getStorageAccessPrefix(storage);
         rsp.setMediumUrl(makeAuthUrl(domain+mediumUrl));
         rsp.setUrl(makeAuthUrl(domain+fileInfo.getInStoragePath()));
