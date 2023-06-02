@@ -44,7 +44,8 @@ public class RuleQueryController implements RuleQueryClient {
     @GetMapping("/gallery/random-get/{ruleCode}")
     public void randomByRuleCode(@PathVariable("ruleCode") String ruleCode,
                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
-        log.info("userCode:{}", UserInfo.getUserCode());
+        String userCode = request.getHeader("user-code");
+        log.info("userCode:{},{}", UserInfo.getUserCode(),userCode);
         // TODO 验证用户权限
         RandomRules rules = RandomRules.parse(ruleCode);
         Rule rule = RuleUtil.getRuleBy(rules, LocalDateTime.now());
