@@ -14,14 +14,15 @@ public class GatewayConfig {
         this.authFilter = authFilter;
     }
 
-    // 可以在这里添加其他配置和Bean
-
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("gallery", r -> r.path("/gallery/**")
                         .filters(f -> f.filter(authFilter))
                         .uri("lb://achun-gallery-app"))
+                .route("file", r -> r.path("/file/**")
+                        .filters(f -> f.filter(authFilter))
+                        .uri("lb://achun-file-app"))
                 .build();
     }
 }
