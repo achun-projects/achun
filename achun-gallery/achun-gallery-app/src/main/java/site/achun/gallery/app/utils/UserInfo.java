@@ -15,6 +15,12 @@ public class UserInfo {
 
     public static String getUserCode(){
         HttpServletRequest request = getCurrentRequest();
+
+        String name = null;
+        while((name = request.getHeaderNames().nextElement())!=null){
+            System.out.println("Name:"+name+",Value:"+request.getHeader(name));
+        }
+
         return request.getHeader("user-code");
     }
 
