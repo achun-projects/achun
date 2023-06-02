@@ -34,7 +34,7 @@ public class AuthFilter implements GatewayFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return Ordered.LOWEST_PRECEDENCE;
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }
 
