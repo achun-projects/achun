@@ -20,16 +20,17 @@ public class AuthFilter implements GatewayFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         // 在请求属性中设置header
-        exchange.getRequest().mutate()
+        ServerHttpRequest newRequest = exchange.getRequest().mutate()
                 .header("user-code", "1")
                 .build();
+        ServerWebExchange build = exchange.mutate().request(newRequest).build();
         // 在这里进行权限校验逻辑
         // 如果校验不通过，可以返回一个错误响应，例如：
         // response.setStatusCode(HttpStatus.UNAUTHORIZED);
         // return response.setComplete();
         log.info("pass auth filter");
         // 校验通过则继续向下传递
-        return chain.filter(exchange);
+        return chain.filter(build);
     }
 
     @Override
