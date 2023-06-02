@@ -15,6 +15,7 @@ import site.achun.gallery.app.service.rules.RandomRules;
 import site.achun.gallery.app.service.rules.Rule;
 import site.achun.gallery.app.service.rules.RuleQueryService;
 import site.achun.gallery.app.service.rules.RuleUtil;
+import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.pictures.response.PicturesBasicInfo;
 import site.achun.gallery.client.module.rules.RuleQueryClient;
 import site.achun.gallery.client.module.rules.requset.QueryFileByRuleCode;
@@ -43,6 +44,7 @@ public class RuleQueryController implements RuleQueryClient {
     @GetMapping("/gallery/random-get/{ruleCode}")
     public void randomByRuleCode(@PathVariable("ruleCode") String ruleCode,
                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.info("userCode:{}", UserInfo.getUserCode());
         // TODO 验证用户权限
         RandomRules rules = RandomRules.parse(ruleCode);
         Rule rule = RuleUtil.getRuleBy(rules, LocalDateTime.now());
