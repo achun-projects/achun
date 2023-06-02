@@ -19,7 +19,7 @@ public class GatewayConfig {
         return builder.routes()
                 .route("gallery", r -> r.path("/gallery/**")
                         .filters(f -> f.filter(authFilter))
-                        .uri("http://achun-gallery-app"))
+                        .uri("lb://achun-gallery-app"))
                 .build();
     }
 }
