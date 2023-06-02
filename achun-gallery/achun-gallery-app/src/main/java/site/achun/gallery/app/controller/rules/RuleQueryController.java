@@ -1,7 +1,7 @@
 package site.achun.gallery.app.controller.rules;
 
-import cn.hutool.core.util.RandomUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +13,7 @@ import site.achun.gallery.app.service.list.ListRandomQueryService;
 import site.achun.gallery.app.service.pictures.PicturesQueryService;
 import site.achun.gallery.app.service.rules.RandomRules;
 import site.achun.gallery.app.service.rules.Rule;
+import site.achun.gallery.app.service.rules.RuleQueryService;
 import site.achun.gallery.app.service.rules.RuleUtil;
 import site.achun.gallery.client.module.pictures.response.PicturesBasicInfo;
 import site.achun.gallery.client.module.rules.RuleQueryClient;
@@ -24,15 +25,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
+@Tag(name = "规则查询")
 @RestController
 @RequiredArgsConstructor
 public class RuleQueryController implements RuleQueryClient {
 
     private final ListRandomQueryService listRandomQueryService;
     private final PicturesQueryService picturesQueryService;
+    private final RuleQueryService ruleQueryService;
+
     @Override
     public Rsp<List<PicturesBasicInfo>> queryFilesByRuleCode(QueryFileByRuleCode query) {
-        return null;
+        return Rsp.success(ruleQueryService.queryFilesByRuleCode(query.getRuleCode()));
     }
 
     @Operation(summary = "根据规则编码随机获取图片")
