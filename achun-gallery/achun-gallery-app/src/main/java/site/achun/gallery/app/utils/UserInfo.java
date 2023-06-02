@@ -2,6 +2,9 @@ package site.achun.gallery.app.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Enumeration;
+
 public class UserInfo {
 
 
@@ -17,7 +20,8 @@ public class UserInfo {
         HttpServletRequest request = getCurrentRequest();
 
         String name = null;
-        while((name = request.getHeaderNames().nextElement())!=null){
+        Enumeration<String> names = request.getHeaderNames();
+        while((name = names.nextElement())!=null){
             System.out.println("Name:"+name+",Value:"+request.getHeader(name));
         }
 
