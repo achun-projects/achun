@@ -13,6 +13,7 @@ import site.achun.file.service.file.FileQueryService;
 import site.achun.support.api.response.Rsp;
 import site.achun.support.api.response.RspPage;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -32,9 +33,12 @@ public class FileQueryController implements FileQueryClient {
 
     @Override
     public Rsp<Map<String, FileInfoResponse>> queryFileMap(QueryByFileCodes queryByFileCodes) {
+        if(CollUtil.isEmpty(queryByFileCodes.getFileCodes())){
+            return Rsp.success(new HashMap<>());
+        }
         List<FileInfoResponse> list = fileQueryService.queryByCodes(queryByFileCodes.getFileCodes());
         if(CollUtil.isEmpty(list)){
-            return Rsp.success(null);
+            return Rsp.success(new HashMap<>());
         }
         Map<String, FileInfoResponse> map = list.stream()
                 .collect(Collectors.toMap(FileInfoResponse::getFileCode, Function.identity(), (k1, k2) -> k1));
@@ -43,9 +47,12 @@ public class FileQueryController implements FileQueryClient {
 
     @Override
     public Rsp<Map<String, FileInfoResponse>> queryFileMap(QueryByUnitCodes queryByUnitCodes) {
+        if(CollUtil.isEmpty(queryByUnitCodes.getUnitCodes())){
+            return Rsp.success(new HashMap<>());
+        }
         List<FileInfoResponse> list = fileQueryService.queryByUnitCodes(queryByUnitCodes.getUnitCodes());
         if(CollUtil.isEmpty(list)){
-            return Rsp.success(null);
+            return Rsp.success(new HashMap<>());
         }
         Map<String, FileInfoResponse> map = list.stream()
                 .collect(Collectors.toMap(FileInfoResponse::getFileCode, Function.identity(), (k1, k2) -> k1));

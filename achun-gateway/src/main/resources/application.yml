@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: achun-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka.apiv5.achun.site/eureka/
+server:
+  port: 9500
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: gallery
+#          uri: http://gallery.apiv5.achun.site
+#          predicates:
+#            - Path=/gallery/**

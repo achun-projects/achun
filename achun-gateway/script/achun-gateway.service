@@ -1,0 +1,13 @@
+[Unit]
+Description=Achun Gateway Application
+After=syslog.target network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/luokong/workspace/achun/achun-gateway
+ExecStart=java -jar /home/luokong/workspace/achun/achun-gateway/target/achun-gateway.jar
+SuccessExitStatus=143
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
