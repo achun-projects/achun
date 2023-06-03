@@ -49,6 +49,11 @@
             <artifactId>achun-client-support</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>site.achun.file</groupId>
+            <artifactId>achun-file-client</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

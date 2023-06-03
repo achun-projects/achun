@@ -9,14 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import site.achun.file.client.module.file.MediaFileQueryClient;
+import site.achun.file.client.module.file.request.QueryByFileCode;
+import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.gallery.app.service.list.ListRandomQueryService;
-import site.achun.gallery.app.service.pictures.PicturesQueryService;
 import site.achun.gallery.app.service.rules.RandomRules;
 import site.achun.gallery.app.service.rules.Rule;
 import site.achun.gallery.app.service.rules.RuleQueryService;
 import site.achun.gallery.app.service.rules.RuleUtil;
 import site.achun.gallery.app.utils.UserInfo;
-import site.achun.gallery.client.module.pictures.response.PicturesBasicInfo;
 import site.achun.gallery.client.module.rules.RuleQueryClient;
 import site.achun.gallery.client.module.rules.requset.QueryFileByRuleCode;
 import site.achun.support.api.response.Rsp;
@@ -32,11 +33,11 @@ import java.util.List;
 public class RuleQueryController implements RuleQueryClient {
 
     private final ListRandomQueryService listRandomQueryService;
-    private final PicturesQueryService picturesQueryService;
     private final RuleQueryService ruleQueryService;
+    private final MediaFileQueryClient mediaFileQueryClient;
 
     @Override
-    public Rsp<List<PicturesBasicInfo>> queryFilesByRuleCode(QueryFileByRuleCode query) {
+    public Rsp<List<MediaFileResponse>> queryFilesByRuleCode(QueryFileByRuleCode query) {
         return Rsp.success(ruleQueryService.queryFilesByRuleCode(query.getRuleCode()));
     }
 
@@ -51,7 +52,7 @@ public class RuleQueryController implements RuleQueryClient {
         Rule rule = RuleUtil.getRuleBy(rules, LocalDateTime.now());
         log.info("匹配到rule:{}",rule.getName());
         String randomFileCode = listRandomQueryService.randomQuery(rule.getBoards());
-        PicturesBasicInfo pic = picturesQueryService.queryBasicInfo(randomFileCode);
+        MediaFileResponse pic = mediaFileQueryClient.queryFile(QueryByFileCode.builder().fileCode(randomFileCode).build()).getData();
         String url = pic.getUrl();
         // 重定向到url
         response.sendRedirect(url);
