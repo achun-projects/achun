@@ -1,6 +1,7 @@
 package site.achun.gallery.app.service.pictures;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson2.JSON;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import site.achun.file.client.enums.Type;
 import site.achun.file.client.module.file.FileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCode;
 import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.file.client.module.file.response.detail.Detail;
 import site.achun.file.client.module.file.response.detail.Image;
 import site.achun.file.client.module.file.response.detail.Video;
 import site.achun.gallery.client.module.pictures.response.PicturesBasicInfo;
@@ -24,15 +26,17 @@ public class PicturesQueryService {
 
     public PicturesBasicInfo queryBasicInfo(String fileCode){
         Rsp<FileInfoResponse> rsp = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(fileCode).build());
+        log.info("rsp:{}", JSON.toJSONString(rsp));
         if(!rsp.hasData()){
             return null;
         }
-        FileInfoResponse fileInfo = rsp.getData();
+        FileInfoResponse<Detail> fileInfo = rsp.getData();
         PicturesBasicInfo pic = new PicturesBasicInfo();
         pic.setFileCode(fileCode);
         pic.setUrl(fileInfo.getUrl());
         pic.setCover(fileInfo.getCover());
 
+        log.info("fileInfo:{}", JSON.toJSONString(fileInfo));
         Type fileType = Type.parse(fileInfo.getType()).get();
         switch (fileType){
             case IMAGE -> {
