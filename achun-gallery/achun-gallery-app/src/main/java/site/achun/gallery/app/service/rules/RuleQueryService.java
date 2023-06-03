@@ -34,7 +34,7 @@ public class RuleQueryService {
 
     private final static Map<String,FromList> map = new HashMap<>();
     static{
-        map.put("10001",new FromList(Arrays.asList("3694407292"),Arrays.asList("3694407292")));
+        map.put("10001",new FromList(Arrays.asList("c6e537af1c5c4a2ca416da6ad7064493","7d6217e8da7445d89d2c3259afc1bd7a"),Arrays.asList("f142ad4998c4478080416ffb44cc4923")));
         map.put("10002",new FromList(Arrays.asList(""),Arrays.asList("")));
         map.put("10003",new FromList(Arrays.asList(""),Arrays.asList("")));
     }
