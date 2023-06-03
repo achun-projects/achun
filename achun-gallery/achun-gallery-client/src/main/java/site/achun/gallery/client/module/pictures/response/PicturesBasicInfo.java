@@ -9,4 +9,7 @@ public class PicturesBasicInfo implements Serializable {
     private String fileCode;
     private String url;
     private String cover;
+    private Integer width;
+    private Integer height;
+    private Integer duration;
 }
