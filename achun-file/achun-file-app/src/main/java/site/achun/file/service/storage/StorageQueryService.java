@@ -26,4 +26,8 @@ public class StorageQueryService {
             return null;
         }
     }
+
+    public StorageResponse queryStorage(String storageCode){
+        return storageConvert.toResponse(storageService.getStorage(storageCode));
+    }
 }
