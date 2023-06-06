@@ -76,7 +76,7 @@ public class DownloadTaskRunner implements CommandLineRunner {
                         continue;
                     }
                     POOL.execute(()->{
-                        downloadTaskService.handler(task);
+                        downloadTaskService.tryDownload(task);
                     });
                 } catch (RedisCommandTimeoutException ex) {
                     log.info("Redis等待超时……，进行下一次等待");

@@ -3,7 +3,6 @@ package site.achun.updown.app.service.module.download;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.crypto.digest.MD5;
 import cn.hutool.http.HttpResponse;
-import com.alibaba.fastjson2.JSON;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,12 +29,7 @@ import java.io.File;
 @RequiredArgsConstructor
 public class DownloadTaskService {
 
-    public void handler(Task task){
-        log.info("Task:{}", JSON.toJSONString(task));
-    }
-
     private final StorageQueryClient storageQueryClient;
-
 
     private final FileUpdateClient fileUpdateClient;
 
