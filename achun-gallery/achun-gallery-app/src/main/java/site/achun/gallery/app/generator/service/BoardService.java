@@ -10,4 +10,15 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface BoardService extends IService<Board> {
 
+    default Board getByCode(String boardCode){
+        return lambdaQuery()
+                .eq(Board::getBoardCode,boardCode)
+                .one();
+    }
+    default Board getByCode(String boardCode,String userCode){
+        return lambdaQuery()
+                .eq(Board::getBoardCode,boardCode)
+                .eq(Board::getUserCode,userCode)
+                .one();
+    }
 }

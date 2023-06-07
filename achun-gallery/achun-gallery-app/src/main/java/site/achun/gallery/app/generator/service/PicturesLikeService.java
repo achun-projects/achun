@@ -10,4 +10,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface PicturesLikeService extends IService<PicturesLike> {
 
+    default PicturesLike getByCode(String listCode,String fileCode,String userCode){
+        return this.lambdaQuery()
+                .eq(PicturesLike::getListCode,listCode)
+                .eq(PicturesLike::getFileCode,fileCode)
+                .eq(PicturesLike::getUserCode,userCode)
+                .one();
+    }
 }

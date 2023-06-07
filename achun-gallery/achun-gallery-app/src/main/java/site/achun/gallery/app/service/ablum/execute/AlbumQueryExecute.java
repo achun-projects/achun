@@ -5,7 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.domain.Album;
+import site.achun.gallery.app.generator.service.AlbumService;
+import site.achun.gallery.app.generator.service.GalleryGroupRecordService;
+import site.achun.gallery.app.service.gallery_group.MyGroupService;
+import site.achun.gallery.app.service.gallery_group.response.GalleryGroupResponse;
+import site.achun.gallery.app.utils.DateTimeUtil;
+import site.achun.gallery.client.constant.GalleryRC;
 import site.achun.gallery.client.module.album.response.AlbumResponse;
+import site.achun.support.api.exception.RspException;
 
 @Slf4j
 @Service
@@ -14,7 +21,6 @@ public class AlbumQueryExecute {
 
     private final MyGroupService myGroupService;
     private final GalleryGroupRecordService galleryGroupRecordService;
-
     private final AlbumService albumService;
 
     public AlbumResponse queryByCode(String albumCode){

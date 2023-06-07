@@ -33,4 +33,5 @@ public interface GalleryGroupService extends IService<GalleryGroup> {
                 .eq(StrUtil.isNotEmpty(userCode),GalleryGroup::getUserCode,userCode)
                 .one();
     }
+
 }

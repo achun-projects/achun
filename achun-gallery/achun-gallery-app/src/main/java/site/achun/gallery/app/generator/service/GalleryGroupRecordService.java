@@ -1,7 +1,12 @@
 package site.achun.gallery.app.generator.service;
 
+import cn.hutool.core.collection.CollUtil;
 import site.achun.gallery.app.generator.domain.GalleryGroupRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
 * @author Administrator
@@ -10,4 +15,15 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface GalleryGroupRecordService extends IService<GalleryGroupRecord> {
 
+    default Set<String> queryListCodes(String groupCode){
+        List<GalleryGroupRecord> list = this.lambdaQuery()
+                .eq(GalleryGroupRecord::getGroupCode, groupCode)
+                .list();
+        if(CollUtil.isEmpty(list)){
+            return CollUtil.newHashSet();
+        }
+        return list.stream()
+                .map(GalleryGroupRecord::getListCode)
+                .collect(Collectors.toSet());
+    }
 }

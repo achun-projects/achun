@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.service.AlbumService;
 import site.achun.gallery.app.service.ablum.execute.AlbumCreateExecute;
+import site.achun.gallery.app.service.ablum.execute.AlbumQueryExecute;
 import site.achun.gallery.app.service.ablum.execute.AlbumRemoveExecute;
 import site.achun.gallery.app.service.ablum.execute.AlbumUpdateExecute;
 import site.achun.gallery.client.module.album.request.CreateOrUpdateAlbum;
@@ -21,6 +22,7 @@ public class AlbumUpdateService {
 
     private final AlbumService albumService;
 
+    private final AlbumQueryExecute albumQueryExecute;
     private final AlbumRemoveExecute albumRemoveExecute;
     private final AlbumUpdateExecute albumUpdateExecute;
     private final AlbumCreateExecute albumCreateExecute;
@@ -33,7 +35,7 @@ public class AlbumUpdateService {
         }else{
             albumCode = albumCreateExecute.createAlbum(request);
         }
-        return ;
+        return albumQueryExecute.queryByCode(albumCode);
     }
 
     public Rsp<Boolean> removeWhenEmpty(RemoveAlbumRequest request) {

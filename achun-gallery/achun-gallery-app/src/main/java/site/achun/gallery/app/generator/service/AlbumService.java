@@ -19,6 +19,7 @@ public interface AlbumService extends IService<Album> {
                 .one();
     }
 
+
     default Album getByCode(String albumCode,String userCode){
         return lambdaQuery()
                 .eq(Album::getAlbumCode,albumCode)
@@ -26,12 +27,14 @@ public interface AlbumService extends IService<Album> {
                 .one();
     }
 
+
     default Album getByName(String name,String userCode){
         return lambdaQuery()
                 .eq(Album::getName,name)
                 .eq(Album::getUserCode,userCode)
                 .one();
     }
+
 
     default void updateRecordUtime(String albumCode){
         lambdaUpdate()

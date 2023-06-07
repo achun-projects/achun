@@ -10,4 +10,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface FileSetService extends IService<FileSet> {
 
+    default FileSet getByCode(String code){
+        return lambdaQuery()
+                .eq(FileSet::getCode,code)
+                .one();
+    }
+
+    default FileSet getByCode(String code,String userCode){
+        return lambdaQuery()
+                .eq(FileSet::getCode,code)
+                .eq(FileSet::getUserCode,userCode)
+                .one();
+    }
 }
