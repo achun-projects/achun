@@ -1,9 +1,12 @@
 package site.achun.gallery.app.utils;
+import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Enumeration;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class UserInfo {
 
@@ -26,6 +29,13 @@ public class UserInfo {
         return request.getHeader("user-code");
     }
 
+    public static String getCode(Supplier<String> getUserCode){
+        return StrUtil.isNotEmpty(getUserCode.get()) ? getUserCode.get() : getCode();
+    }
+
+    public static String getCode(String userCode){
+        return StrUtil.isNotEmpty(userCode) ? userCode : getCode();
+    }
 
 
 }

@@ -44,4 +44,17 @@ public class PageUtil {
         rspPage.setRows(batchConvert.apply(pageResult.getRecords()));
         return rspPage;
     }
+
+    public static <T,R> RspPage<R> parse(RspPage<T> pageResult,Function<T,R> convert){
+        RspPage<R> rspPage = new RspPage<>();
+        rspPage.setTotal(pageResult.getTotal());
+        rspPage.setPage(pageResult.getPage());
+        rspPage.setSize(pageResult.getSize());
+        rspPage.setRows(
+                pageResult.getRows().stream()
+                        .map(convert::apply)
+                        .collect(Collectors.toList())
+        );
+        return rspPage;
+    }
 }

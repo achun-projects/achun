@@ -23,7 +23,7 @@ public class AlbumQueryController implements AlbumQueryClient {
     private final AlbumQueryService albumQueryService;
     @Override
     public Rsp<RspPage<AlbumResponse>> page(QueryAlbumPage query) {
-        String userCode = StrUtil.isNotEmpty(query.getUserCode())?query.getUserCode(): UserInfo.getCode();
+        String userCode = UserInfo.getCode(query::getUserCode);
         query.setUserCode(userCode);
         if(StrUtil.isNotEmpty(query.getLikeName())){
             query.setLikeName("%"+query.getLikeName()+"%");
@@ -33,7 +33,7 @@ public class AlbumQueryController implements AlbumQueryClient {
 
     @Override
     public Rsp<AlbumResponse> detail(QueryAlbumDetail query) {
-        String userCode = StrUtil.isNotEmpty(query.getUserCode())?query.getUserCode(): UserInfo.getCode();
+        String userCode = UserInfo.getCode(query::getUserCode);
         return Rsp.success(albumQueryService.detail(query.getAlbumCode(),userCode));
     }
 }

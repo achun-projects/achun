@@ -22,17 +22,13 @@ public class AlbumUpdateController implements AlbumUpdateClient {
     private final AlbumUpdateService albumUpdateService;
     @Override
     public Rsp<AlbumResponse> createOrUpdate(CreateOrUpdateAlbum request) {
-        if(StrUtil.isEmpty(request.getUserCode())){
-            request.setUserCode(UserInfo.getCode());
-        }
+        request.setUserCode(UserInfo.getCode(request::getUserCode));
         return Rsp.success(albumUpdateService.createOrUpdate(request));
     }
 
     @Override
     public Rsp<Boolean> removeWhenEmpty(RemoveAlbumRequest request) {
-        if(StrUtil.isEmpty(request.getUserCode())){
-            request.setUserCode(UserInfo.getCode());
-        }
+        request.setUserCode(UserInfo.getCode(request::getUserCode));
         return albumUpdateService.removeWhenEmpty(request);
     }
 }
