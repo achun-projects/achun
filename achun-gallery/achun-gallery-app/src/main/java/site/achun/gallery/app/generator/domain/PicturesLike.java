@@ -6,7 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
+
+import lombok.*;
 
 /**
  * 
@@ -14,6 +15,10 @@ import lombok.Data;
  */
 @TableName(value ="pictures_like")
 @Data
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PicturesLike implements Serializable {
     /**
      * ID

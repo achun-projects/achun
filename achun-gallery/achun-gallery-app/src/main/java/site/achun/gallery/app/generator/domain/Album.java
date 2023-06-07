@@ -6,7 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
+
+import lombok.*;
 
 /**
  * 相册表
@@ -14,6 +15,10 @@ import lombok.Data;
  */
 @TableName(value ="album")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Album implements Serializable {
     /**
      * 主键

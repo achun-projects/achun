@@ -1,7 +1,11 @@
 package site.achun.gallery.app.generator.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import site.achun.gallery.app.generator.domain.GalleryGroupRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import site.achun.gallery.client.dto.GroupRecordView;
+
+import java.util.List;
 
 /**
 * @author Administrator
@@ -11,6 +15,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface GalleryGroupRecordMapper extends BaseMapper<GalleryGroupRecord> {
 
+    List<GroupRecordView> selectBoardRecord(@Param("userCode") String userCode);
+
+
+    List<GroupRecordView> selectAlbumRecord(@Param("userCode") String userCode);
 }
 
 

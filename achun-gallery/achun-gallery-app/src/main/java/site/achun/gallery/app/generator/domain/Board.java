@@ -6,7 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
+
+import lombok.*;
 
 /**
  * 画板表
@@ -14,6 +15,10 @@ import lombok.Data;
  */
 @TableName(value ="board")
 @Data
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Board implements Serializable {
     /**
      * 主键

@@ -6,7 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -14,6 +18,9 @@ import lombok.Data;
  */
 @TableName(value ="gallery_group")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GalleryGroup implements Serializable {
     /**
      * 主键

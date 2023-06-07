@@ -15,4 +15,29 @@
         id,group_code,list_code,
         ctime
     </sql>
+
+
+    <select id="selectBoardRecord" resultType="site.achun.gallery.client.dto.GroupRecordView">
+        SELECT
+            ggr.group_code as groupCode,
+            ggr.list_code  as listCode,
+            b.name as name
+        FROM
+            gallery_group_record ggr
+                LEFT JOIN board b ON b.board_code = ggr.list_code
+        WHERE
+            b.user_code = #{userCode}
+    </select>
+
+    <select id="selectAlbumRecord" resultType="site.achun.gallery.client.dto.GroupRecordView">
+        SELECT
+            ggr.group_code as groupCode,
+            ggr.list_code  as listCode,
+            a.name as name
+        FROM
+            gallery_group_record ggr
+                LEFT JOIN album a ON a.album_code = ggr.list_code
+        WHERE
+            a.user_code = #{userCode}
+    </select>
 </mapper>

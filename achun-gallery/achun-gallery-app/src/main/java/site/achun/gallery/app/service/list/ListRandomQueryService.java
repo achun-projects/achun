@@ -18,21 +18,19 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class ListRandomQueryService {
 
-    private final PicturesMapper picturesMapper;
+    private final ListFilesQueryExecute listFilesQueryExecute;
     public String randomQuery(String listCode){
         return randomQuery(Arrays.asList(listCode));
     }
 
     public String randomQuery(Collection<String> listCodes){
         // 通过相册和画板查询到文件总数。使用总数获取随机值。
-        QueryFilesByListCodes query = new QueryFilesByListCodes();
-        query.setListCodes(listCodes);
-        IPage<Pictures> pageResult = picturesMapper.selectFilesByListCodes(Page.of(1, 1), query);
+        IPage<Pictures> pageResult = listFilesQueryExecute.queryPages(listCodes,1,1);
         if(pageResult.getTotal() == 0){
             return null;
         }
         long randomNum = RandomUtil.randomLong(pageResult.getTotal());
-        pageResult = picturesMapper.selectFilesByListCodes(Page.of(randomNum,1),query);
+        pageResult = listFilesQueryExecute.queryPages(listCodes,randomNum,1);
         return pageResult.getRecords().get(0).getFileCode();
     }
 }
