@@ -59,9 +59,11 @@ public class AlbumQueryService {
         String coverFileCode = detail.getCoverFileCode();
         if(StrUtil.isNotBlank(coverFileCode)){
             QueryByFileCode queryFile = QueryByFileCode.builder().fileCode(coverFileCode).build();
-            MediaFileResponse coverFile = fileQueryClient.queryFile(queryFile).tryGetData();
-            if(coverFile != null){
-                detail.setCover(coverFile.getMediumUrl());
+            Rsp<MediaFileResponse> coverFileRsp = fileQueryClient.queryFile(queryFile);
+            if(coverFileRsp != null && coverFileRsp.hasData()){
+                detail.setCover(coverFileRsp.tryGetData().getCover());
+            }else{
+                log.info("相册{}的封面文件{}查询为空",albumCode,coverFileCode);
             }
         }
         return detail;
