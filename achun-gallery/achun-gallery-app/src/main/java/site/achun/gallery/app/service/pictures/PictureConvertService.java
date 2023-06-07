@@ -69,7 +69,22 @@ public class PictureConvertService {
             }
         }
         rspPage.setRows(newRows);
-        return Rsp.success(PageUtil.parse(rspPage,pic -> BeanUtil.toBean(fileResponseMap.get(pic), Photo.class)));
+        return Rsp.success(PageUtil.parse(rspPage,pic -> toPhoto(fileResponseMap.get(pic.getFileCode()))));
+    }
+
+    public Photo toPhoto(MediaFileResponse file){
+        return Photo.builder()
+                .fileCode(file.getFileCode())
+                .cover(file.getCover())
+                .url(file.getUrl())
+                .duration(file.getDuration())
+                .fileName(file.getFileName())
+                .height(file.getHeight())
+                .mediumUrl(file.getMediumUrl())
+                .type(file.getType())
+                .unitCode(file.getUnitCode())
+                .width(file.getWidth())
+                .build();
     }
 
 }

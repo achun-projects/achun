@@ -50,11 +50,10 @@ public class PageUtil {
         rspPage.setTotal(pageResult.getTotal());
         rspPage.setPage(pageResult.getPage());
         rspPage.setSize(pageResult.getSize());
-        rspPage.setRows(
-                pageResult.getRows().stream()
-                        .map(convert::apply)
-                        .collect(Collectors.toList())
-        );
+        List<R> newRows = pageResult.getRows().stream()
+                .map(convert::apply)
+                .collect(Collectors.toList());
+        rspPage.setRows(newRows);
         return rspPage;
     }
 }

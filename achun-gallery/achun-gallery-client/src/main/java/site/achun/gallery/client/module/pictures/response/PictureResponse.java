@@ -40,8 +40,7 @@ public class PictureResponse implements Serializable {
      * 分组ID，当group相同时，视为一组资源。
      这个字段可以灵活使用。
      */
-    private String groupCode;
-
+    private String setCode;
     /**
      * 文件后缀
      */
