@@ -1,6 +1,7 @@
 package site.achun.gallery.app.service.ablum;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -56,10 +57,12 @@ public class AlbumQueryService {
             throw new RspException(GalleryRC.DB_QUERY_RESULT_EMPTY,"查询不到相册:%s",albumCode);
         }
         String coverFileCode = detail.getCoverFileCode();
-        QueryByFileCode queryFile = QueryByFileCode.builder().fileCode(coverFileCode).build();
-        MediaFileResponse coverFile = fileQueryClient.queryFile(queryFile).tryGetData();
-        if(coverFile != null){
-            detail.setCover(coverFile.getMediumUrl());
+        if(StrUtil.isNotBlank(coverFileCode)){
+            QueryByFileCode queryFile = QueryByFileCode.builder().fileCode(coverFileCode).build();
+            MediaFileResponse coverFile = fileQueryClient.queryFile(queryFile).tryGetData();
+            if(coverFile != null){
+                detail.setCover(coverFile.getMediumUrl());
+            }
         }
         return detail;
     }
