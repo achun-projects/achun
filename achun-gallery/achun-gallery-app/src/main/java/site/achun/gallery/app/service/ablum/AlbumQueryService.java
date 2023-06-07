@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class AlbumQueryService {
 
     private final MyAlbumService myAlbumService;
-    private MediaFileQueryClient fileQueryClient;
+    private final MediaFileQueryClient fileQueryClient;
 
     public Rsp<RspPage<AlbumResponse>> page(QueryAlbumPage query){
         // 获取相册分页数据
