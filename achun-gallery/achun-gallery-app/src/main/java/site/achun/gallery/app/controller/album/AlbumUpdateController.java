@@ -1,9 +1,12 @@
 package site.achun.gallery.app.controller.album;
 
+import cn.hutool.core.util.StrUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
+import site.achun.gallery.app.service.ablum.AlbumUpdateService;
+import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.album.AlbumUpdateClient;
 import site.achun.gallery.client.module.album.request.CreateOrUpdateAlbum;
 import site.achun.gallery.client.module.album.request.RemoveAlbumRequest;
@@ -16,13 +19,20 @@ import site.achun.support.api.response.Rsp;
 @RequiredArgsConstructor
 public class AlbumUpdateController implements AlbumUpdateClient {
 
+    private final AlbumUpdateService albumUpdateService;
     @Override
     public Rsp<AlbumResponse> createOrUpdate(CreateOrUpdateAlbum request) {
-        return null;
+        if(StrUtil.isEmpty(request.getUserCode())){
+            request.setUserCode(UserInfo.getCode());
+        }
+        return Rsp.success(albumUpdateService.createOrUpdate(request));
     }
 
     @Override
     public Rsp<Boolean> removeWhenEmpty(RemoveAlbumRequest request) {
-        return null;
+        if(StrUtil.isEmpty(request.getUserCode())){
+            request.setUserCode(UserInfo.getCode());
+        }
+        return albumUpdateService.removeWhenEmpty(request);
     }
 }

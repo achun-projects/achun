@@ -7,7 +7,6 @@ import java.util.Enumeration;
 
 public class UserInfo {
 
-
     public static HttpServletRequest getCurrentRequest() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes != null) {
@@ -16,7 +15,7 @@ public class UserInfo {
         return null;
     }
 
-    public static String getUserCode(){
+    public static String getCode(){
         HttpServletRequest request = getCurrentRequest();
 
         String name = null;
@@ -24,7 +23,6 @@ public class UserInfo {
         while((name = names.nextElement())!=null){
             System.out.println("Name:"+name+",Value:"+request.getHeader(name));
         }
-
         return request.getHeader("user-code");
     }
 
