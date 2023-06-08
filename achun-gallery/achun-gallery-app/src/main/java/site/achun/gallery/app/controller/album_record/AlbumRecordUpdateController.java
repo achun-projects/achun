@@ -4,7 +4,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
+import site.achun.file.client.module.file.FileUpdateClient;
+import site.achun.file.client.module.file.request.DeleteFileRequest;
 import site.achun.gallery.app.service.album_record.AlbumRecordMoveService;
+import site.achun.gallery.app.service.pictures.PictureUpdateExecute;
+import site.achun.gallery.app.service.pictures.PictureUpdateService;
 import site.achun.gallery.app.service.pictures.UploadPictureService;
 import site.achun.gallery.app.service.unit.AnewFileSetService;
 import site.achun.gallery.app.utils.UserInfo;
@@ -27,6 +31,9 @@ public class AlbumRecordUpdateController implements AlbumRecordUpdateClient {
     private final UploadPictureService uploadPictureService;
     private final AnewFileSetService anewFileSetService;
     private final AlbumRecordMoveService albumRecordMoveService;
+    private final PictureUpdateService pictureUpdateService;
+    private final FileUpdateClient fileUpdateClient;
+
     @Override
     public Rsp<FileSetResponse> uploadPictures(UploadPictures createInfo) {
         createInfo.setUserCode(UserInfo.getCode(createInfo::getUserCode));
@@ -55,7 +62,7 @@ public class AlbumRecordUpdateController implements AlbumRecordUpdateClient {
 
     @Override
     public Rsp<Boolean> deleteBatchRecords(Collection<String> fileCodes) {
-        // TODO 文件的也要删除。暂停下。
-        return null;
+        pictureUpdateService.remove(fileCodes);
+        return fileUpdateClient.deleteFileInfos(DeleteFileRequest.builder().fileCodes(fileCodes).build());
     }
 }

@@ -18,17 +18,17 @@ public interface AlbumRecordUpdateClient {
 
     @Operation(summary = "创建相册记录,上传图片")
     @PostMapping("/gallery/album-record/upload-pictures")
-    public Rsp<FileSetResponse> uploadPictures(@RequestBody UploadPictures createInfo);
+    Rsp<FileSetResponse> uploadPictures(@RequestBody UploadPictures createInfo);
 
     @Operation(summary = "重新分组")
     @PostMapping("/gallery/album-record/anew-fileset")
-    public Rsp<Boolean> anewFileSet(@RequestBody @Valid AnewFileSet anewGroup);
+    Rsp<Boolean> anewFileSet(@RequestBody @Valid AnewFileSet anewGroup);
 
     @Operation(summary = "移动一个相册内文件组，到另一个相册。")
     @PostMapping("/gallery/album-record/move")
-    public Rsp<Boolean> moveRecords(@RequestBody MoveAlbumRecordRequest req);
+    Rsp<Boolean> moveRecords(@RequestBody MoveAlbumRecordRequest req);
 
     @Operation(summary = "批量删除文件")
     @PostMapping("/gallery/album-record/batch-delete")
-    public Rsp<Boolean> deleteBatchRecords(@RequestBody Collection<String> fileCodes);
+    Rsp<Boolean> deleteBatchRecords(@RequestBody Collection<String> fileCodes);
 }
