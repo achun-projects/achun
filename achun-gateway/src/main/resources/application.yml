@@ -1,7 +1,6 @@
 spring:
   application:
     name: achun-gateway
-
 eureka:
   client:
     service-url:
