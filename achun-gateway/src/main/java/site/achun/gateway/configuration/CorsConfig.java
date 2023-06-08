@@ -24,7 +24,7 @@ public class CorsConfig {
         // 允许指定的域，可以设置多个来源
 //        corsConfig.addAllowedOrigin("http://example1.com");
 //        corsConfig.addAllowedOrigin("http://example2.com");
-        corsConfig.setAllowedOriginPatterns(Arrays.asList("http://*.achun.site"));
+        corsConfig.setAllowedOriginPatterns(Arrays.asList("http://*.*.achun.site"));
         // 允许全部请求头
         corsConfig.addAllowedHeader("*");
         // 允许携带 Cookie 等用户凭证
