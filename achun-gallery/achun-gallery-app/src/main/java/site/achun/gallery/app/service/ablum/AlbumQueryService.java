@@ -54,7 +54,7 @@ public class AlbumQueryService {
     public AlbumResponse detail(String albumCode,String userCode){
         AlbumResponse detail = myAlbumService.queryDetail(albumCode, userCode);
         if(detail == null){
-            throw new RspException(GalleryRC.DB_QUERY_RESULT_EMPTY,"查询不到相册:%s",albumCode);
+            return null;
         }
         String coverFileCode = detail.getCoverFileCode();
         if(StrUtil.isNotBlank(coverFileCode)){
