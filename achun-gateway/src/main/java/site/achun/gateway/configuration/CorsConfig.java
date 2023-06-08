@@ -23,7 +23,7 @@ public class CorsConfig {
         corsConfig.addAllowedMethod("*");
         // 允许指定的域，可以设置多个来源
 //        corsConfig.addAllowedOrigin("http://example1.com");
-//        corsConfig.addAllowedOrigin("http://example2.com");
+        corsConfig.addAllowedOrigin("http://gallery.web.achun.site");
         corsConfig.setAllowedOriginPatterns(Arrays.asList("http://*.*.achun.site"));
         // 允许全部请求头
         corsConfig.addAllowedHeader("*");
