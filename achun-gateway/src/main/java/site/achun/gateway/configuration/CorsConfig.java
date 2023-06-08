@@ -7,6 +7,8 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.util.pattern.PathPatternParser;
 
+import java.util.Arrays;
+
 /**
  * Author: Heiffeng
  * Date: 2023/3/30
@@ -19,7 +21,7 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.addAllowedMethod("*");
-        corsConfig.addAllowedOrigin("*"); // 允许所有源访问
+        corsConfig.setAllowedOriginPatterns(Arrays.asList("*")); // 使用allowedOriginPatterns代替allowedOrigins
         corsConfig.addAllowedHeader("*");
         corsConfig.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", corsConfig);
