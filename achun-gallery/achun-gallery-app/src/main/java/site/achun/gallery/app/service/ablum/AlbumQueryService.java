@@ -28,7 +28,7 @@ public class AlbumQueryService {
     private final MyAlbumService myAlbumService;
     private final MediaFileQueryClient fileQueryClient;
 
-    public Rsp<RspPage<AlbumResponse>> page(QueryAlbumPage query){
+    public RspPage<AlbumResponse> page(QueryAlbumPage query){
         // 获取相册分页数据
         RspPage<AlbumResponse> rspPage = myAlbumService.page(query);
         if(CollectionUtil.isEmpty(rspPage.getRows())){

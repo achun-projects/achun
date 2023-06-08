@@ -28,7 +28,7 @@ public class AlbumQueryController implements AlbumQueryClient {
         if(StrUtil.isNotEmpty(query.getLikeName())){
             query.setLikeName("%"+query.getLikeName()+"%");
         }
-        return albumQueryService.page(query);
+        return Rsp.success(albumQueryService.page(query));
     }
 
     @Override
