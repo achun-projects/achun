@@ -11,7 +11,7 @@ import site.achun.file.service.storage.StorageUpdateService;
 import site.achun.support.api.response.Rsp;
 
 @Slf4j
-@Tag(name = "存储单位探测服务")
+@Tag(name = "Storage更新")
 @RequiredArgsConstructor
 @RestController
 public class StorageUpdateController implements StorageUpdateClient {
@@ -20,6 +20,6 @@ public class StorageUpdateController implements StorageUpdateClient {
 
     @Override
     public Rsp<StorageResponse> createStorage(CreateStorage create) {
-        return Rsp.success(storageUpdateService.createStorageWithDetected(create));
+        return Rsp.success(storageUpdateService.createStorage(create));
     }
 }

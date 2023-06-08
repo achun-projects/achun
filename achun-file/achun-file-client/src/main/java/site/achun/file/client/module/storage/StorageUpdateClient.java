@@ -11,7 +11,7 @@ import site.achun.support.api.response.Rsp;
 @FeignClient(name = "achun-file-app", contextId = "StorageUpdateClient")
 public interface StorageUpdateClient {
 
-    @Operation(summary = "创建存储单位并探测文件")
+    @Operation(summary = "创建存储单位")
     @PostMapping("/file/storage/create-storage")
     Rsp<StorageResponse> createStorage(@RequestBody CreateStorage create);
 

@@ -26,8 +26,8 @@ public class StorageUpdateService {
     private final StorageService storageService;
     private final StorageConvert storageConvert;
 
-    public StorageResponse createStorageWithDetected(CreateStorage create) {
-        log.info("createStorageWithDetected: {}", create);
+    public StorageResponse createStorage(CreateStorage create) {
+        log.info("createStorage: {}", create);
         // 校验storage是否已存在
         StorageResponse exitStorage = storageQueryService.queryStorage(create.getBucketCode(), create.getStorageName());
         if(exitStorage != null){
@@ -46,11 +46,6 @@ public class StorageUpdateService {
                 .ctime(LocalDateTime.now())
                 .build();
         storageService.save(storage);
-        // 触发文件探测服务
-        RequestLoopAndInitFiles requestLoopAndInitFiles = RequestLoopAndInitFiles.builder()
-                .storageCode(storage.getStorageCode())
-                .localPath(storage.getPath())
-                .build();
         return storageConvert.toResponse(storage);
     }
 
