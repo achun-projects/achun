@@ -10,7 +10,7 @@ import site.achun.gallery.client.module.pictures.response.Timeline;
 import site.achun.support.api.response.Rsp;
 import site.achun.support.api.response.RspPage;
 
-@FeignClient(name = "achun-gallery-app", contextId = "ListQueryClient")
+@FeignClient(name = "achun-gallery-app", contextId = "TimelineQueryClient")
 public interface TimelineQueryClient {
 
     @Operation(summary = "查询时间轴")

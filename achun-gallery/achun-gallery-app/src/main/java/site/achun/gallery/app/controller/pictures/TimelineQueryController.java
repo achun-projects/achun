@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Tag(name = "列表查询")
+@Tag(name = "时间轴查询")
 @RestController
 @RequiredArgsConstructor
 public class TimelineQueryController implements TimelineQueryClient {
