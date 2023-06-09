@@ -8,6 +8,7 @@ import site.achun.gallery.app.generator.domain.Album;
 import site.achun.gallery.app.generator.domain.GalleryGroupRecord;
 import site.achun.gallery.app.generator.service.AlbumService;
 import site.achun.gallery.app.generator.service.GalleryGroupRecordService;
+import site.achun.gallery.app.service.ablum.AlbumUpdateService;
 import site.achun.gallery.client.constant.GalleryRC;
 import site.achun.gallery.client.module.album.request.CreateOrUpdateAlbum;
 import site.achun.support.api.exception.RspException;

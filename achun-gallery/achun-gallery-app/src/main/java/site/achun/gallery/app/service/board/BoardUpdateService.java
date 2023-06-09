@@ -1,5 +1,6 @@
 package site.achun.gallery.app.service.board;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,10 +16,12 @@ import site.achun.gallery.app.generator.service.BoardRecordService;
 import site.achun.gallery.app.generator.service.BoardService;
 import site.achun.gallery.client.constant.GalleryRC;
 import site.achun.gallery.client.module.board.request.BoardCreateRequest;
+import site.achun.gallery.client.module.board.request.BoardUpdateRequest;
 import site.achun.gallery.client.module.board.response.BoardResponse;
 import site.achun.gallery.client.module.pictures.request.QueryRecord;
 import site.achun.support.api.response.Rsp;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Slf4j
@@ -61,6 +64,28 @@ public class BoardUpdateService {
         }
         BoardResponse boardResponse = myBoardService.create(createRequest);
         return Rsp.success(boardResponse);
+    }
+
+    public Rsp<BoardResponse> updateBoard(BoardUpdateRequest updateRequest) {
+        Board board = boardService.getByCode(updateRequest.getBoardCode(),updateRequest.getUserCode());
+        if(board == null){
+            return Rsp.error(GalleryRC.NOT_EXISTS);
+        }
+        boardService.lambdaUpdate()
+                .eq(Board::getBoardCode,updateRequest.getBoardCode())
+                .set(StrUtil.isNotEmpty(updateRequest.getCover()),
+                        Board::getCoverFileCodes,updateRequest.getCover())
+                .set(StrUtil.isNotEmpty(updateRequest.getName()),
+                        Board::getName,updateRequest.getName())
+                .set(StrUtil.isNotEmpty(updateRequest.getDescription()),
+                        Board::getDescription,updateRequest.getDescription())
+                .set(Board::getUtime, LocalDateTime.now())
+                .set(Board::getRecordUtime,LocalDateTime.now())
+                .update();
+        return Rsp.success(
+                myBoardService.toBoardResponse(boardService.getByCode(updateRequest.getBoardCode())),
+                "修改成功"
+        );
     }
 
 }
