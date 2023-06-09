@@ -36,7 +36,7 @@ public class BoardQueryService {
         return myBoardService.selectByBoardCode(boardCode);
     }
 
-    public Rsp<RspPage<BoardResponse>> queryPage(QueryBoardPage query){
+    public RspPage<BoardResponse> queryPage(QueryBoardPage query){
         // 获取相册分页数据
        RspPage<BoardResponse> rspPage = myBoardService.queryPage(query);
         if(CollectionUtil.isEmpty(rspPage.getRows())){

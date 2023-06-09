@@ -32,7 +32,7 @@ public class BoardQueryController implements BoardQueryClient {
     @Override
     public Rsp<RspPage<BoardResponse>> queryPage(QueryBoardPage query) {
         query.setUserCode(UserInfo.getCode(query::getUserCode));
-        return boardQueryService.queryPage(query);
+        return Rsp.success(boardQueryService.queryPage(query));
     }
 
     @Override
