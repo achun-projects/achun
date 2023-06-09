@@ -3,8 +3,6 @@ package site.achun.gallery.app.controller.board;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.gallery.app.service.board.BoardUpdateService;
 import site.achun.gallery.app.utils.UserInfo;
