@@ -27,7 +27,7 @@ public class ListQueryController implements ListQueryClient {
     private final ListRandomQueryService listRandomQueryService;
     private final AlbumUpdateService albumUpdateService;
     private final BoardUpdateService boardUpdateService;
-    
+
     @Override
     public String randomQuery(Collection<String> listCodes) {
         return listRandomQueryService.randomQuery(listCodes);
