@@ -38,12 +38,12 @@ public class BoardQueryService {
 
     public Rsp<RspPage<BoardResponse>> queryPage(QueryBoardPage query){
         // 获取相册分页数据
-        Rsp<RspPage<BoardResponse>> rspPage = myBoardService.queryPage(query);
-        if(CollectionUtil.isEmpty(rspPage.tryGetData().getRows())){
+       RspPage<BoardResponse> rspPage = myBoardService.queryPage(query);
+        if(CollectionUtil.isEmpty(rspPage.getRows())){
             return rspPage;
         }
         // 获取相册封面
-        Set<String> coverFileCodes = rspPage.getData().getRows().stream()
+        Set<String> coverFileCodes = rspPage.getRows().stream()
                 .map(BoardResponse::getCoverFileCodes)
                 .collect(Collectors.toSet());
         if(CollectionUtil.isEmpty(coverFileCodes)){
@@ -52,17 +52,17 @@ public class BoardQueryService {
 
 
         Map<String, MediaFileResponse> coverFileMap = fileQueryClient.queryFileMap(QueryByFileCodes.builder().fileCodes(coverFileCodes).build()).getData();
-        rspPage.getData().getRows().stream().forEach(a->{
+        rspPage.getRows().stream().forEach(a->{
             if(coverFileMap != null && coverFileMap.containsKey(a.getCoverFileCodes())){
                 a.setCover(coverFileMap.get(a.getCoverFileCodes()).getMediumUrl());
             }
         });
         // 获取预览图片
-        List<String> previewFileCodes = rspPage.getData().getRows().stream()
+        List<String> previewFileCodes = rspPage.getRows().stream()
                 .flatMap(board -> board.getPreviews().stream())
                 .collect(Collectors.toList());
         Map<String, MediaFileResponse> previewFileMap = fileQueryClient.queryFileMap(QueryByFileCodes.builder().fileCodes(previewFileCodes).build()).getData();
-        rspPage.getData().getRows().stream().forEach(board -> {
+        rspPage.getRows().stream().forEach(board -> {
             List<String> previewUrls = board.getPreviews().stream()
                     .map(fileCode -> previewFileMap.get(fileCode).getMediumUrl())
                     .collect(Collectors.toList());
