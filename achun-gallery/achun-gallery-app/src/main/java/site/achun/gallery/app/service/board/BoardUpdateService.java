@@ -17,6 +17,7 @@ import site.achun.gallery.app.generator.service.BoardService;
 import site.achun.gallery.client.constant.GalleryRC;
 import site.achun.gallery.client.module.board.request.BoardCreateRequest;
 import site.achun.gallery.client.module.board.request.BoardUpdateRequest;
+import site.achun.gallery.client.module.board.request.CreateOrUpdateBoard;
 import site.achun.gallery.client.module.board.response.BoardResponse;
 import site.achun.gallery.client.module.pictures.request.QueryRecord;
 import site.achun.support.api.response.Rsp;
@@ -52,7 +53,7 @@ public class BoardUpdateService {
         return Rsp.success(null,"成功删除");
     }
 
-    public Rsp<BoardResponse> create(BoardCreateRequest createRequest) {
+    public Rsp<BoardResponse> create(CreateOrUpdateBoard createRequest) {
         Board board = new LambdaQueryChainWrapper<>(boardMapper)
                 .eq(Board::getName, createRequest.getName())
                 .eq(Board::getUserCode, createRequest.getUserCode())
@@ -66,7 +67,7 @@ public class BoardUpdateService {
         return Rsp.success(boardResponse);
     }
 
-    public Rsp<BoardResponse> updateBoard(BoardUpdateRequest updateRequest) {
+    public Rsp<BoardResponse> updateBoard(CreateOrUpdateBoard updateRequest) {
         Board board = boardService.getByCode(updateRequest.getBoardCode(),updateRequest.getUserCode());
         if(board == null){
             return Rsp.error(GalleryRC.NOT_EXISTS);
@@ -86,6 +87,14 @@ public class BoardUpdateService {
                 myBoardService.toBoardResponse(boardService.getByCode(updateRequest.getBoardCode())),
                 "修改成功"
         );
+    }
+
+    public Rsp<BoardResponse> createOrUpdate(CreateOrUpdateBoard request){
+        if(StrUtil.isNotEmpty(request.getBoardCode()) && boardService.getByCode(request.getBoardCode())!=null){
+            return updateBoard(request);
+        }else{
+            return create(request);
+        }
     }
 
 }

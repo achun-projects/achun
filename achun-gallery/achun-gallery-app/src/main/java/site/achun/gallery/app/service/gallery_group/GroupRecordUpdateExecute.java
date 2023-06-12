@@ -1,6 +1,7 @@
 package site.achun.gallery.app.service.gallery_group;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,18 +31,16 @@ public class GroupRecordUpdateExecute {
      * @param groupCodes
      * @param listCode
      */
-    public void createRecord(Set<String> groupCodes, String listCode){
-        if(CollUtil.isEmpty(groupCodes)){
+    public void createRecord(String groupCode, String listCode){
+        if(StrUtil.isEmpty(groupCode)){
             log.info("相册分组集合为空。listCode:{}",listCode);
             return;
         }
-        List<GalleryGroupRecord> groupRecordList = groupCodes.stream()
-                .map(groupCode -> GalleryGroupRecord.builder()
-                        .groupCode(groupCode)
-                        .listCode(listCode)
-                        .ctime(LocalDateTime.now())
-                        .build())
-                .collect(Collectors.toList());
-        groupRecordService.saveBatch(groupRecordList);
+        GalleryGroupRecord record = GalleryGroupRecord.builder()
+                .groupCode(groupCode)
+                .listCode(listCode)
+                .ctime(LocalDateTime.now())
+                .build();
+        groupRecordService.save(record);
     }
 }

@@ -19,6 +19,7 @@ import site.achun.gallery.app.service.gallery_group.MyGroupService;
 import site.achun.gallery.app.service.pictures.MyPictureService;
 import site.achun.gallery.app.utils.DateTimeUtil;
 import site.achun.gallery.client.module.board.request.BoardCreateRequest;
+import site.achun.gallery.client.module.board.request.CreateOrUpdateBoard;
 import site.achun.gallery.client.module.board.request.QueryBoardPage;
 import site.achun.gallery.client.module.board.response.BoardResponse;
 import site.achun.support.api.response.RspPage;
@@ -56,11 +57,11 @@ public class MyBoardService {
     }
 
 
-    public BoardResponse create(BoardCreateRequest createRequest) {
+    public BoardResponse create(CreateOrUpdateBoard createRequest) {
         Board board = toBoard(createRequest);
         boardService.save(board);
         // 保存分组信息
-        groupRecordUpdateExecute.createRecord(createRequest.getGroupCodes(),board.getBoardCode());
+        groupRecordUpdateExecute.createRecord(createRequest.getGroupCode(),board.getBoardCode());
         return toBoardResponse(board);
     }
 
@@ -128,7 +129,7 @@ public class MyBoardService {
         return boardResponse;
     }
 
-    private Board toBoard(BoardCreateRequest createRequest) {
+    private Board toBoard(CreateOrUpdateBoard createRequest) {
         return Board.builder()
                 .boardCode(UUID.randomUUID().toString().replace("-",""))
                 .description(createRequest.getDescription())

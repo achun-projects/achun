@@ -8,6 +8,7 @@ import site.achun.gallery.app.service.board.BoardUpdateService;
 import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.board.BoardUpdateClient;
 import site.achun.gallery.client.module.board.request.BoardCreateRequest;
+import site.achun.gallery.client.module.board.request.CreateOrUpdateBoard;
 import site.achun.gallery.client.module.board.request.RemoveBoardRequest;
 import site.achun.gallery.client.module.board.response.BoardResponse;
 import site.achun.support.api.response.Rsp;
@@ -26,8 +27,14 @@ public class BoardUpdateController implements BoardUpdateClient {
     }
 
     @Override
-    public Rsp<BoardResponse> createBoard(BoardCreateRequest createRequest) {
+    public Rsp<BoardResponse> createBoard(CreateOrUpdateBoard createRequest) {
         createRequest.setUserCode(UserInfo.getCode(createRequest::getUserCode));
         return boardUpdateService.create(createRequest);
+    }
+
+    @Override
+    public Rsp<BoardResponse> createOrUpdateBoard(CreateOrUpdateBoard request) {
+        request.setUserCode(UserInfo.getCode(request::getUserCode));
+        return boardUpdateService.createOrUpdate(request);
     }
 }

@@ -10,6 +10,7 @@ import site.achun.gallery.app.service.list.ListRandomQueryService;
 import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.album.request.CreateOrUpdateAlbum;
 import site.achun.gallery.client.module.board.request.BoardUpdateRequest;
+import site.achun.gallery.client.module.board.request.CreateOrUpdateBoard;
 import site.achun.gallery.client.module.list.ListQueryClient;
 import site.achun.gallery.client.module.list.request.ListType;
 import site.achun.gallery.client.module.list.request.UpdateCover;
@@ -43,7 +44,7 @@ public class ListQueryController implements ListQueryClient {
                     .userCode(userCode)
                     .build()));
         }else if(ListType.BOARD.getCode().equals(updateCover.getListType())){
-            return boardUpdateService.updateBoard(BoardUpdateRequest.builder()
+            return boardUpdateService.updateBoard(CreateOrUpdateBoard.builder()
                     .boardCode(updateCover.getCode())
                     .cover(updateCover.getCoverFileCode())
                     .build());
@@ -62,7 +63,7 @@ public class ListQueryController implements ListQueryClient {
                     .description(update.getDescription())
                     .build()));
         }else if(ListType.BOARD.getCode().equals(update.getListType())){
-            return boardUpdateService.updateBoard(BoardUpdateRequest.builder()
+            return boardUpdateService.updateBoard(CreateOrUpdateBoard.builder()
                     .boardCode(update.getCode())
                     .userCode(userCode)
                     .name(update.getName())
