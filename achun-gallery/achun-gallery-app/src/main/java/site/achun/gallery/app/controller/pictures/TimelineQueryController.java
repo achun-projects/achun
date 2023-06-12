@@ -33,8 +33,7 @@ public class TimelineQueryController implements TimelineQueryClient {
     private final MediaFileQueryClient fileQueryClient;
     @Override
     public Rsp<RspPage<Timeline>> queryTimeline(QueryTimelinePage query) {
-        Rsp<RspPage<TimelineResponse>> queryPageResponse = timelineQueryService.query(query);
-        RspPage<TimelineResponse> rspPage = queryPageResponse.getData();
+        RspPage<TimelineResponse> rspPage = timelineQueryService.query(query);
 
         List<String> fileCodes = rspPage.getRows().stream()
                 .flatMap(rsp -> rsp.getPictures().stream())
