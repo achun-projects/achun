@@ -35,6 +35,7 @@ public class BoardUpdateService {
     private final MyBoardService myBoardService;
     private final BoardService boardService;
     private final BoardRecordService boardRecordService;
+    private final BoardConvert boardConvert;
 
     public Rsp<Void> removeBoard(String boardCode) {
         // 检测相册是否为空
@@ -84,7 +85,7 @@ public class BoardUpdateService {
                 .set(Board::getRecordUtime,LocalDateTime.now())
                 .update();
         return Rsp.success(
-                myBoardService.toBoardResponse(boardService.getByCode(updateRequest.getBoardCode())),
+                boardConvert.toBoardResponse(boardService.getByCode(updateRequest.getBoardCode())),
                 "修改成功"
         );
     }

@@ -82,5 +82,5 @@ public class BoardResponse implements Serializable {
     // 文件数量
     private Integer fileCount;
     // 最近更新时间, 易读的
-    private String recentAtime;
+    private LocalDateTime recordUtime;
 }

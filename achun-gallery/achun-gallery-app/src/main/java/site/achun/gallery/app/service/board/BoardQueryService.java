@@ -1,10 +1,12 @@
 package site.achun.gallery.app.service.board;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.file.MediaFileQueryClient;
+import site.achun.file.client.module.file.request.QueryByFileCode;
 import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.gallery.app.generator.domain.GalleryGroup;
@@ -32,42 +34,28 @@ public class BoardQueryService {
     private final MyGalleryGroupService myGalleryGroupService;
     private final GroupConvertExecute groupConvertExecute;
 
+    private final BoardUpdateExecute boardUpdateExecute;
+
     public BoardResponse detail(String boardCode){
         return myBoardService.selectByBoardCode(boardCode);
     }
 
     public RspPage<BoardResponse> queryPage(QueryBoardPage query){
         // 获取相册分页数据
-       RspPage<BoardResponse> rspPage = myBoardService.queryPage(query);
+        RspPage<BoardResponse> rspPage = myBoardService.queryPage(query);
         if(CollectionUtil.isEmpty(rspPage.getRows())){
             return rspPage;
         }
-        // 获取相册封面
-        Set<String> coverFileCodes = rspPage.getRows().stream()
-                .map(BoardResponse::getCoverFileCodes)
-                .collect(Collectors.toSet());
-        if(CollectionUtil.isEmpty(coverFileCodes)){
-            return rspPage;
-        }
 
-
-        Map<String, MediaFileResponse> coverFileMap = fileQueryClient.queryFileMap(QueryByFileCodes.builder().fileCodes(coverFileCodes).build()).getData();
-        rspPage.getRows().stream().forEach(a->{
-            if(coverFileMap != null && coverFileMap.containsKey(a.getCoverFileCodes())){
-                a.setCover(coverFileMap.get(a.getCoverFileCodes()).getMediumUrl());
+        // 如果封面为空，随机设置默认封面
+        rspPage.getRows().stream().forEach(board->{
+            if(StrUtil.isBlank(board.getCover())){
+                String coverFileCode = boardUpdateExecute.setDefaultCover(board.getBoardCode());
+                MediaFileResponse file = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(coverFileCode).build()).getData();
+                board.setCover(file.getCover());
             }
         });
-        // 获取预览图片
-        List<String> previewFileCodes = rspPage.getRows().stream()
-                .flatMap(board -> board.getPreviews().stream())
-                .collect(Collectors.toList());
-        Map<String, MediaFileResponse> previewFileMap = fileQueryClient.queryFileMap(QueryByFileCodes.builder().fileCodes(previewFileCodes).build()).getData();
-        rspPage.getRows().stream().forEach(board -> {
-            List<String> previewUrls = board.getPreviews().stream()
-                    .map(fileCode -> previewFileMap.get(fileCode).getMediumUrl())
-                    .collect(Collectors.toList());
-            board.setPreviews(previewUrls);
-        });
+
         return rspPage;
     }
 
