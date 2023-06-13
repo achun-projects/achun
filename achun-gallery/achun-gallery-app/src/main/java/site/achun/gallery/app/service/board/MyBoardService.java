@@ -18,7 +18,6 @@ import site.achun.gallery.app.service.gallery_group.MyGalleryGroupService;
 import site.achun.gallery.app.service.gallery_group.MyGroupService;
 import site.achun.gallery.app.service.pictures.MyPictureService;
 import site.achun.gallery.app.utils.DateTimeUtil;
-import site.achun.gallery.client.module.board.request.BoardCreateRequest;
 import site.achun.gallery.client.module.board.request.CreateOrUpdateBoard;
 import site.achun.gallery.client.module.board.request.QueryBoardPage;
 import site.achun.gallery.client.module.board.response.BoardResponse;
