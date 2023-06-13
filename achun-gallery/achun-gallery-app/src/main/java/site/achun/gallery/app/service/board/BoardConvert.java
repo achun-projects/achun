@@ -120,12 +120,21 @@ public class BoardConvert {
                 .map(BoardRecord::getFileCode)
                 .collect(Collectors.toSet());
         Map<String, MediaFileResponse> fileMap = fileQueryClient.queryFileMap(QueryByFileCodes.builder().fileCodes(fileCodes).build()).getData();
-
-        Map<String, List<String>> groups = records.stream()
-                .collect(Collectors.groupingBy(
-                        BoardRecord::getBoardCode,
-                        Collectors.mapping(v->fileMap.containsKey(v.getFileCode())?fileMap.get(v.getFileCode()).getCover():null,Collectors.toList())
-                ));
-        return groups;
+        
+        Map<String,List<String>> result = new HashMap<>();
+        for (BoardRecord record : records) {
+            if(fileMap.containsKey(record.getFileCode())){
+                if(result.containsKey(record.getBoardCode())){
+                    result.get(record.getBoardCode()).add(fileMap.get(record.getFileCode()).getCover());
+                }else{
+                    List<String> files = new ArrayList<>();
+                    files.add(fileMap.get(record.getFileCode()).getCover());
+                    result.put(record.getBoardCode(),files);
+                }
+            }else{
+                log.info("fileCode not found.fileCode:{}",record.getFileCode());
+            }
+        }
+        return result;
     }
 }
