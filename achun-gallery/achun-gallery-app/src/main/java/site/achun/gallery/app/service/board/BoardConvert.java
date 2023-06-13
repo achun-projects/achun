@@ -110,7 +110,7 @@ public class BoardConvert {
 
     private Map<String,List<String>> queryBoardsPreviews(Collection<String> boardCodes){
         List<BoardRecord> records = boardCodes.stream()
-                .flatMap(boardCode -> boardRecordQueryExecute.randomQuery(boardCode, 13).stream())
+                .flatMap(boardCode -> boardRecordQueryExecute.randomQuery(boardCode, 3).stream())
                 .toList();
 
         if(CollUtil.isEmpty(records)){

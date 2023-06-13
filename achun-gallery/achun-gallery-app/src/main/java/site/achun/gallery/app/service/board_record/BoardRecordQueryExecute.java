@@ -3,6 +3,7 @@ package site.achun.gallery.app.service.board_record;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,11 +38,13 @@ public class BoardRecordQueryExecute {
         if(count == null || count == 0){
             return new ArrayList<>();
         }
-        log.info("size:{},count:{}",size,count);
         long random = count <= size ? 0 : RandomUtil.randomLong(count - size);
-        return boardRecordService.lambdaQuery()
-                .eq(BoardRecord::getBoardCode,boardCode)
-                .page(Page.of(random,size))
-                .getRecords();
+        List<BoardRecord> result = boardRecordService.lambdaQuery()
+                .select(BoardRecord::getBoardCode, BoardRecord::getFileCode)
+                .eq(BoardRecord::getBoardCode, boardCode)
+                .last("limit " + random + "," + size)
+                .list();
+        log.info("randomQuery-boardCode:{},files:{},size:{},count:{},random:{}",boardCode, JSON.toJSONString(result),size,count,random);
+        return result;
     }
 }
