@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.enums.Type;
 import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.file.client.module.file.response.detail.Image;
 import site.achun.file.client.module.file.response.detail.Video;
 import site.achun.gallery.app.generator.domain.AlbumRecord;
@@ -27,7 +28,7 @@ public class PicturesUpdateService {
     private final AlbumService albumService;
     private final AlbumRecordMapper albumRecordMapper;
 
-    public void update(FileInfoResponse fileInfo){
+    public void update(MediaFileResponse fileInfo){
         // 保存同步文件
         Pictures pic = new Pictures();
         pic.setFileCode(fileInfo.getFileCode());
@@ -36,27 +37,15 @@ public class PicturesUpdateService {
         pic.setSuffix(fileInfo.getSuffix());
         pic.setSize(fileInfo.getSize());
         pic.setDeleted(Deleted.NO.getStatus());
-        Type type = Type.parse(fileInfo.getType()).get();
-        switch (type){
-            case IMAGE:
-                Image image = BeanUtil.toBean(fileInfo.getDetail(),Image.class);
-                pic.setWidth(image.getWidth());
-                pic.setHeight(image.getHeight());
-                pic.setWh(image.getWh());
-                break;
-            case VIDEO:
-                Video video = BeanUtil.toBean(fileInfo.getDetail(),Video.class);
-                pic.setWidth(video.getWidth());
-                pic.setHeight(video.getHeight());
-                pic.setWh(video.getWh());
-                pic.setDuration(video.getDuration());
-        }
+        pic.setWidth(fileInfo.getWidth());
+        pic.setHeight(fileInfo.getHeight());
+        pic.setWh(fileInfo.getWh());
+        pic.setDuration(fileInfo.getDuration());
         pic.setAtime(LocalDateTime.now());
         pic.setCtime(LocalDateTime.now());
         pic.setUtime(LocalDateTime.now());
         int result = picturesMapper.replaceInto(pic);
         log.info("fileCode:{},replaceInto picture:{}",pic.getFileCode(),result);
-
         // 创建关联关系
         if(StrUtil.isNotBlank(fileInfo.getThirdId())
                 && !fileInfo.getThirdId().equals("-1")
