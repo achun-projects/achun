@@ -53,7 +53,11 @@ public class BoardQueryService {
                 String coverFileCode = boardUpdateExecute.setDefaultCover(board.getBoardCode());
                 if(coverFileCode!=null){
                     MediaFileResponse file = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(coverFileCode).build()).getData();
-                    board.setCover(file.getCover());
+                    if(file!=null){
+                        board.setCover(file.getCover());
+                    }else{
+                        log.info("file not found,fileCode:{}",coverFileCode);
+                    }
                 }
             }
         });

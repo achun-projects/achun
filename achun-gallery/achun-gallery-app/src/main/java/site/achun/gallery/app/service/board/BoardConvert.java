@@ -110,7 +110,7 @@ public class BoardConvert {
 
     private Map<String,List<String>> queryBoardsPreviews(Collection<String> boardCodes){
         List<BoardRecord> records = boardCodes.stream()
-                .flatMap(boardCode -> boardRecordQueryExecute.randomQuery(boardCode, 3).stream())
+                .flatMap(boardCode -> boardRecordQueryExecute.randomQuery(boardCode, 13).stream())
                 .toList();
 
         if(CollUtil.isEmpty(records)){
@@ -120,7 +120,7 @@ public class BoardConvert {
                 .map(BoardRecord::getFileCode)
                 .collect(Collectors.toSet());
         Map<String, MediaFileResponse> fileMap = fileQueryClient.queryFileMap(QueryByFileCodes.builder().fileCodes(fileCodes).build()).getData();
-        
+
         Map<String,List<String>> result = new HashMap<>();
         for (BoardRecord record : records) {
             if(fileMap.containsKey(record.getFileCode())){

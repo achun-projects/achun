@@ -37,8 +37,8 @@ public class BoardRecordQueryExecute {
         if(count == null || count == 0){
             return new ArrayList<>();
         }
-        size = count < size ? count : size;
-        long random = RandomUtil.randomLong(count - size);
+        log.info("size:{},count:{}",size,count);
+        long random = count <= size ? 0 : RandomUtil.randomLong(count - size);
         return boardRecordService.lambdaQuery()
                 .eq(BoardRecord::getBoardCode,boardCode)
                 .page(Page.of(random,size))
