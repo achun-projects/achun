@@ -51,8 +51,10 @@ public class BoardQueryService {
         rspPage.getRows().stream().forEach(board->{
             if(StrUtil.isBlank(board.getCover())){
                 String coverFileCode = boardUpdateExecute.setDefaultCover(board.getBoardCode());
-                MediaFileResponse file = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(coverFileCode).build()).getData();
-                board.setCover(file.getCover());
+                if(coverFileCode!=null){
+                    MediaFileResponse file = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(coverFileCode).build()).getData();
+                    board.setCover(file.getCover());
+                }
             }
         });
 

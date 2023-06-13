@@ -22,7 +22,7 @@ public class BoardRecordQueryExecute {
 
     public BoardRecord randomQueryOne(String boardCode){
         List<BoardRecord> result = randomQuery(boardCode, 1);
-        if(result == null) return null;
+        if(result == null||CollUtil.isEmpty(result)) return null;
         return result.get(0);
     }
 
@@ -35,7 +35,7 @@ public class BoardRecordQueryExecute {
                 .eq(BoardRecord::getBoardCode, boardCode)
                 .count();
         if(count == null || count == 0){
-            return null;
+            return new ArrayList<>();
         }
         size = count < size ? count : size;
         long random = RandomUtil.randomLong(count - size);
