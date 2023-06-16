@@ -6,34 +6,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.gallery.app.service.ablum.AlbumUpdateService;
 import site.achun.gallery.app.service.board.BoardUpdateService;
-import site.achun.gallery.app.service.list.ListRandomQueryService;
 import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.album.request.CreateOrUpdateAlbum;
-import site.achun.gallery.client.module.board.request.BoardUpdateRequest;
 import site.achun.gallery.client.module.board.request.CreateOrUpdateBoard;
-import site.achun.gallery.client.module.list.ListQueryClient;
+import site.achun.gallery.client.module.list.GalleryListUpdateClient;
 import site.achun.gallery.client.module.list.request.ListType;
 import site.achun.gallery.client.module.list.request.UpdateCover;
 import site.achun.gallery.client.module.list.request.UpdateListBaseInfo;
 import site.achun.support.api.response.Rsp;
 
-import java.util.Collection;
-
 @Slf4j
-@Tag(name = "列表查询")
+@Tag(name = "列表更改")
 @RestController
 @RequiredArgsConstructor
-public class ListQueryController implements ListQueryClient {
+public class GalleryListUpdateController implements GalleryListUpdateClient {
 
-    private final ListRandomQueryService listRandomQueryService;
     private final AlbumUpdateService albumUpdateService;
     private final BoardUpdateService boardUpdateService;
-
-    @Override
-    public String randomQuery(Collection<String> listCodes) {
-        return listRandomQueryService.randomQuery(listCodes);
-    }
-
     @Override
     public Rsp updateCover(UpdateCover updateCover) {
         String userCode = UserInfo.getCode();

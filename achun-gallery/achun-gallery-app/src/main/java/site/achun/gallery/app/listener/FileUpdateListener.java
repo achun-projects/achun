@@ -21,7 +21,7 @@ public class FileUpdateListener {
     private final PicturesUpdateService picturesUpdateService;
 
     private final static String LISTEN_BUCKETS = "10011,10012,10013,10014";
-    @RabbitListener(queues = "file.update.queue")
+//    @RabbitListener(queues = "file.update.queue")
     public void whenFileUpdate(String fileCode){
         log.info("fileUpdate :{}",fileCode);
         MediaFileResponse file = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(fileCode).build()).getData();

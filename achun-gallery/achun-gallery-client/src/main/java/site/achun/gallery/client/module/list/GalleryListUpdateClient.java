@@ -8,13 +8,8 @@ import site.achun.gallery.client.module.list.request.UpdateCover;
 import site.achun.gallery.client.module.list.request.UpdateListBaseInfo;
 import site.achun.support.api.response.Rsp;
 
-import java.util.Collection;
-
-@FeignClient(name = "achun-gallery-app", contextId = "ListQueryClient")
-public interface ListQueryClient {
-    @Operation(summary = "随机查询一条记录")
-    @PostMapping("/gallery/list/random-query")
-    String randomQuery(Collection<String> listCodes);
+@FeignClient(name = "achun-gallery-app", contextId = "GalleryListUpdateClient")
+public interface GalleryListUpdateClient {
 
     @Operation(summary = "设置封面")
     @PostMapping("/gallery/list/update-cover")
@@ -23,5 +18,4 @@ public interface ListQueryClient {
     @Operation(summary = "修改名称和描述")
     @PostMapping("/gallery/list/update-name-desc")
     Rsp updateListBaseInfo(@RequestBody UpdateListBaseInfo update);
-
 }
