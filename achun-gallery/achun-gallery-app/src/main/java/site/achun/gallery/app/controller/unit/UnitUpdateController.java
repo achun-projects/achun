@@ -8,11 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.gallery.app.generator.domain.FileSet;
 import site.achun.gallery.app.generator.service.FileSetService;
-import site.achun.gallery.app.service.unit.FileSetQueryExecute;
+import site.achun.gallery.app.service.unit.PicUnitQueryExecute;
+import site.achun.gallery.app.service.unit.PicUnitUpdateExecute;
 import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.fileset.request.UpdateFileSet;
 import site.achun.gallery.client.module.fileset.response.FileSetResponse;
 import site.achun.gallery.client.module.unit.PicUnitUpdateClient;
+import site.achun.gallery.client.module.unit.request.CreateOrUpdateUnit;
 import site.achun.gallery.client.module.unit.request.UpdateFileUnit;
 import site.achun.gallery.client.module.unit.response.FileUnitResponse;
 import site.achun.support.api.enums.Deleted;
@@ -27,7 +29,8 @@ import java.time.LocalDateTime;
 public class UnitUpdateController implements PicUnitUpdateClient {
 
     private final FileSetService fileSetService;
-    private final FileSetQueryExecute fileSetQueryExecute;
+    private final PicUnitQueryExecute picUnitQueryExecute;
+    private final PicUnitUpdateExecute picUnitUpdateExecute;
 
     @Override
     public Rsp<FileUnitResponse> updateUnit(UpdateFileUnit update) {
@@ -56,6 +59,12 @@ public class UnitUpdateController implements PicUnitUpdateClient {
                 .eq(FileSet::getCode,request.getSetCode())
                 .update();
         // TODO 更新文件分组的标签
-        return Rsp.success(fileSetQueryExecute.queryBySetCode(request.getSetCode()));
+        return Rsp.success(picUnitQueryExecute.queryByUnitCode(request.getSetCode()));
+    }
+
+    @Override
+    public Rsp<FileSetResponse> createOrUpdate(CreateOrUpdateUnit req) {
+        String unitCode = picUnitUpdateExecute.createOrUpdate(req);
+        return Rsp.success(picUnitQueryExecute.queryByUnitCode(unitCode));
     }
 }

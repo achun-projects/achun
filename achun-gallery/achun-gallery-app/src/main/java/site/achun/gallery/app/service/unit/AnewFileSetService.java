@@ -30,7 +30,7 @@ public class AnewFileSetService {
 
     private final FileSetService fileSetService;
     private final AlbumRecordService albumRecordService;
-    private final FileSetQueryExecute fileSetQueryExecute;
+    private final PicUnitQueryExecute fileSetQueryExecute;
     private final PicturesService picturesService;
     private final AlbumService albumService;
     public FileSetResponse anewFileset(AnewFileSet anewFileset) {
@@ -59,7 +59,7 @@ public class AnewFileSetService {
             albumRecordService.save(record);
             albumService.updateRecordUtime(anewFileset.getAlbumCode());
             // 判断之前的分组是否有为空的，删除。
-            return fileSetQueryExecute.queryBySetCode(anewFileset.getSetCode());
+            return fileSetQueryExecute.queryByUnitCode(anewFileset.getSetCode());
         }
     }
 }

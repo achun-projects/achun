@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
-import site.achun.gallery.app.service.unit.FileSetQueryExecute;
+import site.achun.gallery.app.service.unit.PicUnitQueryExecute;
 import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.fileset.request.QueryFileSet;
 import site.achun.gallery.client.module.fileset.response.FileSetResponse;
@@ -17,7 +17,7 @@ import site.achun.support.api.response.Rsp;
 @RequiredArgsConstructor
 public class UnitQueryController implements PicUnitQueryClient {
 
-    private final FileSetQueryExecute fileSetQueryExecute;
+    private final PicUnitQueryExecute fileSetQueryExecute;
 
     @Override
     public Rsp<FileSetResponse> queryFileSet(QueryFileSet request) {

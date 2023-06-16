@@ -14,7 +14,7 @@ import site.achun.support.api.exception.RspException;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class FileSetQueryExecute {
+public class PicUnitQueryExecute {
 
     private final FileSetService fileSetService;
 
@@ -33,9 +33,9 @@ public class FileSetQueryExecute {
     }
 
     // 根据setCode查询文件分组
-    public FileSetResponse queryBySetCode(String setCode){
+    public FileSetResponse queryByUnitCode(String unitCode){
         FileSet fileset = fileSetService.lambdaQuery()
-                .eq(FileSet::getCode,setCode)
+                .eq(FileSet::getCode,unitCode)
                 .one();
         if(fileset == null){
             throw new RspException(GalleryRC.DATA_IS_NULL,"文件分组不存在");

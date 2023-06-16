@@ -4,8 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import site.achun.gallery.client.module.fileset.request.CreateFileSet;
 import site.achun.gallery.client.module.fileset.request.UpdateFileSet;
 import site.achun.gallery.client.module.fileset.response.FileSetResponse;
+import site.achun.gallery.client.module.unit.request.CreateOrUpdateUnit;
 import site.achun.gallery.client.module.unit.request.UpdateFileUnit;
 import site.achun.gallery.client.module.unit.response.FileUnitResponse;
 import site.achun.support.api.response.Rsp;
@@ -20,4 +22,8 @@ public interface PicUnitUpdateClient {
     @Operation(summary = "更新Unit")
     @PostMapping("/gallery/fileset/update-fileset")
     Rsp<FileSetResponse> update(@RequestBody UpdateFileSet request);
+
+    @Operation(summary = "创建或更新unit")
+    @PostMapping("/gallery/unit/create-or-update-unit")
+    Rsp<FileSetResponse> createOrUpdate(@RequestBody CreateOrUpdateUnit req);
 }
