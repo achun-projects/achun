@@ -15,8 +15,12 @@ public class FileRemoveListener {
 
     @RabbitListener(queues = "file.remove.queue")
     public void whenFileUpdate(String fileCode){
-        log.info("fileRemove :{}",fileCode);
-        fileDeleteService.deleteFile(fileCode);
+        try{
+            log.info("fileRemove :{}",fileCode);
+            fileDeleteService.deleteFile(fileCode);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
 }
