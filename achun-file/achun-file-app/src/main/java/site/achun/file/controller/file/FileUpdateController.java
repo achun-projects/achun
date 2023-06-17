@@ -41,7 +41,7 @@ public class FileUpdateController implements FileUpdateClient {
     @Override
     public Rsp<FileLocalInfoResponse> updateFileInfo(UpdateFileRequest request) {
         fileUpdateService.updateByCode(request);
-        fileUpdateSender.sendMessage(request);
+        fileUpdateSender.whenFileUpdate(request);
         return Rsp.success(null);
     }
 
@@ -52,6 +52,7 @@ public class FileUpdateController implements FileUpdateClient {
                 .set(FileInfo::getUtime, LocalDateTime.now())
                 .set(FileInfo::getDeleted, Deleted.YES.getStatus())
                 .update();
+        fileUpdateSender.whenFileRemove(request.getFileCode());
         return Rsp.success(success);
     }
 
@@ -62,6 +63,7 @@ public class FileUpdateController implements FileUpdateClient {
                 .set(FileInfo::getUtime,LocalDateTime.now())
                 .set(FileInfo::getDeleted, Deleted.YES.getStatus())
                 .update();
+        request.getFileCodes().stream().forEach(fileCode->fileUpdateSender.whenFileRemove(fileCode));
         return Rsp.success(success);
     }
 }

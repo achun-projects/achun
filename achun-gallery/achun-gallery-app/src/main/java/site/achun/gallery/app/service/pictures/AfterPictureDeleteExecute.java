@@ -32,8 +32,8 @@ public class AfterPictureDeleteExecute {
     private final FileSetService fileSetService;
     private final AlbumRecordService albumRecordService;
     @Async
-    public void execute(Collection<String> fileCodes,Collection<String> fileSetCodes){
-        log.info("开始异步删除文件相关记录,fileCodes:{},fileSetCodes:{}",fileCodes,fileSetCodes);
+    public void execute(Collection<String> fileCodes,Collection<String> fileUnitCodes){
+        log.info("开始异步删除文件相关记录,fileCodes:{},fileSetCodes:{}",fileCodes,fileUnitCodes);
         // # 删除画板关联关系
         boardRecordService.lambdaUpdate()
                 .in(BoardRecord::getFileCode,fileCodes)
@@ -41,7 +41,7 @@ public class AfterPictureDeleteExecute {
         // # 删除空的分组记录，删除空的相册分组记录
         // 分析哪些分组编码对应的记录空了
         List<Pictures> picturesBySetCode = picturesService.lambdaQuery()
-                .in(Pictures::getSetCode, fileSetCodes)
+                .in(Pictures::getSetCode, fileUnitCodes)
                 .list();
         Map<String,Pictures> picturesMap = new HashMap<>();
         if(CollUtil.isNotEmpty(picturesBySetCode)){
@@ -49,7 +49,7 @@ public class AfterPictureDeleteExecute {
                     .collect(Collectors.toMap(Pictures::getSetCode,v->v,(v1,v2)->v1));
         }
         Map<String, Pictures> finalPicturesMap = picturesMap;
-        Set<String> deleteSetCodes = fileSetCodes.stream()
+        Set<String> deleteSetCodes = fileUnitCodes.stream()
                 .filter(setCode -> !finalPicturesMap.containsKey(setCode))
                 .collect(Collectors.toSet());
         // 删除对应记录

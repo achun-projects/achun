@@ -35,10 +35,10 @@ public class PictureUpdateService {
                 .in(Pictures::getFileCode,fileCodes)
                 .remove();
         // 异步清除脏数据
-        Set<String> fileSetCodes = pictures.stream()
+        Set<String> fileUnitCodes = pictures.stream()
                 .map(Pictures::getSetCode)
                 .collect(Collectors.toSet());
-        afterPictureDeleteExecute.execute(fileCodes,fileSetCodes);
+        afterPictureDeleteExecute.execute(fileCodes,fileUnitCodes);
         return Rsp.success(pictures.size(),"删除成功");
     }
 }
