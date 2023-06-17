@@ -44,7 +44,12 @@ public class FileDeleteService {
         if(smallFile.exists()) smallFile.delete();
         if(mediumFile.exists()) mediumFile.delete();
 
-        Boolean result = fileUpdateClient.realDeleteFileInfo(DeleteFileRequest.builder().fileCode(fileCode).build()).getData();
-        log.info("待删除文件：{},删除结果：{}",fileCode,result);
+        var resultRsp = fileUpdateClient.realDeleteFileInfo(DeleteFileRequest.builder().fileCode(fileCode).build());
+        if(resultRsp.hasData() && resultRsp.getData()){
+            log.info("待删除文件：{},删除结果：{}",fileCode,resultRsp.getData());
+        }else{
+            log.info("删除文件调用file-service真实删除时出现异常,rsp:{}",JSON.toJSONString(resultRsp));
+        }
+
     }
 }
