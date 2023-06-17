@@ -34,6 +34,9 @@ public class FileConvert {
     private final StorageConvert storageConvert;
 
     public FileLocalInfoResponse toFileLocalInfoResponse(FileInfo file){
+        if(file == null){
+            return null;
+        }
         return FileLocalInfoResponse.builder()
                 .cover(file.getCover())
                 .storageCode(file.getStorageCode())
