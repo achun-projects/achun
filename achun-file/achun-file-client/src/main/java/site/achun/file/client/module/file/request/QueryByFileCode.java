@@ -15,4 +15,7 @@ public class QueryByFileCode implements Serializable {
 
     @Schema(description = "文件唯一标识")
     private String fileCode;
+
+    @Schema(description = "是否包含删除文件")
+    private Boolean containDeleted = false;
 }

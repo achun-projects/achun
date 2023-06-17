@@ -28,7 +28,7 @@ public class FileQueryController implements FileQueryClient {
     private final FileQueryService fileQueryService;
     @Override
     public Rsp<FileInfoResponse> queryFile(QueryByFileCode queryByFileCode) {
-        return Rsp.success(fileQueryService.queryByCode(queryByFileCode.getFileCode()));
+        return Rsp.success(fileQueryService.queryByCode(queryByFileCode));
     }
 
     @Override

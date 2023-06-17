@@ -29,7 +29,7 @@ public class MediaFileQueryController implements MediaFileQueryClient {
     private final MediaFileQueryService fileQueryService;
     @Override
     public Rsp<MediaFileResponse> queryFile(QueryByFileCode queryByFileCode) {
-        return Rsp.success(fileQueryService.queryByCode(queryByFileCode.getFileCode()));
+        return Rsp.success(fileQueryService.queryByCode(queryByFileCode));
     }
 
     @Override

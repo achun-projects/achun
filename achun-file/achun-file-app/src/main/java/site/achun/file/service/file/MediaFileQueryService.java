@@ -3,6 +3,7 @@ package site.achun.file.service.file;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.module.file.request.QueryByFileCode;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.service.FileInfoService;
@@ -20,8 +21,8 @@ public class MediaFileQueryService {
     private final FileInfoService fileInfoService;
     private final FileConvert fileConvert;
 
-    public MediaFileResponse queryByCode(String fileCode){
-        return fileConvert.toMediaFileResponse(fileInfoService.getByCode(fileCode));
+    public MediaFileResponse queryByCode(QueryByFileCode query){
+        return fileConvert.toMediaFileResponse(fileInfoService.getBy(query));
     }
 
     public List<MediaFileResponse> queryByCodes(Collection<String> fileCodes){

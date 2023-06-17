@@ -1,5 +1,6 @@
 package site.achun.file.generator.service;
 
+import site.achun.file.client.module.file.request.QueryByFileCode;
 import site.achun.file.generator.domain.FileInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import site.achun.support.api.enums.Deleted;
@@ -18,6 +19,14 @@ public interface FileInfoService extends IService<FileInfo> {
         return this.lambdaQuery()
                 .eq(FileInfo::getUnitCode,unitCode)
                 .list();
+    }
+
+    default FileInfo getBy(QueryByFileCode query){
+        boolean containDeleted = query.getContainDeleted() != null ? query.getContainDeleted() : false;
+        return this.lambdaQuery()
+                .eq(FileInfo::getFileCode, query.getFileCode())
+                .eq(!containDeleted,FileInfo::getDeleted, Deleted.NO.getStatus())
+                .one();
     }
     default FileInfo getByCode(String fileCode){
         return this.lambdaQuery()

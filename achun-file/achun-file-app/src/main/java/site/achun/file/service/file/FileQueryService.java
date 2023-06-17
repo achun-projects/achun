@@ -26,8 +26,8 @@ public class FileQueryService {
     private final FileInfoService fileInfoService;
     private final FileConvert fileConvert;
 
-    public FileInfoResponse queryByCode(String fileCode){
-        return fileConvert.toFileResponse(fileInfoService.getByCode(fileCode));
+    public FileInfoResponse queryByCode(QueryByFileCode query){
+        return fileConvert.toFileResponse(fileInfoService.getBy(query));
     }
 
     public List<FileInfoResponse> queryByCodes(Collection<String> fileCodes){
@@ -59,7 +59,7 @@ public class FileQueryService {
     }
 
     public FileLocalInfoResponse queryFileLocalInfo(QueryByFileCode query){
-        FileInfo fileInfo = fileInfoService.getByCode(query.getFileCode());
+        FileInfo fileInfo = fileInfoService.getBy(query);
         if(fileInfo==null){
             return null;
         }
