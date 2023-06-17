@@ -60,6 +60,9 @@ public class FileQueryService {
 
     public FileLocalInfoResponse queryFileLocalInfo(QueryByFileCode query){
         FileInfo fileInfo = fileInfoService.getByCode(query.getFileCode());
+        if(fileInfo==null){
+            return null;
+        }
         return fileConvert.toFileLocalInfoResponse(fileInfo);
     }
 
