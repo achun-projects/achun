@@ -57,6 +57,15 @@ public class FileUpdateController implements FileUpdateClient {
     }
 
     @Override
+    public Rsp<Boolean> realDeleteFileInfo(DeleteFileRequest request) {
+        boolean result = fileInfoService.lambdaUpdate()
+                .eq(FileInfo::getFileCode, request.getFileCode())
+                .remove();
+        log.info("物理删除文件：{},result:{}",request.getFileCode(),result);
+        return Rsp.success(Boolean.TRUE);
+    }
+
+    @Override
     public Rsp<Boolean> deleteFileInfos(DeleteFileRequest request) {
         boolean success = fileInfoService.lambdaUpdate()
                 .in(FileInfo::getFileCode, request.getFileCodes())

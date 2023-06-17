@@ -29,6 +29,9 @@ public interface FileUpdateClient {
     @PostMapping("/file/update/delete-file-by-code")
     Rsp<Boolean> deleteFileInfo(@RequestBody DeleteFileRequest request);
 
+    @Operation(summary = "物理删除文件")
+    @PostMapping("/file/update/real-delete-file-by-code")
+    Rsp<Boolean> realDeleteFileInfo(@RequestBody DeleteFileRequest request);
 
     @Operation(summary = "批量逻辑删除文件")
     @PostMapping("/file/update/delete-file-by-codes")
