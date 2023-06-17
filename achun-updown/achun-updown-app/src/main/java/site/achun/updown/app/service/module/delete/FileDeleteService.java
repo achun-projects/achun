@@ -28,7 +28,11 @@ public class FileDeleteService {
             log.info("deleteFile fileCode is Blank");
             return;
         }
-        Rsp<FileLocalInfoResponse> fileInfoRsp = fileQueryClient.queryFileLocalInfo(QueryByFileCode.builder().fileCode(fileCode).build());
+        QueryByFileCode queryFile = QueryByFileCode.builder()
+                .fileCode(fileCode)
+                .containDeleted(true)
+                .build();
+        Rsp<FileLocalInfoResponse> fileInfoRsp = fileQueryClient.queryFileLocalInfo(queryFile);
         if(!fileInfoRsp.hasData()){
             log.info("deleteFile fileCode查询不到数据，fileCode:{},fileInfoRsp:{}",fileCode, JSON.toJSONString(fileInfoRsp));
             return;
