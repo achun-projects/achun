@@ -1,5 +1,6 @@
 package site.achun.user.client.module.data.response;
 
+import com.alibaba.fastjson2.JSONObject;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,5 +16,5 @@ public class UserDataResponse implements Serializable {
     private String dataCode;
 
     private String key;
-    private Object value;
+    private JSONObject value;
 }

@@ -1,4 +1,4 @@
-package site.achun.gallery.app.utils;
+package site.achun.user.app.utils;
 import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
