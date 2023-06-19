@@ -12,7 +12,7 @@ import site.achun.user.client.module.data.response.UserDataResponse;
 @FeignClient(name = "achun-user-app", contextId = "UserDataUpdateClient")
 public interface UserDataUpdateClient {
 
-    @Operation(summary = "查询用户数据")
+    @Operation(summary = "更新用户数据")
     @PostMapping("/user/data/update-user-data")
     Rsp<UserDataResponse> updateUserData(@RequestBody UpdateUserData update);
 }
