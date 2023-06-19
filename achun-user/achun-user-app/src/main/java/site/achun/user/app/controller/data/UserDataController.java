@@ -16,6 +16,8 @@ import site.achun.user.client.module.data.request.QueryUserData;
 import site.achun.user.client.module.data.request.UpdateUserData;
 import site.achun.user.client.module.data.response.UserDataResponse;
 
+import java.util.concurrent.TimeUnit;
+
 @Slf4j
 @Tag(name = "用户数据")
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ import site.achun.user.client.module.data.response.UserDataResponse;
 public class UserDataController implements UserDataQueryClient, UserDataUpdateClient {
 
     private final StringRedisTemplate redisTemplate;
+
     @Override
     public Rsp<UserDataResponse> queryUserData(QueryUserData query) {
         query.setUserCode(UserInfo.getCode(query::getUserCode));
@@ -30,7 +33,7 @@ public class UserDataController implements UserDataQueryClient, UserDataUpdateCl
         if(!redisTemplate.hasKey(key)){
             return Rsp.error("no data");
         }
-        String value = redisTemplate.opsForValue().get(key);
+        String value = redisTemplate.opsForValue().getAndExpire(key,100,TimeUnit.DAYS);
         UserDataResponse response = BeanUtil.toBean(query, UserDataResponse.class);
         response.setValue(JSONObject.parseObject(value));
         return Rsp.success(response);
@@ -41,7 +44,7 @@ public class UserDataController implements UserDataQueryClient, UserDataUpdateCl
         update.setUserCode(UserInfo.getCode(update::getUserCode));
         String key = String.format("USER:DATA:%s:%s",update.getUserCode(),update.getKey());
 
-        redisTemplate.opsForValue().set(key, JSON.toJSONString(update.getValue()));
+        redisTemplate.opsForValue().set(key, JSON.toJSONString(update.getValue()),100, TimeUnit.DAYS);
         UserDataResponse response = BeanUtil.toBean(update, UserDataResponse.class);
         return Rsp.success(response);
     }
