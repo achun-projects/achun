@@ -110,6 +110,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>achun-user-app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
