@@ -23,6 +23,9 @@ public class GatewayConfig {
                 .route("file", r -> r.path("/file/**")
                         .filters(f -> f.filter(authFilter))
                         .uri("lb://achun-file-app"))
+                .route("user", r -> r.path("/user/**")
+                        .filters(f -> f.filter(authFilter))
+                        .uri("lb://achun-user-app"))
                 .build();
     }
 }
