@@ -1,0 +1,72 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.6)
+
+2023-05-19T07:43:20.338Z  INFO 304493 --- [           main] site.achun.file.FileAppApplication       : Starting FileAppApplication v0.0.1-SNAPSHOT using Java 17.0.7 with PID 304493 (/home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar started by root in /home/luokong/workspace/achun/achun-file/achun-file-app)
+2023-05-19T07:43:20.350Z  INFO 304493 --- [           main] site.achun.file.FileAppApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-05-19T07:43:23.457Z  INFO 304493 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=64bfd613-ed34-3689-be57-5b1c28e3b5fc
+2023-05-19T07:43:23.675Z  INFO 304493 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'site.achun.file.DemoFeignFacade' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-19T07:43:23.678Z  INFO 304493 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'site.achun.file.client.module.file.FileQueryClient' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-19T07:43:23.680Z  INFO 304493 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'site.achun.file.client.module.file.FileQueryV4Client' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-19T07:43:23.686Z  INFO 304493 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'site.achun.file.client.module.file.FileCreateV4Client' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-19T07:43:24.020Z  INFO 304493 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-19T07:43:24.042Z  INFO 304493 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-19T07:43:24.045Z  INFO 304493 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-19T07:43:24.572Z  INFO 304493 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9502 (http)
+2023-05-19T07:43:24.596Z  INFO 304493 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-05-19T07:43:24.597Z  INFO 304493 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-05-19T07:43:24.804Z  INFO 304493 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-05-19T07:43:24.807Z  INFO 304493 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4300 ms
+2023-05-19T07:43:25.832Z  INFO 304493 --- [           main] o.s.c.openfeign.FeignClientFactoryBean   : For 'achun-provider' URL not provided. Will try picking an instance via load-balancing.
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+Registered plugin: 'com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor@68105edc'
+Parsed mapper file: 'URL [jar:file:/home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar!/BOOT-INF/classes!/mapper/FileImagePhashMapper.xml]'
+Parsed mapper file: 'URL [jar:file:/home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar!/BOOT-INF/classes!/mapper/BucketMapper.xml]'
+Parsed mapper file: 'URL [jar:file:/home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar!/BOOT-INF/classes!/mapper/FileGroupTagMapper.xml]'
+Parsed mapper file: 'URL [jar:file:/home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar!/BOOT-INF/classes!/mapper/FileDownloadRecordMapper.xml]'
+Parsed mapper file: 'URL [jar:file:/home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar!/BOOT-INF/classes!/mapper/StorageMapper.xml]'
+Parsed mapper file: 'URL [jar:file:/home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar!/BOOT-INF/classes!/mapper/FileInfoMapper.xml]'
+Parsed mapper file: 'URL [jar:file:/home/luokong/workspace/achun/achun-file/achun-file-app/target/achun-file-app.jar!/BOOT-INF/classes!/mapper/FileUnitMapper.xml]'
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.3.1 
+2023-05-19T07:43:30.797Z  INFO 304493 --- [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2023-05-19T07:43:30.977Z  WARN 304493 --- [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-05-19T07:43:31.074Z  INFO 304493 --- [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2023-05-19T07:43:31.304Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2023-05-19T07:43:31.318Z  INFO 304493 --- [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2023-05-19T07:43:31.366Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2023-05-19T07:43:31.372Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2023-05-19T07:43:31.372Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2023-05-19T07:43:31.372Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2023-05-19T07:43:31.372Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2023-05-19T07:43:31.372Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2023-05-19T07:43:31.372Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2023-05-19T07:43:32.231Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2023-05-19T07:43:32.238Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2023-05-19T07:43:32.241Z  INFO 304493 --- [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2023-05-19T07:43:32.255Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1684482212255 with initial instances count: 1
+2023-05-19T07:43:32.260Z  INFO 304493 --- [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application ACHUN-FILE-APP with eureka with status UP
+2023-05-19T07:43:32.260Z  INFO 304493 --- [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1684482212260, current=UP, previous=STARTING]
+2023-05-19T07:43:32.261Z  INFO 304493 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ACHUN-FILE-APP/192.168.100.109:achun-file-app:9502: registering service...
+2023-05-19T07:43:32.335Z  INFO 304493 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9502 (http) with context path ''
+2023-05-19T07:43:32.337Z  INFO 304493 --- [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9502
+2023-05-19T07:43:32.362Z  INFO 304493 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ACHUN-FILE-APP/192.168.100.109:achun-file-app:9502 - registration status: 204
+2023-05-19T07:43:32.372Z  INFO 304493 --- [           main] site.achun.file.FileAppApplication       : Started FileAppApplication in 13.058 seconds (process running for 14.283)
+2023-05-19T07:45:02.337Z  INFO 304493 --- [tbeatExecutor-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ACHUN-FILE-APP/192.168.100.109:achun-file-app:9502 - Re-registering apps/ACHUN-FILE-APP
+2023-05-19T07:45:02.337Z  INFO 304493 --- [tbeatExecutor-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ACHUN-FILE-APP/192.168.100.109:achun-file-app:9502: registering service...
+2023-05-19T07:45:02.347Z  INFO 304493 --- [tbeatExecutor-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ACHUN-FILE-APP/192.168.100.109:achun-file-app:9502 - registration status: 204
+2023-05-19T07:45:11.431Z  INFO 304493 --- [ionShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application ACHUN-FILE-APP with eureka with status DOWN
+2023-05-19T07:45:11.432Z  INFO 304493 --- [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1684482311432, current=DOWN, previous=UP]
+2023-05-19T07:45:11.433Z  INFO 304493 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ACHUN-FILE-APP/192.168.100.109:achun-file-app:9502: registering service...
+2023-05-19T07:45:11.448Z  INFO 304493 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ACHUN-FILE-APP/192.168.100.109:achun-file-app:9502 - registration status: 204
+2023-05-19T07:45:11.513Z  INFO 304493 --- [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2023-05-19T07:45:14.519Z  INFO 304493 --- [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2023-05-19T07:45:14.768Z  INFO 304493 --- [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ACHUN-FILE-APP/192.168.100.109:achun-file-app:9502 - deregister  status: 200
+2023-05-19T07:45:14.799Z  INFO 304493 --- [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
