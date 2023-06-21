@@ -36,7 +36,7 @@ public class AlbumCreateExecute {
         // 保存分组信息
         GalleryGroupRecord groupRecord = GalleryGroupRecord.builder()
                 .groupCode(request.getGroupCode())
-                .listCode(request.getAlbumCode())
+                .listCode(album.getAlbumCode())
                 .ctime(LocalDateTime.now())
                 .build();
         groupRecordService.save(groupRecord);
