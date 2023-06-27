@@ -46,7 +46,12 @@ public class RuleQueryService {
     static{
         ruleMap.put("10001",
                 """
-                [{"weight": 100,"type": "ALBUM_UNIT_RANDOM","data": {"albumCodes":["1779654914"],"maxCount":9   }},{"weight": 100,"type": "FROM_LISTS","data": [{"name": "正文","values": ["ada5c7965ddd4b0da14beb83b057af5c"]},{"name": "辅文","values": ["f142ad4998c4478080416ffb44cc4923"]}]}]
+                [{"weight": 1000,"type": "ALBUM_UNIT_RANDOM","data": {"albumCodes":["1779654914"],"maxCount":9   }},{"weight": 100,"type": "FROM_LISTS","data": [{"name": "正文","values": ["ada5c7965ddd4b0da14beb83b057af5c"]},{"name": "辅文","values": ["f142ad4998c4478080416ffb44cc4923"]}]}]
+                """
+        );
+        ruleMap.put("10002",
+                """
+                [{"weight": 1000,"type": "ALBUM_UNIT_RANDOM","data": {"albumCodes":["1779654914"],"maxCount":9   }},{"weight": 100,"type": "FROM_LISTS","data": [{"name": "正文","values": ["ada5c7965ddd4b0da14beb83b057af5c"]},{"name": "辅文","values": ["f142ad4998c4478080416ffb44cc4923"]}]}]
                 """
         );
 
@@ -56,7 +61,7 @@ public class RuleQueryService {
                 """
                 );
 
-        ruleMap.put("10002",
+        ruleMap.put("10012",
                 """
                 [{"weight":100,"type":"FROM_LISTS","data":[{"name":"正文","values":["417e4b72f0284fa8ae533ad38e00ce76"]},{"name":"辅文","values":["f142ad4998c4478080416ffb44cc4923"]}]}]  
                 """
