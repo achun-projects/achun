@@ -38,7 +38,7 @@ public class RuleQueryController implements RuleQueryClient {
 
     @Override
     public Rsp<List<MediaFileResponse>> queryFilesByRuleCode(QueryFileByRuleCode query) {
-        return Rsp.success(ruleQueryService.queryFilesByRuleCode(query.getRuleCode()));
+        return Rsp.success(ruleQueryService.queryFilesByRuleCodeV2(query.getRuleCode()));
     }
 
     @Operation(summary = "根据规则编码随机获取图片")
