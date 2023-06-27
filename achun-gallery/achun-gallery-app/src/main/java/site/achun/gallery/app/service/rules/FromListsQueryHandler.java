@@ -20,7 +20,6 @@ import java.util.List;
 public class FromListsQueryHandler implements QueryHandler{
 
     private final ListRandomQueryService listRandomQueryService;
-    private final MediaFileQueryClient mediaFileQueryClient;
 
     @Override
     public boolean match(RuleType type) {
@@ -28,12 +27,12 @@ public class FromListsQueryHandler implements QueryHandler{
     }
 
     @Override
-    public List<MediaFileResponse> query(String rule) {
+    public List<String> query(String rule) {
         List<FromLists> fromLists = JSON.parseArray(rule, FromLists.class);
-        List<MediaFileResponse> respList = new ArrayList<>();
+        List<String> respList = new ArrayList<>();
         for (FromLists list : fromLists) {
             String fileCode = listRandomQueryService.randomQuery(list.getValues());
-            respList.add(mediaFileQueryClient.queryFile(QueryByFileCode.builder().fileCode(fileCode).build()).getData());
+            respList.add(fileCode);
         }
         return respList;
     }

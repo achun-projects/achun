@@ -1,5 +1,7 @@
 package site.achun.gallery.app.generator.service;
 
+import cn.hutool.core.util.RandomUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import site.achun.gallery.app.generator.domain.AlbumRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -34,5 +36,17 @@ public interface AlbumRecordService extends IService<AlbumRecord> {
         return this.lambdaUpdate()
                 .eq(AlbumRecord::getSetCode,setCode)
                 .remove();
+    }
+
+    default AlbumRecord randomQuery(List<String> albumCodes){
+        Page<AlbumRecord> page = lambdaQuery()
+                .in(AlbumRecord::getAlbumCode, albumCodes)
+                .page(Page.of(1, 1));
+
+        long random = RandomUtil.randomLong(page.getTotal());
+        AlbumRecord randomRecord = lambdaQuery()
+                .in(AlbumRecord::getAlbumCode, albumCodes)
+                .page(Page.of(random, 1)).getRecords().get(0);
+        return randomRecord;
     }
 }

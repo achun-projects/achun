@@ -8,7 +8,9 @@ import site.achun.support.api.utils.EnumUtil;
 @AllArgsConstructor
 public enum RuleType {
 
+    ALBUM_UNIT_RANDOM("ALBUM_UNIT_RANDOM","相册内单元随机"),
     FROM_LISTS("FROM_LISTS","来自多个集合");
+
     private String code;
     private String name;
 
