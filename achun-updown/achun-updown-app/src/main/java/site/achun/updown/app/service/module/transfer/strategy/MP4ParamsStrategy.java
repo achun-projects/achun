@@ -1,21 +1,15 @@
 package site.achun.updown.app.service.module.transfer.strategy;
 
-import com.alibaba.fastjson2.JSONObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import site.achun.file.client.module.file.FileResponse;
 import site.achun.file.client.module.file.FileUpdateClient;
-import site.achun.file.client.module.file.FileUpdateV4Client;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
-import site.achun.file.client.module.file.response.InitFileInfoResponse;
-import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferStrategy;
 import site.achun.updown.app.service.module.transfer.TransferType;
 import site.achun.updown.app.util.video.VideoUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
