@@ -1,5 +1,6 @@
 package site.achun.user.client.module.login.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.io.Serializable;
@@ -11,7 +12,9 @@ import java.io.Serializable;
 @ToString
 public class LoginResponse implements Serializable {
 
+    @Schema(title = "用户编码")
     private String userCode;
-    private String token;
+    @Schema(title = "satoken")
+    private String satoken;
 
 }

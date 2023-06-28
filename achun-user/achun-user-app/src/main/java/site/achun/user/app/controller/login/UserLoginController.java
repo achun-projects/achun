@@ -32,7 +32,7 @@ public class UserLoginController implements UserLoginClient {
         StpUtil.login(userAccount.getUserCode(),request.getTimeout());
         LoginResponse response = LoginResponse.builder()
                 .userCode(userAccount.getUserCode())
-                .token(StpUtil.getTokenValue())
+                .satoken(StpUtil.getTokenValue())
                 .build();
         return Rsp.success(response);
     }
@@ -45,7 +45,7 @@ public class UserLoginController implements UserLoginClient {
         }
         LoginResponse response = LoginResponse.builder()
                 .userCode((String) userCode)
-                .token(token)
+                .satoken(token)
                 .build();
         return Rsp.success(response);
     }
