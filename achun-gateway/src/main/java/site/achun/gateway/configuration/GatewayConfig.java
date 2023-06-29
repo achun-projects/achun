@@ -25,6 +25,9 @@ public class GatewayConfig {
                 .route("user", r -> r.path("/user/**")
                         .filters(f -> f.filter(authFilter))
                         .uri("lb://achun-user-app"))
+                .route("video", r -> r.path("/video/**")
+                        .filters(f -> f.filter(authFilter))
+                        .uri("lb://achun-video-app"))
                 .build();
     }
 }
