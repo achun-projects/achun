@@ -8,9 +8,9 @@ import site.achun.gateway.filter.AuthFilter;
 
 @Configuration
 public class GatewayConfig {
-    private final AuthFilter authFilter;
+    private AuthFilter authFilter;
 
-    public GatewayConfig(AuthFilter authFilter) {
+    public void setAuthFilter(AuthFilter authFilter) {
         this.authFilter = authFilter;
     }
 

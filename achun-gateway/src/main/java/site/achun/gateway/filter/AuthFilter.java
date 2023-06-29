@@ -16,11 +16,14 @@ import site.achun.user.client.module.login.response.LoginResponse;
 
 @Slf4j
 @Component
-@AllArgsConstructor
 public class AuthFilter implements GatewayFilter, Ordered {
     private static final String AUTH_TOKEN = "Authorization";
 
-    private final UserLoginClient userLoginClient;
+    private UserLoginClient userLoginClient;
+
+    public void setUserLoginClient(UserLoginClient userLoginClient) {
+        this.userLoginClient = userLoginClient;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
