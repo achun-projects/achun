@@ -1,6 +1,14 @@
 spring:
   application:
     name: achun-gateway
+  data:
+    redis:
+      host: 192.168.100.104
+      port: 6379
+      database: 0
+      password: yunbin
+      ssl:
+        enabled: false
 eureka:
   client:
     service-url:

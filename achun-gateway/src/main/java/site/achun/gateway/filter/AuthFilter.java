@@ -7,13 +7,13 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import site.achun.gateway.service.UserLoginService;
-import site.achun.user.client.module.login.UserLoginClient;
 
 @Slf4j
 @Component
@@ -21,14 +21,15 @@ import site.achun.user.client.module.login.UserLoginClient;
 public class AuthFilter implements GatewayFilter, Ordered {
     private static final String AUTH_TOKEN = "Authorization";
 
-    private final UserLoginService userLoginService;
+    private final StringRedisTemplate redisTemplate;
+    private final static String KEY = "USER:LOGIN:%s";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         String satoken = request.getHeaders().getFirst("satoken");
-        String userCode = userLoginService.getUserCode(satoken);
+        String userCode = redisTemplate.opsForValue().get(String.format(KEY, satoken));
         // 在请求属性中设置header
         request = request.mutate()
                 .header("user-code", userCode)
