@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCode;
+import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.support.api.request.ReqPage;
 import site.achun.support.api.response.Rsp;
 import site.achun.support.api.response.RspPage;
@@ -44,14 +45,18 @@ public class ChannelQueryExecute {
 
     public ChannelResponse toResponse(Channel channel){
         ChannelResponse response = BeanUtil.toBean(channel, ChannelResponse.class);
-        if(StrUtil.isNotBlank(channel.getCoverFileCode()))
-            response.setCoverFileUrl(fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(channel.getCoverFileCode()).build()).getData().getUrl());
-        else
+        if(StrUtil.isNotBlank(channel.getCoverFileCode())){
+            Rsp<MediaFileResponse> fileResponse = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(channel.getCoverFileCode()).build());
+            response.setCoverFileUrl(fileResponse.hasData()?fileResponse.getData().getUrl():"");
+        } else{
             response.setCoverFileUrl("");
-        if(StrUtil.isNotBlank(channel.getBannerFileCode()))
-            response.setBannerFileUrl(fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(channel.getBannerFileCode()).build()).getData().getUrl());
-        else
+        }
+        if(StrUtil.isNotBlank(channel.getBannerFileCode())){
+            Rsp<MediaFileResponse> fileResponse = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(channel.getBannerFileCode()).build());
+            response.setBannerFileUrl(fileResponse.hasData()?fileResponse.getData().getUrl():"");
+        }else{
             response.setBannerFileUrl("");
+        }
         return response;
     }
 
