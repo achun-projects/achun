@@ -1,5 +1,6 @@
 package site.achun.gateway.configuration;
 
+import lombok.AllArgsConstructor;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -7,12 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import site.achun.gateway.filter.AuthFilter;
 
 @Configuration
+@AllArgsConstructor
 public class GatewayConfig {
-    private AuthFilter authFilter;
 
-    public void setAuthFilter(AuthFilter authFilter) {
-        this.authFilter = authFilter;
-    }
+    private final AuthFilter authFilter;
 
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {

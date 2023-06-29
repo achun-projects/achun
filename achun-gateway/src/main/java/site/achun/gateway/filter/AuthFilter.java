@@ -4,37 +4,30 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import site.achun.support.api.response.Rsp;
+import site.achun.gateway.service.UserLoginService;
 import site.achun.user.client.module.login.UserLoginClient;
-import site.achun.user.client.module.login.response.LoginResponse;
 
 @Slf4j
 @Component
+@AllArgsConstructor
 public class AuthFilter implements GatewayFilter, Ordered {
     private static final String AUTH_TOKEN = "Authorization";
 
-    private UserLoginClient userLoginClient;
-
-    public void setUserLoginClient(UserLoginClient userLoginClient) {
-        this.userLoginClient = userLoginClient;
-    }
+    private final UserLoginService userLoginService;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         String satoken = request.getHeaders().getFirst("satoken");
-        Rsp<LoginResponse> loginResponse = userLoginClient.checkToken(satoken);
-        String userCode = "1";
-        if(loginResponse.hasData()){
-            userCode = loginResponse.getData().getUserCode();
-        }
+        String userCode = userLoginService.getUserCode(satoken);
         // 在请求属性中设置header
         request = request.mutate()
                 .header("user-code", userCode)
@@ -50,7 +43,7 @@ public class AuthFilter implements GatewayFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
+        return -1;
     }
 }
 
