@@ -56,4 +56,16 @@ public class PageUtil {
         rspPage.setRows(newRows);
         return rspPage;
     }
+
+
+    public static <F,T> RspPage<T> parse(IPage<F> pageResult,ReqPage reqPage, Function<F,T> convert){
+        RspPage<T> rspPage = reqPage.createPageRsp();
+        rspPage.setRows(pageResult.getRecords().stream()
+                .map(convert::apply)
+                .collect(Collectors.toList())
+        );
+        rspPage.setTotal(pageResult.getTotal());
+        return rspPage;
+    }
+
 }

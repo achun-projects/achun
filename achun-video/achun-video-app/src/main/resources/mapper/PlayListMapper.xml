@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.video.app.generator.mapper.PlayListMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.video.app.generator.domain.PlayList">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="plistCode" column="plist_code" jdbcType="VARCHAR"/>
+            <result property="objectCode" column="object_code" jdbcType="VARCHAR"/>
+            <result property="objectType" column="object_type" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+            <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
+            <result property="ruTime" column="ru_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,plist_code,object_code,
+        object_type,name,description,
+        ctime,utime,ru_time
+    </sql>
+</mapper>

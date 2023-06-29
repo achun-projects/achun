@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.video.app.generator.mapper.VideoClickRecordMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.video.app.generator.domain.VideoClickRecord">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="videoCode" column="video_code" jdbcType="VARCHAR"/>
+            <result property="loginUserCode" column="login_user_code" jdbcType="VARCHAR"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,video_code,login_user_code,
+        ctime
+    </sql>
+
+    <select id="selectClickNum" resultType="site.achun.video.app.service.execute.record.ObjectNum">
+        SELECT
+        video_code as code,
+        count(*) as num
+        FROM
+        video_click_record
+        WHERE
+        video_code IN
+        <foreach item="code" index="index" collection="req.videoCodes"
+                 open="(" separator="," close=")">
+            #{code}
+        </foreach>
+        GROUP BY
+        video_code
+    </select>
+
+</mapper>
