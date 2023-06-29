@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.support.api.response.Rsp;
 import site.achun.user.app.generator.domain.UserAccount;
@@ -20,6 +21,9 @@ public class UserLoginController implements UserLoginClient {
 
     private final UserAccountService userAccountService;
 
+    private final static String KEY = "USER:LOGIN:%s";
+    private final StringRedisTemplate redisTemplate;
+
     @Override
     public Rsp<LoginResponse> login(LoginRequest request) {
         UserAccount userAccount = userAccountService.lambdaQuery()
@@ -34,6 +38,7 @@ public class UserLoginController implements UserLoginClient {
                 .userCode(userAccount.getUserCode())
                 .satoken(StpUtil.getTokenValue())
                 .build();
+        redisTemplate.opsForValue().set(String.format(KEY,response.getSatoken()),response.getUserCode());
         return Rsp.success(response);
     }
 
