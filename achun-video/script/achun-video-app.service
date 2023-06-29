@@ -1,0 +1,13 @@
+[Unit]
+Description=Achun Video Application
+After=syslog.target network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/luokong/workspace/achun/achun-video
+ExecStart=java -jar /home/luokong/workspace/achun/achun-video/achun-video-app/target/achun-video-app.jar
+SuccessExitStatus=143
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

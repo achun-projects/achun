@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.video.app.generator.mapper.BoardRecordMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.video.app.generator.domain.BoardRecord">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="boardCode" column="board_code" jdbcType="VARCHAR"/>
+            <result property="fileCode" column="file_code" jdbcType="VARCHAR"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,board_code,file_code,
+        ctime
+    </sql>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.video.app.generator.mapper.GalleryGroupRecordMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.video.app.generator.domain.GalleryGroupRecord">
+            <id property="id" column="id" jdbcType="OTHER"/>
+            <result property="groupCode" column="group_code" jdbcType="VARCHAR"/>
+            <result property="listCode" column="list_code" jdbcType="VARCHAR"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,group_code,list_code,
+        ctime
+    </sql>
+
+
+    <select id="selectBoardRecord" resultType="site.achun.video.client.dto.GroupRecordView">
+        SELECT
+            ggr.group_code as groupCode,
+            ggr.list_code  as listCode,
+            b.name as name
+        FROM
+            gallery_group_record ggr
+                LEFT JOIN board b ON b.board_code = ggr.list_code
+        WHERE
+            b.user_code = #{userCode}
+    </select>
+
+    <select id="selectAlbumRecord" resultType="site.achun.video.client.dto.GroupRecordView">
+        SELECT
+            ggr.group_code as groupCode,
+            ggr.list_code  as listCode,
+            a.name as name
+        FROM
+            gallery_group_record ggr
+                LEFT JOIN album a ON a.album_code = ggr.list_code
+        WHERE
+            a.user_code = #{userCode}
+    </select>
+</mapper>

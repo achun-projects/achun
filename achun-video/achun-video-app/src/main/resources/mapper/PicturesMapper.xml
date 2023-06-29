@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.video.app.generator.mapper.PicturesMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.video.app.generator.domain.Pictures">
+            <id property="id" column="id" jdbcType="OTHER"/>
+            <result property="fileCode" column="file_code" jdbcType="VARCHAR"/>
+            <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+            <result property="setCode" column="set_code" jdbcType="VARCHAR"/>
+            <result property="suffix" column="suffix" jdbcType="VARCHAR"/>
+            <result property="size" column="size" jdbcType="INTEGER"/>
+            <result property="width" column="width" jdbcType="INTEGER"/>
+            <result property="height" column="height" jdbcType="INTEGER"/>
+            <result property="wh" column="wh" jdbcType="INTEGER"/>
+            <result property="duration" column="duration" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+            <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
+            <result property="atime" column="atime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,file_code,file_name,
+        set_code,suffix,size,
+        width,height,wh,
+        duration,deleted,ctime,
+        utime,atime
+    </sql>
+
+    <update id="replaceInto">
+        REPLACE INTO `pictures` (
+            `file_code`,
+            `file_name`,
+            `set_code`,
+            `suffix`,
+            `size`,
+            `width`,
+            `height`,
+            `wh`,
+            `duration`,
+            `deleted`,
+            `ctime`,
+            `utime`,
+            `atime`
+        )
+        VALUES(
+        #{fileCode},
+        #{fileName},
+        #{setCode},
+        #{suffix},
+        #{size},
+        #{width},
+        #{height},
+        #{wh},
+        #{duration},
+        #{deleted},
+        #{ctime},
+        #{utime},
+        #{atime}
+        );
+    </update>
+
+    <select id="selectFilesByListCodes" resultType="site.achun.video.app.generator.domain.Pictures">
+        SELECT
+            p.*
+        FROM
+            pictures p INNER JOIN board_record br ON br.file_code = p.file_code
+        WHERE
+            br.board_code IN
+            <foreach item="code" index="index" collection="query.listCodes" open="(" separator="," close=")">
+                #{code}
+            </foreach>
+        UNION
+        SELECT
+            p.*
+        FROM
+            pictures p INNER JOIN album_record ar ON ar.set_code = p.set_code
+        WHERE
+            ar.album_code IN
+            <foreach item="code" index="index" collection="query.listCodes" open="(" separator="," close=")">
+                #{code}
+            </foreach>
+    </select>
+
+    <select id="selectAlbumFiles" resultType="site.achun.video.app.generator.domain.Pictures"
+            parameterType="site.achun.video.client.module.pictures.request.QueryRecord">
+        SELECT
+        pi.*
+        FROM
+        pictures pi
+        LEFT JOIN album_record ar ON ar.set_code = pi.set_code
+        LEFT JOIN album al ON al.album_code = ar.album_code
+        LEFT JOIN pictures_like pl ON pl.file_code = pi.file_code
+        LEFT JOIN file_set fs ON fs.code = pi.set_code
+        WHERE
+        pi.deleted = 2
+        and ar.album_code = #{query.code} and al.user_code = #{query.userCode}
+        <if test="query.excludeBoardCodes != null and query.excludeBoardCodes.size() > 0 ">
+            AND pi.file_code NOT IN ( SELECT file_code FROM board_record WHERE board_code IN
+            <foreach item="code" index="index" collection="query.excludeBoardCodes"
+                     open="(" separator="," close=")">
+                #{code}
+            </foreach>
+            )
+        </if>
+        <if test="query.maxWH != null and query.maxWH > 0">
+            AND #{query.maxWH} >= pi.wh
+        </if>
+        <if test="query.minWH != null and query.minWH > 0">
+            AND pi.wh >= #{query.minWH}
+        </if>
+        <if test = "query.justQueryLike">
+            and pl.ctime is not null
+        </if>
+        <if test = "query.excludeLike">
+            and pl.ctime is null
+        </if>
+        <if test = "query.search != null and query.search != ''">
+            and fs.name like #{query.search}
+        </if>
+        ORDER BY
+        <if test = "query.likeTop"> pl.ctime DESC, </if>
+        ar.ctime DESC,pi.file_name
+    </select>
+
+    <select id="selectBoardFiles"
+            resultType="site.achun.video.app.generator.domain.Pictures"
+            parameterType="site.achun.video.client.module.pictures.request.QueryRecord">
+        SELECT
+        pi.*
+        FROM
+        pictures pi
+        LEFT JOIN board_record br ON br.file_code = pi.file_code
+        WHERE
+        pi.deleted = 2
+        and br.board_code IN
+        <foreach item="code" index="index" collection="query.codes"
+                 open="(" separator="," close=")">
+            #{code}
+        </foreach>
+        <if test="query.maxWH != null and query.maxWH > 0">
+            AND #{query.maxWH} >= pi.wh
+        </if>
+        <if test="query.minWH != null and query.minWH > 0">
+            AND pi.wh >= #{query.minWH}
+        </if>
+        ORDER BY br.ctime DESC
+    </select>
+
+    <select id="selectAlbumsFileCount" resultType="site.achun.video.client.dto.ListFileCount" parameterType="site.achun.video.client.module.pictures.request.QueryByListCodes">
+        SELECT
+        ar.album_code as code,
+        count(*) as fileCount
+        FROM
+        pictures pi
+        LEFT JOIN album_record ar ON pi.set_code = ar.set_code
+        WHERE
+        ar.album_code IN
+        <foreach item="code" index="index" collection="query.listCodes"
+                 open="(" separator="," close=")">
+            #{code}
+        </foreach>
+        GROUP BY
+        ar.album_code
+    </select>
+
+    <select id="selectBoardFileCount" resultType="site.achun.video.client.dto.ListFileCount" parameterType="site.achun.video.client.module.pictures.request.QueryByListCodes">
+        SELECT
+        br.board_code as code,
+        count(*) as fileCount
+        FROM
+        pictures pi
+        LEFT JOIN board_record br ON br.file_code = pi.file_code
+        WHERE
+        br.board_code IN
+        <foreach item="code" index="index" collection="query.listCodes"
+                 open="(" separator="," close=")">
+            #{code}
+        </foreach>
+        GROUP BY
+        br.board_code
+    </select>
+
+    <select id="selectTimelinePage" resultType="site.achun.video.client.module.pictures.response.TimelineResponse">
+        SELECT
+            DATE_FORMAT( ctime, '%Y-%m-%d' ) AS `time`,
+            COUNT(*) AS `count`
+        FROM
+            pictures
+        GROUP BY
+            `time`
+        ORDER BY
+            `time` DESC
+    </select>
+</mapper>
