@@ -1,5 +1,7 @@
 package site.achun.gallery.app.controller.rules;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.RandomUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,24 +40,24 @@ public class RuleQueryController implements RuleQueryClient {
 
     @Override
     public Rsp<List<MediaFileResponse>> queryFilesByRuleCode(QueryFileByRuleCode query) {
-        return Rsp.success(ruleQueryService.queryFilesByRuleCodeV2(query.getRuleCode()));
+        return Rsp.success(ruleQueryService.queryFilesByRuleCode(query.getRuleCode()));
     }
 
     @Operation(summary = "根据规则编码随机获取图片")
     @GetMapping("/gallery/random-get/{ruleCode}")
     public void randomByRuleCode(@PathVariable("ruleCode") String ruleCode,
                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userCode = request.getHeader("user-code");
-        log.info("userCode:{},{}", UserInfo.getCode(),userCode);
-        // TODO 验证用户权限
-        RandomRules rules = RandomRules.parse(ruleCode);
-        Rule rule = RuleUtil.getRuleBy(rules, LocalDateTime.now());
-        log.info("匹配到rule:{}",rule.getName());
-        String randomFileCode = listRandomQueryService.randomQuery(rule.getBoards());
-        MediaFileResponse pic = mediaFileQueryClient.queryFile(QueryByFileCode.builder().fileCode(randomFileCode).build()).getData();
-        String url = pic.getUrl();
+        List<MediaFileResponse> list = ruleQueryService.queryFilesByRuleCode(ruleCode);
+        if(CollUtil.isEmpty(list)){
+            log.info("根据规则编码随机获取图片，列表无数据，ruleCode:{}",ruleCode);
+            return;
+        }
+        MediaFileResponse fileResponse = RandomUtil.randomEle(list);
+        String url = fileResponse.getUrl();
         // 重定向到url
         response.sendRedirect(url);
+
+
     }
 
 }

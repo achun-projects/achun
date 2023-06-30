@@ -1,13 +1,11 @@
-package site.achun.gallery.app.service.rules;
+package site.achun.gallery.app.service.rules.handler;
 
 import com.alibaba.fastjson2.JSON;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import site.achun.file.client.module.file.MediaFileQueryClient;
-import site.achun.file.client.module.file.request.QueryByFileCode;
-import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.gallery.app.service.list.ListRandomQueryService;
+import site.achun.gallery.app.service.rules.QueryHandler;
 import site.achun.gallery.app.service.rules.beans.FromLists;
 import site.achun.gallery.app.service.rules.beans.RuleType;
 
@@ -17,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class FromListsQueryHandler implements QueryHandler{
+public class FromListsQueryHandler implements QueryHandler {
 
     private final ListRandomQueryService listRandomQueryService;
 
