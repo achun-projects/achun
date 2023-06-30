@@ -51,11 +51,13 @@ public class FileInfoQueryExecute {
         List<VideoFileInfoResponse> videoFileInfoResponseList = videoFileInfoList.stream()
                 .map(info->{
                     VideoFileInfoResponse response = BeanUtil.toBean(info, VideoFileInfoResponse.class);
-                    MediaFileResponse fileResponse = fileMap.get(response.getFileCode());
-                    // 补充url
-                    response.setUrl(fileResponse.getUrl());
-                    // 补充封面url
-                    response.setCover(fileResponse.getCover());
+                    if(fileMap.containsKey(response.getFileCode())){
+                        MediaFileResponse fileResponse = fileMap.get(response.getFileCode());
+                        // 补充url
+                        response.setUrl(fileResponse.getUrl());
+                        // 补充封面url
+                        response.setCover(fileResponse.getCover());
+                    }
                     return response;
                 })
                 .collect(Collectors.toList());
