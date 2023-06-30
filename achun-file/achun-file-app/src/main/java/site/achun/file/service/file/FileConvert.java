@@ -4,10 +4,16 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import site.achun.file.beans.file.FileOrigin;
+import site.achun.file.client.enums.Env;
 import site.achun.file.client.enums.Type;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.FileInfoResponse;
@@ -16,6 +22,7 @@ import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.file.client.module.file.response.detail.Image;
 import site.achun.file.client.module.file.response.detail.Video;
+import site.achun.file.client.module.storage.beans.StorageExtra;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.domain.Storage;
 import site.achun.file.generator.service.StorageService;
@@ -185,22 +192,23 @@ public class FileConvert {
         return url+"?token="+token;
     }
 
-//
-//
     private String getStorageAccessPrefix(Storage storage){
-//        String envCode = RpcContext.getServerAttachment().getAttachment(Env.KEY);
-//        Env env = null;
-//        if(envCode==null || (env = Env.parse(envCode))==null){
-//            StorageExtra.Env defaultEnv = storage.getExtra().getDefaultEnv();
-//            return defaultEnv.getHost() + defaultEnv.getPath();
-//        }
-//        Env finalEnv = env;
-//        StorageExtra.Env rsp = storage.getExtra().getEnvs().stream().
-//                filter(e -> e.getCode().equals(finalEnv.getCode()))
-//                .findFirst().get();
-//        log.info("Current envCode:{},rsp:{}",envCode,rsp);
-//        return rsp.getHost() + rsp.getPath();
-        return storage.getAccessPrefix();
+        // 从header获取X-token
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes attr = (ServletRequestAttributes) requestAttributes;
+        HttpServletRequest request = attr.getRequest();
+        String envCode = request.getHeader("env");//网关传过来的 token
+
+        Env env = null;
+        if (!StringUtils.hasText(envCode) || (env = Env.parse(envCode))==null) {
+            return storage.getAccessPrefix();
+        }
+        Env finalEnv = env;
+        StorageExtra.Env rsp = storage.getExtra().getEnvs().stream().
+                filter(e -> e.getCode().equals(finalEnv.getCode()))
+                .findFirst().get();
+        log.info("Current envCode:{},rsp:{}",envCode,rsp);
+        return rsp.getHost() + rsp.getPath();
     }
 
 }

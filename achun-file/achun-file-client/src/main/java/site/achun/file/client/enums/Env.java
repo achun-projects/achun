@@ -23,6 +23,6 @@ public enum Env {
     public final static String KEY = "ENV";
 
     public final static Env parse(String code){
-        return EnumUtil.parse(Env.values(),Env::getCode,code).get();
+        return EnumUtil.parse(Env.values(),Env::getCode,code.toUpperCase()).get();
     }
 }

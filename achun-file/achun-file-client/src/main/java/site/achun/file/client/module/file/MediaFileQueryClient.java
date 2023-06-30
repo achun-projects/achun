@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import site.achun.file.client.configuration.FileFeignConfiguration;
 import site.achun.file.client.module.file.request.*;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.support.api.response.Rsp;
@@ -11,7 +12,7 @@ import site.achun.support.api.response.Rsp;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "achun-file-app", contextId = "MediaFileQueryClient")
+@FeignClient(name = "achun-file-app", contextId = "MediaFileQueryClient",configuration = FileFeignConfiguration.class)
 public interface MediaFileQueryClient {
     @Operation(summary = "根据文件唯一标识查询文件")
     @PostMapping("/file/query/query-media-file-by-code")
