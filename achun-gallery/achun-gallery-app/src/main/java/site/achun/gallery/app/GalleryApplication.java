@@ -14,11 +14,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @MapperScan("${spring.mapper.scan}")
 @EnableFeignClients(basePackages = "site.achun")
 @EnableAsync
-public class GalleryAppApplication {
+public class GalleryApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GalleryAppApplication.class, args);
-        log.info("GalleryAppApplication start...");
+        SpringApplication.run(GalleryApplication.class, args);
+        log.info("GalleryApplication start...");
     }
 
 }
