@@ -38,8 +38,8 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("相册V5系统API")
                         .version("1.0")
-                        .description( "Knife4j集成springdoc-openapi示例")
-                        .termsOfService("http://doc.xiaominfo.com")
+                        .description( "相册V5系统API")
+                        .termsOfService("http://achun.site")
                         .license(new License().name("Apache 2.0")
                                 .url("http://doc.xiaominfo.com")));
     }
