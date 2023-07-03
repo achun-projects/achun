@@ -15,3 +15,6 @@ eureka:
       defaultZone: http://eureka.apiv5.achun.site/eureka/
 server:
   port: 9500
+logging:
+  file:
+    name: /data/logs/achun/file/info.log
