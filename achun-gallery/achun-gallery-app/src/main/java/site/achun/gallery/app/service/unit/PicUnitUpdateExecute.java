@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.domain.FileSet;
 import site.achun.gallery.app.generator.service.FileSetService;
-import site.achun.gallery.client.module.pic_unit.request.CreateFileSet;
-import site.achun.gallery.client.module.pic_unit.request.CreateOrUpdateUnit;
+import site.achun.gallery.client.module.pic_unit.request.CreatePicUnit;
+import site.achun.gallery.client.module.pic_unit.request.CreateOrUpdatePicUnit;
 import site.achun.support.api.enums.Deleted;
 import site.achun.support.api.utils.CodeGenUtil;
 
@@ -20,7 +20,7 @@ public class PicUnitUpdateExecute {
 
     private final FileSetService fileSetService;
 
-    public String createOrUpdate(CreateFileSet create){
+    public String createOrUpdate(CreatePicUnit create){
         FileSet existFileSet = null;
         if(StrUtil.isNotEmpty(create.getSetCode()) && (existFileSet = fileSetService.getByCode(create.getSetCode())) != null){
             if(StrUtil.isNotEmpty(create.getName())) existFileSet.setName(create.getName());
@@ -42,7 +42,7 @@ public class PicUnitUpdateExecute {
         }
     }
 
-    public String createOrUpdate(CreateOrUpdateUnit request){
+    public String createOrUpdate(CreateOrUpdatePicUnit request){
         FileSet existFileSet = null;
         if(StrUtil.isNotEmpty(request.getUnitCode()) && (existFileSet = fileSetService.getByCode(request.getUnitCode())) != null){
             if(StrUtil.isNotEmpty(request.getName())) existFileSet.setName(request.getName());

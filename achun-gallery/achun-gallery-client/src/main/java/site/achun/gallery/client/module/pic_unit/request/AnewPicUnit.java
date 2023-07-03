@@ -12,7 +12,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnewFileSet implements Serializable {
+public class AnewPicUnit implements Serializable {
     /**
      * 相册编码，对应album表
      */

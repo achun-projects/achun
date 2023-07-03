@@ -14,7 +14,7 @@ import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.album.request.MoveAlbumRecordRequest;
 import site.achun.gallery.client.module.album_record.AlbumRecordUpdateClient;
 import site.achun.gallery.client.module.album_record.request.UploadPictures;
-import site.achun.gallery.client.module.pic_unit.request.AnewFileSet;
+import site.achun.gallery.client.module.pic_unit.request.AnewPicUnit;
 import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 import site.achun.gallery.client.module.pictures.request.UploadPicturesRequest;
 import site.achun.support.api.response.Rsp;
@@ -48,7 +48,7 @@ public class AlbumRecordUpdateController implements AlbumRecordUpdateClient {
     }
 
     @Override
-    public Rsp<Boolean> anewFileSet(AnewFileSet anewGroup) {
+    public Rsp<Boolean> anewFileSet(AnewPicUnit anewGroup) {
         anewFileSetService.anewFileset(anewGroup);
         return Rsp.success(true);
     }

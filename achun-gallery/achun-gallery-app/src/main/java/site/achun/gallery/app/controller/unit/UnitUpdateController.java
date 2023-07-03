@@ -14,7 +14,7 @@ import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.pic_unit.request.UpdatePicUnit;
 import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 import site.achun.gallery.client.module.pic_unit.PicUnitUpdateClient;
-import site.achun.gallery.client.module.pic_unit.request.CreateOrUpdateUnit;
+import site.achun.gallery.client.module.pic_unit.request.CreateOrUpdatePicUnit;
 import site.achun.support.api.enums.Deleted;
 import site.achun.support.api.response.Rsp;
 
@@ -56,7 +56,7 @@ public class UnitUpdateController implements PicUnitUpdateClient {
     }
 
     @Override
-    public Rsp<PicUnitResponse> createOrUpdate(CreateOrUpdateUnit req) {
+    public Rsp<PicUnitResponse> createOrUpdate(CreateOrUpdatePicUnit req) {
         String unitCode = picUnitUpdateExecute.createOrUpdate(req);
         return Rsp.success(picUnitQueryExecute.queryByUnitCode(unitCode));
     }

@@ -13,7 +13,7 @@ import java.util.Collection;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateOrUpdateUnit implements Serializable {
+public class CreateOrUpdatePicUnit implements Serializable {
 
     @Schema(title = "用户code")
     private String userCode;

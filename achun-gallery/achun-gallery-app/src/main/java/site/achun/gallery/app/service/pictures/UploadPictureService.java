@@ -7,7 +7,7 @@ import site.achun.gallery.app.generator.service.AlbumService;
 import site.achun.gallery.app.service.album_record.AlbumRecordUpdateExecute;
 import site.achun.gallery.app.service.unit.PicUnitQueryExecute;
 import site.achun.gallery.app.service.unit.PicUnitUpdateExecute;
-import site.achun.gallery.client.module.pic_unit.request.CreateFileSet;
+import site.achun.gallery.client.module.pic_unit.request.CreatePicUnit;
 import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 import site.achun.gallery.client.module.pictures.request.UploadPicturesRequest;
 import site.achun.support.api.response.Rsp;
@@ -25,7 +25,7 @@ public class UploadPictureService{
     public Rsp<PicUnitResponse> createFileSet(UploadPicturesRequest createFileSet) {
         // 新建分组
         fileSetUpdateExecute.createOrUpdate(
-                CreateFileSet.builder()
+                CreatePicUnit.builder()
                         .setCode(createFileSet.getSetCode())
                         .userCode(createFileSet.getUserCode())
                         .name(createFileSet.getName())

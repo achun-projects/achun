@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.gallery.client.module.pic_unit.request.UpdatePicUnit;
 import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
-import site.achun.gallery.client.module.pic_unit.request.CreateOrUpdateUnit;
+import site.achun.gallery.client.module.pic_unit.request.CreateOrUpdatePicUnit;
 import site.achun.support.api.response.Rsp;
 
 @FeignClient(name = "achun-gallery-app", contextId = "PicUnitUpdateClient")
@@ -18,5 +18,5 @@ public interface PicUnitUpdateClient {
 
     @Operation(summary = "创建或更新unit")
     @PostMapping("/gallery/unit/create-or-update-unit")
-    Rsp<PicUnitResponse> createOrUpdate(@RequestBody CreateOrUpdateUnit req);
+    Rsp<PicUnitResponse> createOrUpdate(@RequestBody CreateOrUpdatePicUnit req);
 }
