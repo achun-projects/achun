@@ -2,13 +2,16 @@ package site.achun.gallery.app.service.list;
 
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.module.file.MediaFileQueryClient;
+import site.achun.file.client.module.file.request.QueryByFileCode;
+import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.gallery.app.generator.domain.Pictures;
-import site.achun.gallery.app.generator.mapper.PicturesMapper;
-import site.achun.gallery.client.module.pictures.request.QueryFilesByListCodes;
+import site.achun.gallery.app.service.pictures.PictureConvertService;
+import site.achun.gallery.client.module.pictures.response.Photo;
+import site.achun.support.api.response.Rsp;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,6 +22,8 @@ import java.util.Collection;
 public class ListRandomQueryService {
 
     private final ListFilesQueryExecute listFilesQueryExecute;
+    private final MediaFileQueryClient mediaFileQueryClient;
+    private final PictureConvertService pictureConvertService;
     public String randomQuery(String listCode){
         return randomQuery(Arrays.asList(listCode));
     }
@@ -32,5 +37,17 @@ public class ListRandomQueryService {
         long randomNum = RandomUtil.randomLong(pageResult.getTotal());
         pageResult = listFilesQueryExecute.queryPages(listCodes,randomNum,1);
         return pageResult.getRecords().get(0).getFileCode();
+    }
+
+    public Photo randomQueryOnePhoto(String listCode){
+        String fileCode = randomQuery(listCode);
+        if(fileCode == null){
+            return null;
+        }
+        Rsp<MediaFileResponse> fileResponse = mediaFileQueryClient.queryFile(QueryByFileCode.builder().fileCode(fileCode).build());
+        if(fileResponse.hasData()){
+            return pictureConvertService.toPhoto(fileResponse.getData());
+        }
+        return null;
     }
 }

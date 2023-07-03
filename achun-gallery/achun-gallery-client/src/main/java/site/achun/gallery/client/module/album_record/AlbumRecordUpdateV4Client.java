@@ -9,8 +9,10 @@ import java.util.Collection;
 
 
 @FeignClient(name = "virde-gallery-web", contextId = "AlbumRecordUpdateV4Client")
+@Deprecated
 public interface AlbumRecordUpdateV4Client {
 
     @PostMapping("/gallery/album-record/batch-delete")
+    @Deprecated
     Rsp<Boolean> deleteBatchRecords(@RequestBody Collection<String> fileCodes);
 }

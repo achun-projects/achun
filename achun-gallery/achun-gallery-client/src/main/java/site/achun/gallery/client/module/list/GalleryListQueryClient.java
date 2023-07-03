@@ -8,7 +8,10 @@ import java.util.Collection;
 
 @FeignClient(name = "achun-gallery-app", contextId = "ListQueryClient")
 public interface GalleryListQueryClient {
+
     @Operation(summary = "随机查询一条记录")
     @PostMapping("/gallery/list/random-query")
+    @Deprecated
     String randomQuery(Collection<String> listCodes);
+
 }
