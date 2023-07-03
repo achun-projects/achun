@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.DeleteFileRequest;
 import site.achun.gallery.app.service.album_record.AlbumRecordMoveService;
-import site.achun.gallery.app.service.pictures.PictureUpdateExecute;
 import site.achun.gallery.app.service.pictures.PictureUpdateService;
 import site.achun.gallery.app.service.pictures.UploadPictureService;
 import site.achun.gallery.app.service.unit.AnewFileSetService;
@@ -15,8 +14,8 @@ import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.album.request.MoveAlbumRecordRequest;
 import site.achun.gallery.client.module.album_record.AlbumRecordUpdateClient;
 import site.achun.gallery.client.module.album_record.request.UploadPictures;
-import site.achun.gallery.client.module.fileset.request.AnewFileSet;
-import site.achun.gallery.client.module.fileset.response.FileSetResponse;
+import site.achun.gallery.client.module.pic_unit.request.AnewFileSet;
+import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 import site.achun.gallery.client.module.pictures.request.UploadPicturesRequest;
 import site.achun.support.api.response.Rsp;
 
@@ -35,7 +34,7 @@ public class AlbumRecordUpdateController implements AlbumRecordUpdateClient {
     private final FileUpdateClient fileUpdateClient;
 
     @Override
-    public Rsp<FileSetResponse> uploadPictures(UploadPictures createInfo) {
+    public Rsp<PicUnitResponse> uploadPictures(UploadPictures createInfo) {
         createInfo.setUserCode(UserInfo.getCode(createInfo::getUserCode));
         UploadPicturesRequest createFileSet = UploadPicturesRequest.builder()
                 .setCode(createInfo.getSetCode())

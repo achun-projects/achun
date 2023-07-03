@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.domain.FileSet;
 import site.achun.gallery.app.generator.service.FileSetService;
-import site.achun.gallery.client.module.fileset.request.CreateFileSet;
-import site.achun.gallery.client.module.unit.request.CreateOrUpdateUnit;
+import site.achun.gallery.client.module.pic_unit.request.CreateFileSet;
+import site.achun.gallery.client.module.pic_unit.request.CreateOrUpdateUnit;
 import site.achun.support.api.enums.Deleted;
 import site.achun.support.api.utils.CodeGenUtil;
 

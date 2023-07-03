@@ -1,4 +1,4 @@
-package site.achun.gallery.client.module.fileset.response;
+package site.achun.gallery.client.module.pic_unit.response;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileSetResponse implements Serializable {
+public class PicUnitResponse implements Serializable {
 
     /**
      * 分组唯一标识

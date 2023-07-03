@@ -1,4 +1,4 @@
-package site.achun.gallery.client.module.fileset.request;
+package site.achun.gallery.client.module.pic_unit.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;

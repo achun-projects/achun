@@ -11,12 +11,10 @@ import site.achun.gallery.app.generator.service.FileSetService;
 import site.achun.gallery.app.service.unit.PicUnitQueryExecute;
 import site.achun.gallery.app.service.unit.PicUnitUpdateExecute;
 import site.achun.gallery.app.utils.UserInfo;
-import site.achun.gallery.client.module.fileset.request.UpdateFileSet;
-import site.achun.gallery.client.module.fileset.response.FileSetResponse;
-import site.achun.gallery.client.module.unit.PicUnitUpdateClient;
-import site.achun.gallery.client.module.unit.request.CreateOrUpdateUnit;
-import site.achun.gallery.client.module.unit.request.UpdateFileUnit;
-import site.achun.gallery.client.module.unit.response.FileUnitResponse;
+import site.achun.gallery.client.module.pic_unit.request.UpdatePicUnit;
+import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
+import site.achun.gallery.client.module.pic_unit.PicUnitUpdateClient;
+import site.achun.gallery.client.module.pic_unit.request.CreateOrUpdateUnit;
 import site.achun.support.api.enums.Deleted;
 import site.achun.support.api.response.Rsp;
 
@@ -33,12 +31,7 @@ public class UnitUpdateController implements PicUnitUpdateClient {
     private final PicUnitUpdateExecute picUnitUpdateExecute;
 
     @Override
-    public Rsp<FileUnitResponse> updateUnit(UpdateFileUnit update) {
-        return null;
-    }
-
-    @Override
-    public Rsp<FileSetResponse> update(UpdateFileSet request) {
+    public Rsp<PicUnitResponse> update(UpdatePicUnit request) {
         request.setUserCode(UserInfo.getCode(request::getUserCode));
         FileSet existFileSet = fileSetService.getByCode(request.getSetCode());
         if(existFileSet == null){
@@ -63,7 +56,7 @@ public class UnitUpdateController implements PicUnitUpdateClient {
     }
 
     @Override
-    public Rsp<FileSetResponse> createOrUpdate(CreateOrUpdateUnit req) {
+    public Rsp<PicUnitResponse> createOrUpdate(CreateOrUpdateUnit req) {
         String unitCode = picUnitUpdateExecute.createOrUpdate(req);
         return Rsp.success(picUnitQueryExecute.queryByUnitCode(unitCode));
     }

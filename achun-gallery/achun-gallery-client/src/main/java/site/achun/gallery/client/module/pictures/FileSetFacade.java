@@ -1,6 +1,6 @@
 package site.achun.gallery.client.module.pictures;
 
-import site.achun.gallery.client.module.fileset.response.FileSetResponse;
+import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 import site.achun.support.api.response.Rsp;
 
 /**
@@ -16,7 +16,7 @@ public interface FileSetFacade {
      * @param pictureGroupCode
      * @return
      */
-    Rsp<FileSetResponse> queryByCode(String setCode);
+    Rsp<PicUnitResponse> queryByCode(String setCode);
 
 
 }

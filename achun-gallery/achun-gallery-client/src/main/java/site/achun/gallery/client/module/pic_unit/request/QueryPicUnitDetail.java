@@ -1,4 +1,4 @@
-package site.achun.gallery.client.module.fileset.request;
+package site.achun.gallery.client.module.pic_unit.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QueryFileSet implements Serializable {
-    private String setCode;
+public class QueryPicUnitDetail implements Serializable {
+    private String picUnitCode;
     private String userCode;
     private String likeName;
 }

@@ -6,9 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.gallery.app.service.unit.PicUnitQueryExecute;
 import site.achun.gallery.app.utils.UserInfo;
-import site.achun.gallery.client.module.fileset.request.QueryFileSet;
-import site.achun.gallery.client.module.fileset.response.FileSetResponse;
-import site.achun.gallery.client.module.unit.PicUnitQueryClient;
+import site.achun.gallery.client.module.pic_unit.request.QueryPicUnitDetail;
+import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
+import site.achun.gallery.client.module.pic_unit.PicUnitQueryClient;
 import site.achun.support.api.response.Rsp;
 
 @Slf4j
@@ -17,12 +17,12 @@ import site.achun.support.api.response.Rsp;
 @RequiredArgsConstructor
 public class UnitQueryController implements PicUnitQueryClient {
 
-    private final PicUnitQueryExecute fileSetQueryExecute;
+    private final PicUnitQueryExecute picUnitQueryExecute;
 
     @Override
-    public Rsp<FileSetResponse> queryFileSet(QueryFileSet request) {
+    public Rsp<PicUnitResponse> queryPicUnitDetail(QueryPicUnitDetail request) {
         log.info("查询文件分组,请求参数:{}",request);
         request.setUserCode(UserInfo.getCode(request::getUserCode));
-        return Rsp.success(fileSetQueryExecute.query(request));
+        return Rsp.success(picUnitQueryExecute.query(request));
     }
 }

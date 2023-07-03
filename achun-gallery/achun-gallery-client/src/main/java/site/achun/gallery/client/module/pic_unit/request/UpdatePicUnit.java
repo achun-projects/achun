@@ -1,4 +1,4 @@
-package site.achun.gallery.client.module.fileset.request;
+package site.achun.gallery.client.module.pic_unit.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,21 +9,16 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * Description
- *
- * @Author: Heiffeng
- * @Date: 2022/4/25 15:27
+ * Author: Heiffeng
+ * Date: 2023/3/27
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateSetCode implements Serializable {
-
+public class UpdatePicUnit implements Serializable {
     private String setCode;
     private String userCode;
     private String name;
     private Collection<String> tags;
-    private Collection<String> fileCodes;
-
 }

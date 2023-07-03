@@ -1,4 +1,4 @@
-package site.achun.gallery.client.module.unit.request;
+package site.achun.gallery.client.module.pic_unit.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

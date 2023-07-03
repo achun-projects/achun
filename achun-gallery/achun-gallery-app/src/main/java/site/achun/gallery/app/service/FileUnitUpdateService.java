@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import site.achun.file.client.module.unit.request.UpdateUnit;
 import site.achun.gallery.app.generator.domain.FileSet;
 import site.achun.gallery.app.generator.service.FileSetService;
-import site.achun.gallery.client.module.unit.request.UpdateFileUnit;
 import site.achun.support.api.enums.Deleted;
 
 import java.time.LocalDateTime;

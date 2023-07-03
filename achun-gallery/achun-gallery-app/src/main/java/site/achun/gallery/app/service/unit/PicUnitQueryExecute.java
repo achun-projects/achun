@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.domain.FileSet;
 import site.achun.gallery.app.generator.service.FileSetService;
 import site.achun.gallery.client.constant.GalleryRC;
-import site.achun.gallery.client.module.fileset.request.QueryFileSet;
-import site.achun.gallery.client.module.fileset.response.FileSetResponse;
+import site.achun.gallery.client.module.pic_unit.request.QueryPicUnitDetail;
+import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 import site.achun.support.api.exception.RspException;
 
 @Slf4j
@@ -20,20 +20,20 @@ public class PicUnitQueryExecute {
 
     private final FileSetConvert fileSetConvert;
 
-    public FileSetResponse query(QueryFileSet request){
+    public PicUnitResponse query(QueryPicUnitDetail request){
         FileSet fileset = fileSetService.lambdaQuery()
-                .eq(FileSet::getCode,request.getSetCode())
+                .eq(FileSet::getCode,request.getPicUnitCode())
                 .eq(FileSet::getUserCode,request.getUserCode())
                 .like(StrUtil.isNotBlank(request.getLikeName()),FileSet::getName,request.getLikeName())
                 .one();
         if(fileset == null){
-            throw new RspException(GalleryRC.DATA_IS_NULL,"文件分组不存在");
+            return null;
         }
         return fileSetConvert.toResponse(fileset);
     }
 
     // 根据setCode查询文件分组
-    public FileSetResponse queryByUnitCode(String unitCode){
+    public PicUnitResponse queryByUnitCode(String unitCode){
         FileSet fileset = fileSetService.lambdaQuery()
                 .eq(FileSet::getCode,unitCode)
                 .one();

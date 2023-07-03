@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.domain.FileSet;
-import site.achun.gallery.client.module.fileset.response.FileSetResponse;
+import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 
 /**
  * Author: Heiffeng
@@ -15,8 +15,8 @@ import site.achun.gallery.client.module.fileset.response.FileSetResponse;
 @AllArgsConstructor
 public class FileSetConvert {
 
-    public FileSetResponse toResponse(FileSet fileSet){
-        return FileSetResponse.builder()
+    public PicUnitResponse toResponse(FileSet fileSet){
+        return PicUnitResponse.builder()
                 .name(fileSet.getName())
                 .code(fileSet.getCode())
                 .userCode(fileSet.getUserCode())

@@ -11,8 +11,8 @@ import site.achun.gallery.app.generator.service.AlbumService;
 import site.achun.gallery.app.generator.service.FileSetService;
 import site.achun.gallery.app.generator.service.PicturesService;
 import site.achun.gallery.client.constant.GalleryRC;
-import site.achun.gallery.client.module.fileset.request.AnewFileSet;
-import site.achun.gallery.client.module.fileset.response.FileSetResponse;
+import site.achun.gallery.client.module.pic_unit.request.AnewFileSet;
+import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 import site.achun.support.api.exception.RspException;
 
 import java.time.LocalDateTime;
@@ -33,7 +33,7 @@ public class AnewFileSetService {
     private final PicUnitQueryExecute fileSetQueryExecute;
     private final PicturesService picturesService;
     private final AlbumService albumService;
-    public FileSetResponse anewFileset(AnewFileSet anewFileset) {
+    public PicUnitResponse anewFileset(AnewFileSet anewFileset) {
         if(fileSetService.getByCode(anewFileset.getSetCode())!=null){
             // TODO 存在分组，将其他文件迁移至该分组，并更新信息
             throw new RspException(GalleryRC.CODE_UN_IMPLEMENTS);
