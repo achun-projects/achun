@@ -12,10 +12,12 @@ public class FileFeignConfiguration implements RequestInterceptor {
     public void apply(RequestTemplate template) {
         // 从header获取X-token
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
-        String env = request.getHeader("env");//网关传过来的 token
-        if (StringUtils.hasText(env)) {
-            template.header("env", env);
+        if(requestAttributes != null){
+            HttpServletRequest request = requestAttributes.getRequest();
+            String env = request.getHeader("env");//网关传过来的 token
+            if (StringUtils.hasText(env)) {
+                template.header("env", env);
+            }
         }
     }
 }
