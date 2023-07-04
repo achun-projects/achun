@@ -6,7 +6,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Collection;
 
-@Schema(description = "创建文件")
+@Schema(description = "根据fileCodes查询文件")
 @Data
 @Builder
 @ToString

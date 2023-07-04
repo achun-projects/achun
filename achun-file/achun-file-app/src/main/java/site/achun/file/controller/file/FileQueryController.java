@@ -81,6 +81,11 @@ public class FileQueryController implements FileQueryClient {
     }
 
     @Override
+    public Rsp<List<FileInfoResponse>> queryFileList(QueryByMD5 query) {
+        return Rsp.success(fileQueryService.queryFileList(query));
+    }
+
+    @Override
     public Rsp<List<FileInfoResponse>> queryFileList(QueryByUnitCodes queryByUnitCodes) {
         return Rsp.success(fileQueryService.queryByUnitCodes(queryByUnitCodes.getUnitCodes()));
     }

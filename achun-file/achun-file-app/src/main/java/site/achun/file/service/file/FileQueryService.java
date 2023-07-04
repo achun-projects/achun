@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.file.request.QueryByFileCode;
 import site.achun.file.client.module.file.request.QueryByFileCodes;
+import site.achun.file.client.module.file.request.QueryByMD5;
 import site.achun.file.client.module.file.request.QueryFilePage;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
@@ -14,6 +15,7 @@ import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.service.FileInfoService;
 import site.achun.file.util.PageUtil;
 import site.achun.support.api.enums.Deleted;
+import site.achun.support.api.response.Rsp;
 import site.achun.support.api.response.RspPage;
 
 import java.util.Collection;
@@ -37,6 +39,14 @@ public class FileQueryService {
     public List<FileInfoResponse> queryByUnitCode(String unitCode){
         List<FileInfo> fileInfoList = fileInfoService.lambdaQuery()
                 .eq(FileInfo::getUnitCode, unitCode)
+                .eq(FileInfo::getDeleted, Deleted.NO.getStatus())
+                .list();
+        return fileConvert.toFileResponse(fileInfoList);
+    }
+
+    public List<FileInfoResponse> queryFileList(QueryByMD5 query) {
+        List<FileInfo> fileInfoList = fileInfoService.lambdaQuery()
+                .eq(FileInfo::getMd5, query.getMd5())
                 .eq(FileInfo::getDeleted, Deleted.NO.getStatus())
                 .list();
         return fileConvert.toFileResponse(fileInfoList);

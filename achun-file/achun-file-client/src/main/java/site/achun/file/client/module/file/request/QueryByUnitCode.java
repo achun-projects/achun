@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Schema(description = "创建文件")
+@Schema(description = "根据unitCode查询")
 @Data
 @Builder
 @ToString
