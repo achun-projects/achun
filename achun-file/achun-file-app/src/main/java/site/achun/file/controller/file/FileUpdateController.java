@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
+import site.achun.file.client.module.file.request.CreateFileInfo;
+import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.DeleteFileRequest;
@@ -36,6 +38,11 @@ public class FileUpdateController implements FileUpdateClient {
     @Override
     public Rsp<InitFileInfoResponse> initFileInfo(InitFileInfo init) {
         return Rsp.success(fileCreateService.initFileInfo(init));
+    }
+
+    @Override
+    public Rsp<FileInfoResponse> createFile(CreateFileInfo create) {
+        return fileCreateService.createFileInfo(create);
     }
 
     @Override

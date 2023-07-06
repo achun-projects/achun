@@ -5,14 +5,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import site.achun.file.client.module.file.request.CreateFileInfo;
 import site.achun.file.client.module.file.request.DeleteFileRequest;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.request.UpdateFileRequest;
+import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.support.api.response.Rsp;
-
-import java.util.Collection;
 
 @FeignClient(name = "achun-file-app", contextId = "FileUpdateClient")
 public interface FileUpdateClient {
@@ -20,6 +20,10 @@ public interface FileUpdateClient {
     @Operation(summary = "初始化文件")
     @PostMapping("/file/update/init-file-info")
     Rsp<InitFileInfoResponse> initFileInfo(@RequestBody InitFileInfo init);
+
+    @Operation(summary = "新增一条文件记录")
+    @PostMapping("/file/update/create-file")
+    Rsp<FileInfoResponse> createFile(@RequestBody CreateFileInfo create);
 
     @Operation(summary = "更新文件")
     @PostMapping("/file/update/update-file-info")

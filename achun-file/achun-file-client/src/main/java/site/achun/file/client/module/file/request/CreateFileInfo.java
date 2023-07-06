@@ -31,14 +31,13 @@ public class CreateFileInfo implements Serializable {
     private String thirdId;
 
     @Schema(description = "文件仓库标识")
-    private String bucketCode;
+    private String storageCode;
 
     @Schema(description = "文件名")
     private String fileName;
 
-    // TODO 换成unitCode
     @Schema(description = "分组ID，当group相同时，视为一组资源。")
-    private String groupCode;
+    private String unitCode;
 
     @Schema(description = "文件类型, 0. 其他 1. 图片(jpg,jpeg,gif,png) 2. 视频(mp4,flv) 3. 音频(mp3)")
     private Integer type;
@@ -47,7 +46,7 @@ public class CreateFileInfo implements Serializable {
     private String suffix;
 
     @Schema(description = "在bucket内的存储路径")
-    private String inBucketPath;
+    private String inStoragePath;
 
     @Schema(description = "封面图片，在bucket内的存储路径")
     private String cover;
@@ -69,8 +68,4 @@ public class CreateFileInfo implements Serializable {
 
     @Schema(description = "文件源数据")
     private Object origin;
-
-    @Schema(description = "节点时间")
-    private Date linetime;
-
 }
