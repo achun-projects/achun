@@ -36,9 +36,30 @@
 
 等待更新
 
-#### 参与贡献
+## 技术栈
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+### 模块
+
+| 项目                   | 说明                      |
+|----------------------|-------------------------|
+| achun-app-support    | app支持项目                 |
+| achun-client-support | client支持项目              |
+| achun-eureka         | SpringCloud eureka组件    |
+| achun-gateway        | SpringCloud 网关组件        |
+| achun-file           | 文件信息服务                  |
+| achun-updown         | 文件上传下载服务，包括文件的转码处理和删除等等 |
+| achun-user           | 用户信息服务                  |
+| achun-gallery        | 相册服务                    |
+| achun-video          | 视频服务                    |
+
+### 框架
+
+| 技术          | 版本       | 说明       | 文档                                   |
+|-------------|----------|----------|--------------------------------------|
+| SpringBoot  | 3.1.0    |          | [文档](https://docs.spring.io/spring-boot/docs/current/reference/html/) |
+| SpringCloud | 2022.0.2 |          | [文档](https://docs.spring.io/spring-cloud/docs/current/reference/html/) |
+| MySQL       | 8.0.32   |          | [文档](https://dev.mysql.com/doc/refman/8.0/en/) |
+| RabbitMQ    |          |          | [文档](https://www.rabbitmq.com/documentation.html) |
+| Redis       |          |          | [文档](https://redis.io/docs/about/) |
+| Hutool      | 5.8.18   |   一个小而全的Java工具类库       | [文档](https://doc.hutool.cn/pages/index/) |
+| Sa-Token    |  1.35.0.RC     | 用于用户登录校验 | [文档](https://sa-token.cc/doc.html#/) |
