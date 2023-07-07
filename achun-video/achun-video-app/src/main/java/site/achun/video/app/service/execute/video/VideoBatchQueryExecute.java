@@ -6,7 +6,6 @@ import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import site.achun.file.client.module.file.FileResponse;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.response.MediaFileResponse;

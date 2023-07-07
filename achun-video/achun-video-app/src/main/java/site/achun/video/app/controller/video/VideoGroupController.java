@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.bind.annotation.*;
-import site.achun.file.client.module.file.FileResponse;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.response.MediaFileResponse;
