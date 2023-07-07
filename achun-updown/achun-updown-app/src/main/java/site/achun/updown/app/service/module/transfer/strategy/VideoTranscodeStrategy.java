@@ -2,11 +2,8 @@ package site.achun.updown.app.service.module.transfer.strategy;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import site.achun.file.client.module.file.FileUpdateClient;
-import site.achun.file.client.module.file.FileUpdateV4Client;
-import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferStrategy;
 import site.achun.updown.app.service.module.transfer.TransferType;
