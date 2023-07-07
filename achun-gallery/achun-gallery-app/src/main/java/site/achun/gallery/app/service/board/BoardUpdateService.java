@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.gallery.app.generator.domain.GalleryGroupRecord;
 import site.achun.gallery.app.generator.domain.Pictures;
 import site.achun.gallery.app.generator.domain.Board;
 import site.achun.gallery.app.generator.domain.BoardRecord;
@@ -14,6 +15,7 @@ import site.achun.gallery.app.generator.mapper.BoardMapper;
 import site.achun.gallery.app.generator.mapper.PicturesMapper;
 import site.achun.gallery.app.generator.service.BoardRecordService;
 import site.achun.gallery.app.generator.service.BoardService;
+import site.achun.gallery.app.generator.service.GalleryGroupRecordService;
 import site.achun.gallery.client.constant.GalleryRC;
 import site.achun.gallery.client.module.board.request.BoardCreateRequest;
 import site.achun.gallery.client.module.board.request.BoardUpdateRequest;
@@ -36,6 +38,7 @@ public class BoardUpdateService {
     private final BoardService boardService;
     private final BoardRecordService boardRecordService;
     private final BoardConvert boardConvert;
+    private final GalleryGroupRecordService groupRecordService;
 
     public Rsp<Void> removeBoard(String boardCode) {
         // 检测相册是否为空
@@ -50,6 +53,10 @@ public class BoardUpdateService {
                 .remove();
         boardRecordService.lambdaUpdate()
                 .eq(BoardRecord::getBoardCode,boardCode)
+                .remove();
+        // 清除相册分组记录
+        groupRecordService.lambdaUpdate()
+                .eq(GalleryGroupRecord::getListCode,boardCode)
                 .remove();
         return Rsp.success(null,"成功删除");
     }
