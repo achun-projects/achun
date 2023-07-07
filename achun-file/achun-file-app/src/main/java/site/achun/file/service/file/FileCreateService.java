@@ -9,7 +9,7 @@ import site.achun.file.client.constant.FileRC;
 import site.achun.file.client.enums.Hidden;
 import site.achun.file.client.module.file.request.CreateFileInfo;
 import site.achun.file.client.module.file.request.InitFileInfo;
-import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.domain.FileUnit;
@@ -80,7 +80,7 @@ public class FileCreateService {
         return fileInfo;
     }
 
-    public Rsp<FileInfoResponse> createFileInfo(CreateFileInfo createFileInfo) {
+    public Rsp<FileLocalInfoResponse> createFileInfo(CreateFileInfo createFileInfo) {
         if(createFileInfo==null){
             return Rsp.error(FileRC.PARAMS_IS_NULL);
         }
@@ -103,7 +103,7 @@ public class FileCreateService {
         }else{
             log.info("save file error,{},line:{}",fileInfo,line);
         }
-        return Rsp.success(fileConvert.toFileResponse(fileInfo));
+        return Rsp.success(fileConvert.toFileLocalInfoResponse(fileInfo));
     }
 
 }

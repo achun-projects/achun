@@ -41,7 +41,7 @@ public class FileUpdateController implements FileUpdateClient {
     }
 
     @Override
-    public Rsp<FileInfoResponse> createFile(CreateFileInfo create) {
+    public Rsp<FileLocalInfoResponse> createFile(CreateFileInfo create) {
         return fileCreateService.createFileInfo(create);
     }
 

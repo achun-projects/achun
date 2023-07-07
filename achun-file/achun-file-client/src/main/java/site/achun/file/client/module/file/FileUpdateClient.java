@@ -23,7 +23,7 @@ public interface FileUpdateClient {
 
     @Operation(summary = "新增一条文件记录")
     @PostMapping("/file/update/create-file")
-    Rsp<FileInfoResponse> createFile(@RequestBody CreateFileInfo create);
+    Rsp<FileLocalInfoResponse> createFile(@RequestBody CreateFileInfo create);
 
     @Operation(summary = "更新文件")
     @PostMapping("/file/update/update-file-info")
