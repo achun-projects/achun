@@ -26,7 +26,11 @@ public class UserInfoQueryController implements UserInfoQueryClient {
 
     @Override
     public Rsp<UserInfoResponse> queryUser(String satoken) {
-        var userCode = StpUtil.getLoginIdByToken(satoken);
+        String userCode = (String) StpUtil.getLoginIdByToken(satoken);
+        if(StrUtil.isEmpty(userCode)){
+            log.info("userCode:{},satoken:{}",userCode,satoken);
+            return Rsp.error("无效Token");
+        }
         UserAccount userAccount = userAccountService.lambdaQuery()
                 .eq(UserAccount::getUserCode, userCode)
                 .last("limit 1")
