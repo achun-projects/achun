@@ -59,11 +59,11 @@ public class RuleQueryController implements RuleQueryClient {
         // 重定向到url
 //
 //        // 设置字符编码为 UTF-8
-//        response.setCharacterEncoding("UTF-8");
-//        // 设置响应头的 Content-Type，包括字符编码
-//        response.setContentType("text/plain; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        // 设置响应头的 Content-Type，包括字符编码
+        response.setContentType("text/plain; charset=UTF-8");
 
-        response.sendRedirect(URLEncoder.encode(URLUtil.encodeBlank(url), "UTF-8"));
+        response.sendRedirect(URLUtil.encodeBlank(url));
 
 
     }
