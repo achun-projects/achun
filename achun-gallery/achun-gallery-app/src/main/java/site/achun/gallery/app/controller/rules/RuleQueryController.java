@@ -26,6 +26,7 @@ import site.achun.gallery.client.module.rules.requset.QueryFileByRuleCode;
 import site.achun.support.api.response.Rsp;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -56,7 +57,8 @@ public class RuleQueryController implements RuleQueryClient {
         MediaFileResponse fileResponse = RandomUtil.randomEle(list);
         String url = fileResponse.getUrl();
         // 重定向到url
-        response.sendRedirect(URLUtil.encodeBlank(url));
+
+        response.sendRedirect(URLUtil.encodeBlank(URLEncoder.encode(url, "UTF-8")));
 
 
     }
