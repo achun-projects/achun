@@ -2,6 +2,7 @@ package site.achun.gallery.app.controller.rules;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.URLUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,7 +56,7 @@ public class RuleQueryController implements RuleQueryClient {
         MediaFileResponse fileResponse = RandomUtil.randomEle(list);
         String url = fileResponse.getUrl();
         // 重定向到url
-        response.sendRedirect(url);
+        response.sendRedirect(URLUtil.encodeBlank(url));
 
 
     }
