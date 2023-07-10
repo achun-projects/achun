@@ -57,7 +57,7 @@ public class RuleQueryController implements RuleQueryClient {
         MediaFileResponse fileResponse = RandomUtil.randomEle(list);
         String url = fileResponse.getUrl();
         // 重定向到url
-        response.sendRedirect(URLUtil.encodeBlank(url));
+        response.sendRedirect(url);
     }
 
 }
