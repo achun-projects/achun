@@ -1,4 +1,7 @@
 package site.achun.file.client.module.file.response.detail;
 
-public class Detail {
+import java.io.Serializable;
+
+public class Detail implements Serializable {
+
 }
