@@ -20,8 +20,6 @@ import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.file.client.module.file.response.MediaFileResponse;
-import site.achun.file.client.module.file.response.detail.Image;
-import site.achun.file.client.module.file.response.detail.Video;
 import site.achun.file.client.module.storage.beans.StorageExtra;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.domain.Storage;
@@ -163,27 +161,10 @@ public class FileConvert {
         }
 
         // 设置详细信息
-        Type fileType = Type.parse(fileInfo.getType()).get();
-        switch (fileType){
-            case IMAGE:
-                Image image = new Image();
-                image.setWh(fileInfo.getWh());
-                image.setWidth(fileInfo.getWidth());
-                image.setHeight(fileInfo.getHeight());
-                rsp.setDetail(image);
-                break;
-            case VIDEO:
-                Video video = new Video();
-                video.setHeight(fileInfo.getHeight());
-                video.setWidth(fileInfo.getWidth());
-                video.setWh(fileInfo.getWh());
-                video.setDuration(fileInfo.getDuration());
-                rsp.setDetail(video);
-                break;
-            case AUDIO:
-            case OTHER:
-            default:
-        }
+        rsp.setHeight(fileInfo.getHeight());
+        rsp.setWidth(fileInfo.getWidth());
+        rsp.setWh(fileInfo.getWh());
+        rsp.setDuration(fileInfo.getDuration());
         return rsp;
     }
 

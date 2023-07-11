@@ -2,7 +2,6 @@ package site.achun.file.client.module.file.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import site.achun.file.client.module.file.response.detail.Detail;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileInfoResponse<T extends Detail> implements Serializable {
+public class FileInfoResponse implements Serializable {
 
     @Schema(description = "文件唯一标识，系统生成，25年内不重复")
     private String fileCode;
@@ -50,6 +49,16 @@ public class FileInfoResponse<T extends Detail> implements Serializable {
     @Schema(description = "网图访问url")
     private String mediumUrl;
 
-    @Schema(description = "详细信息")
-    private T detail;
+    @Schema(description = "宽度，图片视频等格式特有")
+    private Integer width;
+
+    @Schema(description = "高度，图片视频等格式特有")
+    private Integer height;
+
+    @Schema(description = "宽高比，乘100的整数")
+    private Integer wh;
+
+    @Schema(description = "持续时长，视频音频等格式特有")
+    private Integer duration;
+
 }
