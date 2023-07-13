@@ -1,15 +1,10 @@
 package site.achun.gallery.app.service;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import site.achun.file.client.enums.Type;
-import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.MediaFileResponse;
-import site.achun.file.client.module.file.response.detail.Image;
-import site.achun.file.client.module.file.response.detail.Video;
 import site.achun.gallery.app.generator.domain.AlbumRecord;
 import site.achun.gallery.app.generator.domain.Pictures;
 import site.achun.gallery.app.generator.mapper.AlbumRecordMapper;
