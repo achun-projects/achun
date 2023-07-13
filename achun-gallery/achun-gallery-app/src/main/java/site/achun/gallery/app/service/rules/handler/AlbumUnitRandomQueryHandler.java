@@ -1,5 +1,7 @@
 package site.achun.gallery.app.service.rules.handler;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson2.JSON;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import site.achun.gallery.app.service.rules.QueryHandler;
 import site.achun.gallery.app.service.rules.beans.FromUnit;
 import site.achun.gallery.app.service.rules.beans.RuleType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,8 +41,12 @@ public class AlbumUnitRandomQueryHandler implements QueryHandler {
         List<Pictures> pics = picturesService.lambdaQuery()
                 .eq(Pictures::getSetCode, randomUnitCode)
                 .list();
-        return pics.stream()
-                .map(Pictures::getFileCode)
-                .collect(Collectors.toList());
+        if(CollUtil.isEmpty(pics)){
+            return new ArrayList<>();
+        }else{
+            return RandomUtil.randomEleList(pics,fromUnit.getMaxCount()).stream()
+                    .map(Pictures::getFileCode)
+                    .collect(Collectors.toList());
+        }
     }
 }
