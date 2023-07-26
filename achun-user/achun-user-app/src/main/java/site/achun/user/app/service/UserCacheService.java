@@ -14,6 +14,8 @@ public class UserCacheService {
     private final static String KEY = "USER:LOGIN:%s";
     private final StringRedisTemplate redisTemplate;
 
+    private final static Long DEFAULT_TIMEOUT = 60 * 60 * 24 * 2L; // 2天
+
     /**
      * 设置缓存
      * @param token token
@@ -21,6 +23,9 @@ public class UserCacheService {
      * @param timeout 失效时间，单位秒
      */
     public void put(String token,String userCode,Long timeout){
+        if(timeout==null || timeout <= 0){
+            timeout = DEFAULT_TIMEOUT;
+        }
         String key = String.format(KEY,token);
         redisTemplate.opsForValue().set(key,userCode,timeout, TimeUnit.SECONDS);
     }
