@@ -10,6 +10,7 @@ import site.achun.support.api.response.Rsp;
 import site.achun.user.app.generator.domain.UserAccount;
 import site.achun.user.app.generator.service.UserAccountService;
 import site.achun.user.app.service.UserCacheService;
+import site.achun.user.app.service.dto.UserCacheInfo;
 import site.achun.user.app.utils.RsaUtil;
 import site.achun.user.client.module.login.UserLoginClient;
 import site.achun.user.client.module.login.request.LoginRequest;
@@ -50,12 +51,12 @@ public class UserLoginController implements UserLoginClient {
 
     @Override
     public Rsp<LoginResponse> checkToken(String token){
-        String userCode = userCacheService.get(token);
-        if(userCode == null){
+        UserCacheInfo userCacheInfo = userCacheService.getByToken(token);
+        if(userCacheInfo == null){
             return Rsp.error("token无效");
         }
         LoginResponse response = LoginResponse.builder()
-                .userCode(userCode)
+                .userCode(userCacheInfo.getUserCode())
                 .satoken(token)
                 .build();
         return Rsp.success(response);

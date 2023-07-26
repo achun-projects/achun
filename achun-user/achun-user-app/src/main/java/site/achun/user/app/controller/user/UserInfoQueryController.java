@@ -1,6 +1,5 @@
 package site.achun.user.app.controller.user;
 
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,7 @@ import site.achun.support.api.response.Rsp;
 import site.achun.user.app.generator.domain.UserAccount;
 import site.achun.user.app.generator.service.UserAccountService;
 import site.achun.user.app.service.UserCacheService;
+import site.achun.user.app.service.dto.UserCacheInfo;
 import site.achun.user.client.module.user.UserInfoQueryClient;
 import site.achun.user.client.module.user.response.UserInfoResponse;
 
@@ -28,13 +28,12 @@ public class UserInfoQueryController implements UserInfoQueryClient {
 
     @Override
     public Rsp<UserInfoResponse> queryUser(String satoken) {
-        String userCode = userCacheService.get(satoken);
-        if(StrUtil.isEmpty(userCode)){
-            log.info("userCode:{},satoken:{}",userCode,satoken);
+        UserCacheInfo userCacheInfo = userCacheService.getByToken(satoken);
+        if(userCacheInfo == null){
             return Rsp.error("无效Token");
         }
         UserAccount userAccount = userAccountService.lambdaQuery()
-                .eq(UserAccount::getUserCode, userCode)
+                .eq(UserAccount::getUserCode, userCacheInfo.getUserCode())
                 .last("limit 1")
                 .one();
         UserInfoResponse response = UserInfoResponse.builder()
