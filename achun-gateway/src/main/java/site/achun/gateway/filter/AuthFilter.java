@@ -34,15 +34,15 @@ public class AuthFilter implements GatewayFilter, Ordered {
         ServerHttpResponse response = exchange.getResponse();
         String satoken = request.getHeaders().getFirst("satoken");
         UserCacheInfo userCacheInfo = userLoginService.getByToken(satoken);
-        if(userCacheInfo==null){
-            byte[] bits = JSON.toJSONString(Rsp.error("无效token")).getBytes(StandardCharsets.UTF_8);
-            DataBuffer buffer = response.bufferFactory().wrap(bits);
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            //指定编码，否则在浏览器中会中文乱码
-            response.getHeaders().add("Content-Type", "text/plain;charset=UTF-8");
-            return response.writeWith(Mono.just(buffer));
-        }
-        String userCode = userCacheInfo.getUserCode();
+//        if(userCacheInfo==null){
+//            byte[] bits = JSON.toJSONString(Rsp.error("无效token")).getBytes(StandardCharsets.UTF_8);
+//            DataBuffer buffer = response.bufferFactory().wrap(bits);
+//            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+//            //指定编码，否则在浏览器中会中文乱码
+//            response.getHeaders().add("Content-Type", "text/plain;charset=UTF-8");
+//            return response.writeWith(Mono.just(buffer));
+//        }
+        String userCode = userCacheInfo == null?"":userCacheInfo.getUserCode();
         // 在请求属性中设置header
         request = request.mutate()
                 .header("user-code", userCode)
