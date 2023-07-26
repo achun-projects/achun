@@ -36,6 +36,7 @@ public class GalleryListUpdateController implements GalleryListUpdateClient {
             return boardUpdateService.updateBoard(CreateOrUpdateBoard.builder()
                     .boardCode(updateCover.getCode())
                     .cover(updateCover.getCoverFileCode())
+                    .userCode(userCode)
                     .build());
         }
         return Rsp.error("listType参数错误");
