@@ -1,4 +1,4 @@
-package site.achun.user.app.service.dto;
+package site.achun.user.client.module.login.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

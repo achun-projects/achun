@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import site.achun.user.app.service.dto.UserCacheInfo;
+import site.achun.user.client.module.login.dto.UserCacheInfo;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
