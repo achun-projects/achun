@@ -12,6 +12,7 @@ import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.support.api.response.Rsp;
 import site.achun.user.app.generator.domain.UserAccount;
 import site.achun.user.app.generator.service.UserAccountService;
+import site.achun.user.app.service.UserCacheService;
 import site.achun.user.client.module.user.UserInfoQueryClient;
 import site.achun.user.client.module.user.response.UserInfoResponse;
 
@@ -23,10 +24,11 @@ public class UserInfoQueryController implements UserInfoQueryClient {
 
     private final UserAccountService userAccountService;
     private final MediaFileQueryClient mediaFileQueryClient;
+    private final UserCacheService userCacheService;
 
     @Override
     public Rsp<UserInfoResponse> queryUser(String satoken) {
-        String userCode = (String) StpUtil.getLoginIdByToken(satoken);
+        String userCode = userCacheService.get(satoken);
         if(StrUtil.isEmpty(userCode)){
             log.info("userCode:{},satoken:{}",userCode,satoken);
             return Rsp.error("无效Token");

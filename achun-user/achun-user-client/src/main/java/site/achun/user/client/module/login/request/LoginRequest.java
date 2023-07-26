@@ -18,7 +18,7 @@ public class LoginRequest implements Serializable {
     @Schema(title = "密码")
     private String password;
 
-    @Schema(title = "超时时间")
+    @Schema(title = "超时时间,单位秒")
     private Long timeout;
 
 }

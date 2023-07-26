@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import site.achun.support.api.response.Rsp;
 import site.achun.user.app.generator.domain.UserAccount;
 import site.achun.user.app.generator.service.UserAccountService;
+import site.achun.user.app.service.UserCacheService;
 import site.achun.user.client.module.login.UserLoginClient;
 import site.achun.user.client.module.login.request.LoginRequest;
 import site.achun.user.client.module.login.response.LoginResponse;
+
+import java.util.UUID;
 
 @Slf4j
 @Tag(name = "用户登录")
@@ -21,8 +24,7 @@ public class UserLoginController implements UserLoginClient {
 
     private final UserAccountService userAccountService;
 
-    private final static String KEY = "USER:LOGIN:%s";
-    private final StringRedisTemplate redisTemplate;
+    private final UserCacheService userCacheService;
 
     @Override
     public Rsp<LoginResponse> login(LoginRequest request) {
@@ -33,23 +35,22 @@ public class UserLoginController implements UserLoginClient {
         if(userAccount == null){
             return Rsp.error("用户不存在");
         }
-        StpUtil.login(userAccount.getUserCode(),request.getTimeout());
         LoginResponse response = LoginResponse.builder()
                 .userCode(userAccount.getUserCode())
-                .satoken(StpUtil.getTokenValue())
+                .satoken(UUID.randomUUID().toString().replace("-",""))
                 .build();
-        redisTemplate.opsForValue().set(String.format(KEY,response.getSatoken()),response.getUserCode());
+        userCacheService.put(response.getSatoken(),response.getUserCode(),request.getTimeout());
         return Rsp.success(response);
     }
 
     @Override
-    public Rsp<LoginResponse> checkToken(String token) {
-        var userCode = StpUtil.getLoginIdByToken(token);
+    public Rsp<LoginResponse> checkToken(String token){
+        String userCode = userCacheService.get(token);
         if(userCode == null){
             return Rsp.error("token无效");
         }
         LoginResponse response = LoginResponse.builder()
-                .userCode((String) userCode)
+                .userCode(userCode)
                 .satoken(token)
                 .build();
         return Rsp.success(response);
