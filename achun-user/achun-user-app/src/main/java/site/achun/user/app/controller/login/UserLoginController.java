@@ -1,10 +1,8 @@
 package site.achun.user.app.controller.login;
 
-import cn.dev33.satoken.stp.StpUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.support.api.response.Rsp;
 import site.achun.user.app.generator.domain.UserAccount;
@@ -41,9 +39,14 @@ public class UserLoginController implements UserLoginClient {
         if(userAccount == null){
             return Rsp.error("登录失败");
         }
+        UserCacheInfo userCacheInfo = userCacheService.getByUserCode(userAccount.getUserCode());
+        String token = UUID.randomUUID().toString().replace("-","");
+        if(userCacheInfo != null){
+            token = userCacheInfo.getToken();
+        }
         LoginResponse response = LoginResponse.builder()
                 .userCode(userAccount.getUserCode())
-                .satoken(UUID.randomUUID().toString().replace("-",""))
+                .satoken(token)
                 .build();
         userCacheService.put(response.getSatoken(),response.getUserCode(),request.getTimeout());
         return Rsp.success(response);

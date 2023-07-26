@@ -1,5 +1,6 @@
 package site.achun.user.app.service;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson2.JSON;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import site.achun.user.app.service.dto.UserCacheInfo;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -38,19 +40,21 @@ public class UserCacheService {
     }
 
     public UserCacheInfo getByToken(String token){
-        String key = String.format(KEY,token,"*");
-        if(!redisTemplate.hasKey(key)){
-            return null;
-        }
-        String json = redisTemplate.opsForValue().get(key);
-        return JSON.parseObject(json,UserCacheInfo.class);
+        String patternKey = String.format(KEY,token,"*");
+        return getByPatternKey(patternKey);
     }
 
     public UserCacheInfo getByUserCode(String userCode){
-        String key = String.format(KEY,"*",userCode);
-        if(!redisTemplate.hasKey(key)){
+        String patternKey = String.format(KEY,"*",userCode);
+        return getByPatternKey(patternKey);
+    }
+
+    public UserCacheInfo getByPatternKey(String patternKey){
+        Set<String> keys = redisTemplate.keys(patternKey);
+        if(CollUtil.isEmpty(keys)){
             return null;
         }
+        String key = keys.stream().findFirst().get();
         String json = redisTemplate.opsForValue().get(key);
         return JSON.parseObject(json,UserCacheInfo.class);
     }
