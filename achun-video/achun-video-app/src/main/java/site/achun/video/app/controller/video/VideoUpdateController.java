@@ -12,6 +12,7 @@ import site.achun.support.api.response.Rsp;
 import site.achun.video.app.service.business.video.VideoUpdateService;
 import site.achun.video.app.utils.UserInfo;
 import site.achun.video.client.module.video.request.CreateOrUpdateVideoRequest;
+import site.achun.video.client.module.video.request.RemoveVideoRequest;
 import site.achun.video.client.module.video.response.VideoInfoResponse;
 
 
@@ -29,12 +30,17 @@ public class VideoUpdateController {
 
     private final VideoUpdateService videoUpdateService;
 
-//    @NeedLogin
     @Operation(summary = "创建视频信息")
     @PostMapping("/video/create/create-or-update-video")
     public Rsp<VideoInfoResponse> createOrUpdateVideo(@RequestBody @Valid CreateOrUpdateVideoRequest createVideo){
         String userCode = UserInfo.getCode();
         createVideo.setUserCode(userCode);
         return videoUpdateService.createOrUpdateVideo(createVideo);
+    }
+
+    @Operation(summary = "删除视频")
+    @PostMapping("/video/update/remove-video-unit")
+    public Rsp<VideoInfoResponse> removeVideo(@RequestBody @Valid RemoveVideoRequest request){
+        return null;
     }
 }
