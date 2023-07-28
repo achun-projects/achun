@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.file.FileAuthClient;
 import site.achun.file.client.module.file.request.AuthFileToken;
@@ -19,9 +20,8 @@ public class FileAuthController implements FileAuthClient {
 
     @Operation(summary = "校验文件访问token")
     @GetMapping("/file/auth/auth-file-header-token")
-    public Rsp<Void> authFileToken(HttpServletRequest request) {
+    public Rsp<Void> authFileToken(HttpServletRequest request,@RequestHeader("token") String token) {
         String uri = request.getRequestURI();
-        String token = request.getHeader("token");
         String tokenP = request.getParameter("token");
         log.info("uri:{},token:{},token:{}",uri,token,tokenP);
         return Rsp.success(null);
