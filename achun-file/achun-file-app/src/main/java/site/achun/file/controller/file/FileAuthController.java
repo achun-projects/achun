@@ -28,14 +28,16 @@ public class FileAuthController implements FileAuthClient {
     public ResponseEntity<Void> authFileToken(HttpServletRequest request) {
         String uri = request.getHeader("origin_uri");
         String token = request.getHeader("token");
-        if(StrUtil.isBlank(token)){
-            log.info("token is null when request:{},",uri);
+        if (StrUtil.isBlank(token)) {
+            log.info("token is null when request:{},", uri);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         // 开始验证
         boolean canAccess = false;
-        try{
+        try {
             canAccess = FileAuthUtil.checkToken(token, uri);
+        }catch (NumberFormatException ex){
+            ;
         }catch (Exception ex){
             ex.printStackTrace();
         }
