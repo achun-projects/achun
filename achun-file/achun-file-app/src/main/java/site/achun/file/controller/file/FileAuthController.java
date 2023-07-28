@@ -36,10 +36,7 @@ public class FileAuthController implements FileAuthClient {
         boolean canAccess = false;
         try{
             canAccess = FileAuthUtil.checkToken(token, uri);
-        }catch (RuntimeException ex){
-            log.info("校验不通过,message:{}",ex.getMessage());
         }catch (Exception ex){
-            log.info("校验异常",ex);
             ex.printStackTrace();
         }
         if(canAccess){
