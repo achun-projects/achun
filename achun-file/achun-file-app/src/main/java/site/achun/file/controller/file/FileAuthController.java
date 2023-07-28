@@ -22,7 +22,8 @@ public class FileAuthController implements FileAuthClient {
     public Rsp<Void> authFileToken(HttpServletRequest request) {
         String uri = request.getRequestURI();
         String token = request.getHeader("token");
-        log.info("uri:{},token:{}",uri,token);
+        String tokenP = request.getParameter("token");
+        log.info("uri:{},token:{},token:{}",uri,token,tokenP);
         return Rsp.success(null);
     }
 
