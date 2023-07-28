@@ -12,6 +12,9 @@ import site.achun.file.client.module.file.FileAuthClient;
 import site.achun.file.client.module.file.request.AuthFileToken;
 import site.achun.support.api.response.Rsp;
 
+import java.util.Enumeration;
+import java.util.Iterator;
+
 @Slf4j
 @Tag(name = "文件查询")
 @RequiredArgsConstructor
@@ -20,10 +23,15 @@ public class FileAuthController implements FileAuthClient {
 
     @Operation(summary = "校验文件访问token")
     @GetMapping("/file/auth/auth-file-header-token")
-    public Rsp<Void> authFileToken(HttpServletRequest request,@RequestHeader("token") String token) {
+    public Rsp<Void> authFileToken(HttpServletRequest request) {
         String uri = request.getRequestURI();
+        Iterator<String> headers = request.getHeaderNames().asIterator();
+        while(headers.hasNext()){
+            String header = headers.next();
+            log.info("header:{},value:{}",header,request.getHeader(header));
+        }
         String tokenP = request.getParameter("token");
-        log.info("uri:{},token:{},token:{}",uri,token,tokenP);
+        log.info("uri:{},token:{},token:{}",uri,"",tokenP);
         return Rsp.success(null);
     }
 
