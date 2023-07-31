@@ -28,6 +28,9 @@ public class GatewayConfig {
                 .route("video", r -> r.path("/video/**")
                         .filters(f -> f.filter(authFilter))
                         .uri("lb://achun-video-app"))
+                .route("theatre", r -> r.path("/theatre/**")
+                        .filters(f -> f.filter(authFilter))
+                        .uri("lb://achun-theatre-app"))
                 .build();
     }
 }

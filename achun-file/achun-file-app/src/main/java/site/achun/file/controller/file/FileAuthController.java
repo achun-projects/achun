@@ -37,7 +37,7 @@ public class FileAuthController implements FileAuthClient {
         try {
             canAccess = FileAuthUtil.checkToken(token, uri);
         }catch (NumberFormatException ex){
-            ;
+            log.info("错误token:{}",token);
         }catch (Exception ex){
             ex.printStackTrace();
         }
