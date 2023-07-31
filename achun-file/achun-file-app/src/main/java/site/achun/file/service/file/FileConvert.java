@@ -155,7 +155,7 @@ public class FileConvert {
         rsp.setUrl(makeAuthUrl(domain+fileInfo.getInStoragePath()));
         // 设置封面
         if(StrUtil.isNotEmpty(fileInfo.getCover())){
-            rsp.setCover(makeAuthUrl(domain + rsp.getCover()));
+            rsp.setCover(makeAuthUrl(domain + fileInfo.getCover()));
         }else{
             rsp.setCover(makeAuthUrl(domain+smallUrl));
         }
