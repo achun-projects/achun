@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import site.achun.file.client.enums.Type;
 import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.CreateFileInfo;
-import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.storage.StorageQueryClient;
 import site.achun.file.client.module.storage.request.QueryStorageByCode;
@@ -43,7 +42,7 @@ public class UploadService {
         CreateFileInfo createFileInfo = CreateFileInfo.builder()
                 .fileCode(params.fileCode)
                 .md5(params.getHash())
-                .storageCode(params.getStorageResponse().getBucketCode())
+                .storageCode(params.getStorageResponse().getStorageCode())
                 .fileName(params.getFile().getName())
                 .inStoragePath(params.getInStoragePath())
                 .unitCode(params.getUnitCode())
