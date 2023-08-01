@@ -21,10 +21,12 @@ public class LocalConfigurationFileReader implements CommandLineRunner {
         File file = new File(CONFIG_FILE_PATH);
         if(!file.exists()){
             log.info("自定义配置文件不存在");
+            return;
         }
         String fileContent = FileUtil.readAsString(file);
         if(StrUtil.isEmpty(fileContent)){
             log.info("自定义配置文件存在,但内容为空");
+            return;
         }
         try{
             AchunConfig achunConfig = JSONObject.parseObject(fileContent, AchunConfig.class);
