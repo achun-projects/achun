@@ -29,14 +29,19 @@ public class UserLoginController implements UserLoginClient {
     private final UserCacheService userCacheService;
 
     private final static ConcurrentHashMap<String,Integer> errorLoginRecord = new ConcurrentHashMap<>();
+    private final static Integer ERROR_LIMIT_COUNT = 5;
 
     @Override
     public Rsp<LoginResponse> login(LoginRequest request) {
-        if(errorLoginRecord.containsKey(request.getAccount()) && errorLoginRecord.get(request.getAccount()) > 5){
+        if(errorLoginRecord.containsKey(request.getAccount()) && errorLoginRecord.get(request.getAccount()) > ERROR_LIMIT_COUNT){
+            log.info("登录失败，账号锁定:{}",request.getAccount());
+            errorRecord(request.getAccount());
             return Rsp.error("账号锁定");
         }
         String password = RsaUtil.decrypt(request.getPassword(), RsaUtil.DEFAULT_RSA_PRIVATE_KEY);
         if(password==null){
+            log.info("登录失败，密码错误:{},password:{}",request.getAccount(),request.getPassword());
+            errorRecord(request.getAccount());
             return Rsp.error("登录失败");
         }
         UserAccount userAccount = userAccountService.lambdaQuery()
@@ -44,6 +49,8 @@ public class UserLoginController implements UserLoginClient {
                 .eq(UserAccount::getPassword, password)
                 .one();
         if(userAccount == null){
+            log.info("登录失败，账号不存在:{},password:{}",request.getAccount(),password);
+            errorRecord(request.getAccount());
             return Rsp.error("登录失败");
         }
         UserCacheInfo userCacheInfo = userCacheService.getByUserCode(userAccount.getUserCode());
@@ -56,6 +63,7 @@ public class UserLoginController implements UserLoginClient {
                 .satoken(token)
                 .build();
         userCacheService.put(response.getSatoken(),response.getUserCode(),request.getTimeout());
+        log.info("登录成功：{}",request.getAccount());
         return Rsp.success(response);
     }
 
