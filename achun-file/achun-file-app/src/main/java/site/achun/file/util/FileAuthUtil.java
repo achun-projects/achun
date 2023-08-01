@@ -8,11 +8,14 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 
 public class FileAuthUtil {
-    private final static String KEY = "THISISFILEAUTHUT";
     private final static Integer TIMEOUT = 1;
     private final static TemporalUnit TIMEOUT_UNIT = ChronoUnit.HOURS;
 
-    private final static cn.hutool.crypto.symmetric.AES AES = new AES(KEY.getBytes());
+    private static cn.hutool.crypto.symmetric.AES AES = null;
+
+    public static void init(String key){
+        AES = new AES(key.getBytes());
+    }
 
     public static String generatorToken(String url){
         LocalDateTime expireTime = LocalDateTime.now().plus(TIMEOUT, TIMEOUT_UNIT);
