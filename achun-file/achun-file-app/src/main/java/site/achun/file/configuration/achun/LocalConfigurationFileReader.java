@@ -18,6 +18,7 @@ public class LocalConfigurationFileReader implements CommandLineRunner {
     private final static String CONFIG_FILE_PATH = "/root/.achun/config.json";
     @Override
     public void run(String... args) throws Exception {
+        FileAuthUtil.init(AchunConfig.config.getFileAuthKey());
         File file = new File(CONFIG_FILE_PATH);
         if(!file.exists()){
             log.info("自定义配置文件不存在");
