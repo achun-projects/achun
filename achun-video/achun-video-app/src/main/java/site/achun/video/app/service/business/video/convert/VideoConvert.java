@@ -21,6 +21,9 @@ public class VideoConvert {
         VideoFileInfo videoFileInfo = BeanUtil.toBean(fileResponse, VideoFileInfo.class);
         videoFileInfo.setVideoCode(fileResponse.getUnitCode());
         videoFileInfo.setVideoName(fileResponse.getFileName());
+        videoFileInfo.setCtime(LocalDateTime.now());
+        videoFileInfo.setUtime(LocalDateTime.now());
+        videoFileInfo.setAtime(LocalDateTime.now());
         return videoFileInfo;
     }
 
