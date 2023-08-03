@@ -18,9 +18,16 @@ public interface TagsMapService extends IService<TagsMap> {
                 .eq(TagsMap::getObjectCode,objectCode)
                 .list();
     }
-    default List<TagsMap> getTagsMapByObjectCodes(Collection<String> objectCodes){
+    default List<TagsMap> queryByObjectCodes(Collection<String> objectCodes){
         List<TagsMap> list = this.lambdaQuery()
                 .in(TagsMap::getObjectCode, objectCodes)
+                .list();
+        if(CollUtil.isEmpty(list)) return new ArrayList<>();
+        return list;
+    }
+    default List<TagsMap> queryByObjectCode(String objectCode){
+        List<TagsMap> list = this.lambdaQuery()
+                .eq(TagsMap::getObjectCode, objectCode)
                 .list();
         if(CollUtil.isEmpty(list)) return new ArrayList<>();
         return list;

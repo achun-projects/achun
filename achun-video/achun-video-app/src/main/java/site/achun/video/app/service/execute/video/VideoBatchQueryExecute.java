@@ -90,7 +90,7 @@ public class VideoBatchQueryExecute {
                 .filter(video->clickNumMap.containsKey(video.getVideoCode()))
                 .forEach(video->video.setClickNum(clickNumMap.get(video.getVideoCode())));
         // 补充标签
-        Map<String, List<TagsMap>> tagsMap = tagsMapService.getTagsMapByObjectCodes(videoCodes).stream()
+        Map<String, List<TagsMap>> tagsMap = tagsMapService.queryByObjectCodes(videoCodes).stream()
                 .collect(Collectors.groupingBy(TagsMap::getObjectCode));
         videoInfoResponseList.stream()
                 .filter(video->tagsMap.containsKey(video.getVideoCode()))

@@ -23,6 +23,7 @@ import site.achun.video.app.service.business.video.convert.VideoConvert;
 import site.achun.video.app.service.execute.video.VideoQueryExecute;
 import site.achun.video.client.constant.ViewLevelEnum;
 import site.achun.video.client.module.video.request.CreateOrUpdateVideoRequest;
+import site.achun.video.client.module.video.request.RemoveVideoRequest;
 import site.achun.video.client.module.video.response.VideoInfoResponse;
 
 import java.time.LocalDateTime;
@@ -149,5 +150,4 @@ public class VideoUpdateService {
         videoInfo.setSourceUrl(createVideo.getSourceUrl());
         return videoInfo;
     }
-
 }
