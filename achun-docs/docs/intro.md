@@ -2,46 +2,14 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Achun
 
-Let's discover **Docusaurus in less than 5 minutes**.
+小阿蠢是一个文件助手。
 
-## Getting Started
+文件助手应该是什么样子的？我暂时还没有具体的答案，但我想，它应该是好用的，智能的，能帮我管理好文件的，而不只是帮我存储文件。
 
-Get started by **creating a new site**.
+## 介绍
+做这个项目完全是自己兴趣驱动的，所有的需求都来自于我自己。之所以自己来做也是因为没有找到合适的，好用的文件管理工具。而网盘之类的，本质上还是在解决存储的问题，而且，不是基于本地的。会存在成本问题导致使用不佳或者其他的问题。
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+## 规划
+目前这个项目实现的功能有：相册管理，视频管理。之后会继续优化这两个功能。也会再继续添加音乐播放，文档管理，文本阅读等模块。

@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Achun杂乱文件小助手',
+  tagline: 'Achun杂乱文件小助手',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -64,7 +64,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'My Site',
+        title: 'Achun杂乱文件小助手',
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.svg',
@@ -74,9 +74,9 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: '文档',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          {to: '/blog', label: '博客', position: 'left'},
           {
             href: 'https://github.com/facebook/docusaurus',
             label: 'GitHub',
@@ -127,7 +127,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Achun杂乱文件小助手. All rights reserved.<br/> <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备2023010027号-1</a>`,
       },
       prism: {
         theme: lightCodeTheme,
