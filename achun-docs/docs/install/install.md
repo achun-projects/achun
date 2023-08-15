@@ -3,13 +3,7 @@
 
 ## 准备工作
 
-linux服务器
-
-安装rabbitmq
-
-安装mysql8数据库
-
-安装redis
+请提前准备好mysql数据库，rabbitmq，redis等服务。
 
 ## 修改配置文件
 
