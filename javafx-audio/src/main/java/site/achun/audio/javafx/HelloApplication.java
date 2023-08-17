@@ -1,4 +1,4 @@
-package site.achun.audio.javafx.javafxaudio;
+package site.achun.audio.javafx;
 
 import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;

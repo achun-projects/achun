@@ -1,4 +1,4 @@
-module site.achun.audio.javafx.javafxaudio {
+module site.achun.audio.javafx {
     requires javafx.controls;
     requires javafx.fxml;
             
@@ -8,6 +8,6 @@ module site.achun.audio.javafx.javafxaudio {
             requires org.kordamp.bootstrapfx.core;
             requires atlantafx.base;
             
-    opens site.achun.audio.javafx.javafxaudio to javafx.fxml;
-    exports site.achun.audio.javafx.javafxaudio;
+    opens site.achun.audio.javafx to javafx.fxml;
+    exports site.achun.audio.javafx;
 }

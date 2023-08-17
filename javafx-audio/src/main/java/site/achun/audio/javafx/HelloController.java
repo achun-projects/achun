@@ -1,4 +1,4 @@
-package site.achun.audio.javafx.javafxaudio;
+package site.achun.audio.javafx;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
