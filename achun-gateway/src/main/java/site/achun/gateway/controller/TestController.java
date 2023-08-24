@@ -12,4 +12,9 @@ public class TestController {
     public String hello(String name){
         return "Hello "+name;
     }
+
+    @GetMapping("/gateway/echo")
+    public String echo(){
+        return "stand by";
+    }
 }
