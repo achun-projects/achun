@@ -188,7 +188,9 @@
             DATE_FORMAT( ctime, '%Y-%m-%d' ) AS `time`,
             COUNT(*) AS `count`
         FROM
-            pictures
+            file_set
+        WHERE
+            user_code = #{userCode}
         GROUP BY
             `time`
         ORDER BY

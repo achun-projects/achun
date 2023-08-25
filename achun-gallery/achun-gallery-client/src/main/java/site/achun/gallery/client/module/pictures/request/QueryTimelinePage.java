@@ -8,4 +8,5 @@ import java.io.Serializable;
 @Data
 public class QueryTimelinePage extends ReqPage implements Serializable {
 
+    private String userCode;
 }

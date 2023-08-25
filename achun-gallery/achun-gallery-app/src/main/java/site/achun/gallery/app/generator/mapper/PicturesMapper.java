@@ -27,7 +27,7 @@ public interface PicturesMapper extends BaseMapper<Pictures> {
 
     IPage<Pictures> selectBoardFiles(Page<?> page, @Param("query") QueryRecord queryRecord);
 
-    IPage<TimelineResponse> selectTimelinePage(Page<?> page);
+    IPage<TimelineResponse> selectTimelinePage(Page<?> page, @Param("userCode")String userCode);
 
     int replaceInto(Pictures pictures);
 

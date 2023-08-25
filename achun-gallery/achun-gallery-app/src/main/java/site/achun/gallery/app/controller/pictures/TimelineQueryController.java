@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
+import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.pictures.response.PictureResponse;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCodes;
@@ -33,6 +34,7 @@ public class TimelineQueryController implements TimelineQueryClient {
     private final MediaFileQueryClient fileQueryClient;
     @Override
     public Rsp<RspPage<Timeline>> queryTimeline(QueryTimelinePage query) {
+        query.setUserCode(UserInfo.getCode(query::getUserCode));
         RspPage<TimelineResponse> rspPage = timelineQueryService.query(query);
 
         List<String> fileCodes = rspPage.getRows().stream()
