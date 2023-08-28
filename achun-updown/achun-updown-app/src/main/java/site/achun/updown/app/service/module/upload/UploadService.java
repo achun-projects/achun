@@ -110,6 +110,7 @@ public class UploadService {
                 .fileName(file.getName())
                 .inStoragePath(upload.getKey())
                 .unitCode(upload.getUnitCode())
+                .thirdId(upload.getThirdId())
                 .origin(JSON.toJSONString(upload))
                 .size((int) file.length()/1024)
                 .suffix(suffix)

@@ -14,6 +14,7 @@ import java.util.Map;
 public class Upload {
     private String storageCode;
     private String unitCode;
+    private String thirdId;
     private String key;
     private String path;
     private Boolean override;

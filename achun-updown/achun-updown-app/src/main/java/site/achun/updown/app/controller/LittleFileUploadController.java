@@ -57,7 +57,8 @@ public class LittleFileUploadController {
     @PostMapping("/updown/upload/little-file-upload")
     public Rsp<FileInfoResponse> uploadFile(
             @RequestParam("file") MultipartFile multipartFile,
-            @RequestParam(value = "unit",required = false,defaultValue = "") String unitCode){
+            @RequestParam(value = "unit",required = false,defaultValue = "") String unitCode,
+            @RequestParam(value = "third",required = false,defaultValue = "") String third){
         if(StrUtil.isEmpty(unitCode)){
             unitCode = UUID.randomUUID().toString().replace("-","");
         }
@@ -106,6 +107,7 @@ public class LittleFileUploadController {
                 .path(targetFilePath)
                 .storageCode(bucketCode)
                 .unitCode(unitCode)
+                .thirdId(third)
                 .key(key)
                 .origin(originMap)
                 .override(false)
