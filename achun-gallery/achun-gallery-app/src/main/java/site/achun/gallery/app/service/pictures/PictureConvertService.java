@@ -84,6 +84,7 @@ public class PictureConvertService {
                 .type(file.getType())
                 .unitCode(file.getUnitCode())
                 .width(file.getWidth())
+                .size(file.getSize())
                 .build();
     }
 

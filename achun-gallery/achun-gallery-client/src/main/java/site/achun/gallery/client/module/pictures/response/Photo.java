@@ -29,4 +29,5 @@ public class Photo implements Serializable {
     private Integer width;
     private Integer height;
     private Integer duration; // 持续时长，视频音频等格式特有
+    private Long size;
 }
