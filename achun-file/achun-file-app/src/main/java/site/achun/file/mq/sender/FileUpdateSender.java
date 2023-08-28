@@ -14,8 +14,8 @@ public class FileUpdateSender {
 
     private final AmqpTemplate amqpTemplate;
 
-    public void whenFileUpdate(UpdateFileRequest request){
-        amqpTemplate.convertAndSend("FILE_UPDATE_FANOUT_EXCHANGE","",request.getFileCode());
+    public void whenFileUpdate(String fileCode){
+        amqpTemplate.convertAndSend("FILE_UPDATE_FANOUT_EXCHANGE","",fileCode);
     }
 
     public void whenFileRemove(String fileCode){
