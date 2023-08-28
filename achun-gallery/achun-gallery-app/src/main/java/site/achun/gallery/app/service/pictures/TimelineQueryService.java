@@ -17,6 +17,7 @@ import site.achun.support.api.response.RspPage;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,13 +34,13 @@ public class TimelineQueryService {
     // 为日期查询增加缓存逻辑,临时方案，没有支持多账号。
     // 后面可以使用file_group做查询，即可支持多账号。
     // 现在不做是因为不确定每个上传都有group记录
-    private static RspPage<TimelineResponse> temp = null;
+    private static HashMap<String,RspPage<TimelineResponse>> tempMap = new HashMap<>();
     public RspPage<TimelineResponse> query(QueryTimelinePage query){
-        new Thread(()->{
-            temp = queryPage(query);
+        new Thread(() -> {
+            tempMap.put(query.getUserCode(), queryPage(query));
         }).start();
-        if(temp != null){
-            return temp;
+        if(tempMap.containsKey(query.getUserCode())){
+            return tempMap.get(query.getUserCode());
         }else{
             return queryPage(query);
         }
