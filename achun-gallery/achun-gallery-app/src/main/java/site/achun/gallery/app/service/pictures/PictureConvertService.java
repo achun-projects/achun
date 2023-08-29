@@ -4,18 +4,14 @@ import cn.hutool.core.bean.BeanUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import site.achun.file.client.module.file.FileQueryClient;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.gallery.app.generator.domain.Pictures;
-import site.achun.gallery.app.utils.PageUtil;
 import site.achun.gallery.client.module.pictures.request.CreatePicture;
 import site.achun.gallery.client.module.pictures.response.Photo;
 import site.achun.gallery.client.module.pictures.response.PictureResponse;
 import site.achun.support.api.enums.Deleted;
-import site.achun.support.api.response.Rsp;
-import site.achun.support.api.response.RspPage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,11 +32,11 @@ public class PictureConvertService {
 
     private final MediaFileQueryClient fileQueryClient;
 
-    public PictureResponse toResponse(Pictures pictures){
+    public PictureResponse copyToResponse(Pictures pictures){
         return BeanUtil.toBean(pictures,PictureResponse.class);
     }
 
-    public List<PictureResponse> toResponse(Collection<Pictures> picturesCollection){
+    public List<PictureResponse> copyToResponse(Collection<Pictures> picturesCollection){
         return BeanUtil.copyToList(picturesCollection, PictureResponse.class);
     }
 
@@ -51,25 +47,27 @@ public class PictureConvertService {
         return picture;
     }
 
-    public Rsp<RspPage<Photo>> toPhotoPage(RspPage<PictureResponse> rspPage) {
+    public List<Photo> toPhotos(List<Pictures> list) {
         // 转换文件
-        List<String> fileCodes = rspPage.getRows().stream()
-                .map(PictureResponse::getFileCode)
+        List<String> fileCodes = list.stream()
+                .map(Pictures::getFileCode)
                 .collect(Collectors.toList());
         QueryByFileCodes query = QueryByFileCodes.builder().fileCodes(fileCodes).build();
         Map<String, MediaFileResponse> fileResponseMap = fileQueryClient.queryFileMap(query).tryGetData();
 
         // 过滤掉不存在的记录
-        List<PictureResponse> newRows = new ArrayList<>();
-        for (PictureResponse row : rspPage.getRows()) {
-            if(fileResponseMap.containsKey(row.getFileCode())){
-                newRows.add(row);
+        List<PictureResponse> newList = new ArrayList<>();
+        for (Pictures item : list) {
+            PictureResponse newItem = copyToResponse(item);
+            if(fileResponseMap.containsKey(item.getFileCode())){
+                newList.add(newItem);
             }else{
-                log.info("fileCode:{}在文件系统中不存在",row.getFileCode());
+                log.info("fileCode:{}在文件系统中不存在",item.getFileCode());
             }
         }
-        rspPage.setRows(newRows);
-        return Rsp.success(PageUtil.parse(rspPage,pic -> toPhoto(fileResponseMap.get(pic.getFileCode()))));
+        return newList.stream()
+                .map(rsp -> toPhoto(fileResponseMap.get(rsp.getFileCode())))
+                .collect(Collectors.toList());
     }
 
     public Photo toPhoto(MediaFileResponse file){

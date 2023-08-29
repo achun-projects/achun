@@ -65,7 +65,7 @@ public class TimelineQueryService {
                     .orderByDesc(Pictures::getCtime)
                     .last("limit 10")
                     .list();
-            record.setPictures(convertService.toResponse(pictures));
+            record.setPictures(convertService.copyToResponse(pictures));
         });
         return PageUtil.parse(timelinePage,query);
     }

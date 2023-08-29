@@ -30,15 +30,11 @@ public class AlbumRecordQueryService {
     private final PictureConvertService pictureConvertService;
 
     public Rsp<RspPage<Photo>> queryPage(QueryRecord queryRecord){
-
         IPage<Pictures> pageResp = picturesMapper.selectAlbumFiles(PageUtil.parse(queryRecord.getReqPage()), queryRecord);
-        RspPage<PictureResponse> rspPage = PageUtil.parse(pageResp,pictureConvertService::toResponse,queryRecord.getReqPage());
-
-        if(CollUtil.isEmpty(rspPage.getRows())){
-            RspPage result = rspPage;
-            return Rsp.success(result);
+        if(CollUtil.isEmpty(pageResp.getRecords())){
+            return Rsp.success(queryRecord.getReqPage().createPageRsp());
         }
-        return pictureConvertService.toPhotoPage(rspPage);
+        return Rsp.success(PageUtil.batchParse(pageResp,queryRecord.getReqPage(),pictureConvertService::toPhotos));
     }
 
 }

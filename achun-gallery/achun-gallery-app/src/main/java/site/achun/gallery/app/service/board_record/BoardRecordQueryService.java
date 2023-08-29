@@ -43,13 +43,10 @@ public class BoardRecordQueryService {
             }
         }
         IPage<Pictures> pageResp = picturesMapper.selectBoardFiles(PageUtil.parse(queryRecord.getReqPage()), queryRecord);
-        RspPage<PictureResponse> rspPage = PageUtil.parse(pageResp,pictureConvertService::toResponse,queryRecord.getReqPage());
-
-        if(CollUtil.isEmpty(rspPage.getRows())){
-            RspPage result = rspPage;
-            return Rsp.success(result);
+        if(CollUtil.isEmpty(pageResp.getRecords())){
+            return Rsp.success(queryRecord.getReqPage().createPageRsp());
         }
-        return pictureConvertService.toPhotoPage(rspPage);
+        return Rsp.success(PageUtil.batchParse(pageResp,queryRecord.getReqPage(),pictureConvertService::toPhotos));
     }
 
 }
