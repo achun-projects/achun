@@ -1,11 +1,16 @@
 package site.achun.file.service.storage;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.module.storage.request.QueryStoragePage;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.generator.domain.Storage;
 import site.achun.file.generator.service.StorageService;
+import site.achun.file.util.PageUtil;
+import site.achun.support.api.response.RspPage;
 
 @Slf4j
 @Service
@@ -29,5 +34,15 @@ public class StorageQueryService {
 
     public StorageResponse queryStorage(String storageCode){
         return storageConvert.toResponse(storageService.getStorage(storageCode));
+    }
+
+    public RspPage<StorageResponse> queryStoragePage(QueryStoragePage query){
+        Page<Storage> pageResult = storageService.lambdaQuery()
+                .orderByDesc(Storage::getUtime)
+                .page(Page.of(query.getPage(), query.getSize()));
+        if(CollUtil.isEmpty(pageResult.getRecords())){
+            return query.createPageRsp();
+        }
+        return PageUtil.batchParse(pageResult,query,storageConvert::toResponse);
     }
 }

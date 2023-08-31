@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.file.request.CreateFileInfo;
-import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.DeleteFileRequest;

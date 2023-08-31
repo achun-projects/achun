@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.generator.domain.Storage;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,5 +28,11 @@ public class StorageConvert {
                 .path(storage.getPath())
                 .ctime(storage.getCtime())
                 .build();
+    }
+
+    public List<StorageResponse> toResponse(List<Storage> storage){
+        return storage.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 }
