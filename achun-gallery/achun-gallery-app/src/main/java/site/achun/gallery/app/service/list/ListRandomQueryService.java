@@ -44,7 +44,7 @@ public class ListRandomQueryService {
         if(pageResult.getTotal() == 0){
             return null;
         }
-        long randomNum = RandomUtil.randomLong(pageResult.getTotal());
+        long randomNum = RandomUtil.randomLong(pageResult.getTotal() / size);
         pageResult = listFilesQueryExecute.queryPages(listCodes,randomNum,size);
         return pageResult.getRecords();
     }
