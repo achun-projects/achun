@@ -33,7 +33,7 @@ public class FromListsQueryHandler implements QueryHandler {
         List<String> respList = new ArrayList<>();
         for (FromLists list : fromLists) {
             List<Pictures> files = listRandomQueryService.randomQuery(list.getValues(),list.getCount());
-            if(CollUtil.isEmpty(files)){
+            if(CollUtil.isNotEmpty(files)){
                 respList.addAll(files.stream().map(Pictures::getFileCode).collect(Collectors.toList()));
             }
         }
