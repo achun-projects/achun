@@ -1,9 +1,11 @@
 package site.achun.gallery.app.service.rules.handler;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson2.JSON;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.gallery.app.generator.domain.Pictures;
 import site.achun.gallery.app.service.list.ListRandomQueryService;
 import site.achun.gallery.app.service.rules.QueryHandler;
 import site.achun.gallery.app.service.rules.beans.FromLists;
@@ -11,6 +13,7 @@ import site.achun.gallery.app.service.rules.beans.RuleType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -29,8 +32,10 @@ public class FromListsQueryHandler implements QueryHandler {
         List<FromLists> fromLists = JSON.parseArray(rule, FromLists.class);
         List<String> respList = new ArrayList<>();
         for (FromLists list : fromLists) {
-            String fileCode = listRandomQueryService.randomQuery(list.getValues());
-            respList.add(fileCode);
+            List<Pictures> files = listRandomQueryService.randomQuery(list.getValues(),list.getCount());
+            if(CollUtil.isEmpty(files)){
+                respList.addAll(files.stream().map(Pictures::getFileCode).collect(Collectors.toList()));
+            }
         }
         return respList;
     }

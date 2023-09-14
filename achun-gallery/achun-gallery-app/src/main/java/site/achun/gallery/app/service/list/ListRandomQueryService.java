@@ -1,5 +1,6 @@
 package site.achun.gallery.app.service.list;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import site.achun.support.api.response.Rsp;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,14 +31,22 @@ public class ListRandomQueryService {
     }
 
     public String randomQuery(Collection<String> listCodes){
+        List<Pictures> list = randomQuery(listCodes, 1);
+        if(CollUtil.isEmpty(list)){
+            return null;
+        }
+        return list.get(0).getFileCode();
+    }
+
+    public List<Pictures> randomQuery(Collection<String> listCodes, long size){
         // 通过相册和画板查询到文件总数。使用总数获取随机值。
         IPage<Pictures> pageResult = listFilesQueryExecute.queryPages(listCodes,1,1);
         if(pageResult.getTotal() == 0){
             return null;
         }
         long randomNum = RandomUtil.randomLong(pageResult.getTotal());
-        pageResult = listFilesQueryExecute.queryPages(listCodes,randomNum,1);
-        return pageResult.getRecords().get(0).getFileCode();
+        pageResult = listFilesQueryExecute.queryPages(listCodes,randomNum,size);
+        return pageResult.getRecords();
     }
 
     public Photo randomQueryOnePhoto(String listCode){

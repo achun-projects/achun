@@ -30,7 +30,6 @@ public class PlayRecordController {
     private final PlayRecordService playRecordService;
     private final VideoClickRecordService videoClickRecordService;
 
-
     @Operation(summary = "查询播放记录")
     @GetMapping("/video/play-record/recent")
     public Rsp<List<Video>> queryRecentPlayRecord(@RequestParam("limit") Integer limit){
