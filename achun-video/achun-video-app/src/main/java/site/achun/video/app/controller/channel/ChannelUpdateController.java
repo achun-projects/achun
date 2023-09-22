@@ -28,7 +28,6 @@ public class ChannelUpdateController {
 
     private final ChannelUpdateService channelUpdateService;
 
-//    @NeedLogin
     @Operation(summary = "创建频道")
     @PostMapping("/video/channel/create-channel")
     public Rsp<ChannelResponse> createChannel(@RequestBody CreateChannel createChannel){
@@ -36,7 +35,6 @@ public class ChannelUpdateController {
         return Rsp.success(channelUpdateService.createChannel(createChannel));
     }
 
-//    @NeedLogin
     @Operation(summary = "更新频道")
     @PostMapping("/video/channel/update-channel")
     public Rsp<ChannelResponse> updateChannel(@RequestBody @Valid UpdateChannel updateChannel){

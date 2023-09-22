@@ -9,6 +9,7 @@ import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByUnitCode;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.support.api.enums.Deleted;
+import site.achun.support.api.enums.Visibility;
 import site.achun.support.api.response.RC;
 import site.achun.support.api.response.Rsp;
 import site.achun.video.app.generator.domain.PlayListRecord;
@@ -128,6 +129,7 @@ public class VideoUpdateService {
                 .viewLevel(createVideo.getViewLevel()==null? ViewLevelEnum.NORMAL : createVideo.getViewLevel())
                 .sourceType(createVideo.getSourceType())
                 .sourceUrl(createVideo.getSourceUrl())
+                .visibility(Visibility.ALL.getLevel())
                 .ctime(LocalDateTime.now())
                 .utime(LocalDateTime.now())
                 .deleted(Deleted.NO.getStatus())

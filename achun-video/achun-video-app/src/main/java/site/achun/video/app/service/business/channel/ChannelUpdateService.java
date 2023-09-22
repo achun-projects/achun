@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.support.api.enums.Visibility;
 import site.achun.support.api.utils.CodeGenUtil;
 import site.achun.video.app.generator.domain.Channel;
 import site.achun.video.app.generator.service.ChannelService;
@@ -39,6 +40,7 @@ public class ChannelUpdateService {
                 .userCode(createChannel.getUserCode())
                 .bannerFileCode(createChannel.getBannerFileCode())
                 .coverFileCode(createChannel.getCoverFileCode())
+                .visibility(Visibility.ALL.getLevel())
                 .atime(LocalDateTime.now())
                 .ctime(LocalDateTime.now())
                 .utime(LocalDateTime.now())
