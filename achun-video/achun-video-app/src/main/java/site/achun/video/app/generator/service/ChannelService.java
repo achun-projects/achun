@@ -8,7 +8,7 @@ import site.achun.video.client.module.channel.response.ChannelSimpleResponse;
 /**
 * @author Administrator
 * @description 针对表【channel】的数据库操作Service
-* @createDate 2023-06-29 18:54:59
+* @createDate 2023-09-22 13:41:56
 */
 public interface ChannelService extends IService<Channel> {
     default Channel queryByChannelCode(String channelCode){

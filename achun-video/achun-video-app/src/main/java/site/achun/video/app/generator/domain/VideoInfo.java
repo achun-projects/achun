@@ -95,6 +95,11 @@ public class VideoInfo implements Serializable {
     private String sourceUrl;
 
     /**
+     * 可见性
+     */
+    private Integer visibility;
+
+    /**
      * 创建时间
      */
     private LocalDateTime ctime;
@@ -137,6 +142,7 @@ public class VideoInfo implements Serializable {
             && (this.getOrgin() == null ? other.getOrgin() == null : this.getOrgin().equals(other.getOrgin()))
             && (this.getSourceType() == null ? other.getSourceType() == null : this.getSourceType().equals(other.getSourceType()))
             && (this.getSourceUrl() == null ? other.getSourceUrl() == null : this.getSourceUrl().equals(other.getSourceUrl()))
+            && (this.getVisibility() == null ? other.getVisibility() == null : this.getVisibility().equals(other.getVisibility()))
             && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()))
             && (this.getUtime() == null ? other.getUtime() == null : this.getUtime().equals(other.getUtime()))
             && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()));
@@ -159,6 +165,7 @@ public class VideoInfo implements Serializable {
         result = prime * result + ((getOrgin() == null) ? 0 : getOrgin().hashCode());
         result = prime * result + ((getSourceType() == null) ? 0 : getSourceType().hashCode());
         result = prime * result + ((getSourceUrl() == null) ? 0 : getSourceUrl().hashCode());
+        result = prime * result + ((getVisibility() == null) ? 0 : getVisibility().hashCode());
         result = prime * result + ((getCtime() == null) ? 0 : getCtime().hashCode());
         result = prime * result + ((getUtime() == null) ? 0 : getUtime().hashCode());
         result = prime * result + ((getDeleted() == null) ? 0 : getDeleted().hashCode());
@@ -184,6 +191,7 @@ public class VideoInfo implements Serializable {
         sb.append(", orgin=").append(orgin);
         sb.append(", sourceType=").append(sourceType);
         sb.append(", sourceUrl=").append(sourceUrl);
+        sb.append(", visibility=").append(visibility);
         sb.append(", ctime=").append(ctime);
         sb.append(", utime=").append(utime);
         sb.append(", deleted=").append(deleted);

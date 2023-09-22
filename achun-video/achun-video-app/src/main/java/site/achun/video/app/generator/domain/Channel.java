@@ -57,6 +57,11 @@ public class Channel implements Serializable {
     private String bannerFileCode;
 
     /**
+     * 可见性
+     */
+    private Integer visibility;
+
+    /**
      * 创建时间
      */
     private LocalDateTime ctime;
@@ -93,6 +98,7 @@ public class Channel implements Serializable {
             && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
             && (this.getCoverFileCode() == null ? other.getCoverFileCode() == null : this.getCoverFileCode().equals(other.getCoverFileCode()))
             && (this.getBannerFileCode() == null ? other.getBannerFileCode() == null : this.getBannerFileCode().equals(other.getBannerFileCode()))
+            && (this.getVisibility() == null ? other.getVisibility() == null : this.getVisibility().equals(other.getVisibility()))
             && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()))
             && (this.getUtime() == null ? other.getUtime() == null : this.getUtime().equals(other.getUtime()))
             && (this.getAtime() == null ? other.getAtime() == null : this.getAtime().equals(other.getAtime()));
@@ -109,6 +115,7 @@ public class Channel implements Serializable {
         result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
         result = prime * result + ((getCoverFileCode() == null) ? 0 : getCoverFileCode().hashCode());
         result = prime * result + ((getBannerFileCode() == null) ? 0 : getBannerFileCode().hashCode());
+        result = prime * result + ((getVisibility() == null) ? 0 : getVisibility().hashCode());
         result = prime * result + ((getCtime() == null) ? 0 : getCtime().hashCode());
         result = prime * result + ((getUtime() == null) ? 0 : getUtime().hashCode());
         result = prime * result + ((getAtime() == null) ? 0 : getAtime().hashCode());
@@ -128,6 +135,7 @@ public class Channel implements Serializable {
         sb.append(", userCode=").append(userCode);
         sb.append(", coverFileCode=").append(coverFileCode);
         sb.append(", bannerFileCode=").append(bannerFileCode);
+        sb.append(", visibility=").append(visibility);
         sb.append(", ctime=").append(ctime);
         sb.append(", utime=").append(utime);
         sb.append(", atime=").append(atime);
