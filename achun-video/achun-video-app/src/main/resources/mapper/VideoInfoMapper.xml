@@ -18,6 +18,7 @@
             <result property="orgin" column="orgin" jdbcType="OTHER"/>
             <result property="sourceType" column="source_type" jdbcType="INTEGER"/>
             <result property="sourceUrl" column="source_url" jdbcType="VARCHAR"/>
+            <result property="visibility" column="visibility" jdbcType="TINYINT"/>
             <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
             <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
             <result property="deleted" column="deleted" jdbcType="INTEGER"/>
@@ -28,7 +29,7 @@
         cover_file_code,user_code,person_code,
         title,description,author,
         view_level,orgin,source_type,
-        source_url,ctime,utime,
-        deleted
+        source_url,visibility,ctime,
+        utime,deleted
     </sql>
 </mapper>

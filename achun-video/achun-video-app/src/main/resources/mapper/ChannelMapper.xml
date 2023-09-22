@@ -12,6 +12,7 @@
             <result property="userCode" column="user_code" jdbcType="VARCHAR"/>
             <result property="coverFileCode" column="cover_file_code" jdbcType="VARCHAR"/>
             <result property="bannerFileCode" column="banner_file_code" jdbcType="VARCHAR"/>
+            <result property="visibility" column="visibility" jdbcType="TINYINT"/>
             <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
             <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
             <result property="atime" column="atime" jdbcType="TIMESTAMP"/>
@@ -20,7 +21,7 @@
     <sql id="Base_Column_List">
         id,channel_code,name,
         description,user_code,cover_file_code,
-        banner_file_code,ctime,utime,
-        atime
+        banner_file_code,visibility,ctime,
+        utime,atime
     </sql>
 </mapper>
