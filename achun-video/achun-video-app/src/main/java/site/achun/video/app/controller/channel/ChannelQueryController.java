@@ -29,7 +29,6 @@ public class ChannelQueryController {
     private final ChannelQueryExecute channelQueryExecute;
 
     @Operation(summary = "查询频道列表")
-//    @NeedLogin
     @GetMapping("/video/channel/query-channel-list")
     public Rsp<List<ChannelResponse>> queryChannels(@RequestParam("limit") Integer limit){
         String userCode = UserInfo.getCode();
@@ -41,7 +40,6 @@ public class ChannelQueryController {
     }
 
     @Operation(summary = "查询频道分页")
-//    @NeedLogin
     @PostMapping("/video/channel/query-channel-page")
     public Rsp<RspPage<ChannelResponse>> queryChannelPage(@RequestBody QueryChannelPage query){
         String userCode = UserInfo.getCode();
