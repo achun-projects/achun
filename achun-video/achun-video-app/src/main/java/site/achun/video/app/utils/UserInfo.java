@@ -3,6 +3,7 @@ import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import site.achun.support.api.enums.Visibility;
 
 import java.util.Enumeration;
 import java.util.function.Supplier;
@@ -30,6 +31,10 @@ public class UserInfo {
 
     public static String getCode(Supplier<String> getUserCode){
         return StrUtil.isNotEmpty(getUserCode.get()) ? getUserCode.get() : getCode();
+    }
+
+    public static Visibility calVisibility(String userCode){
+        return StrUtil.isNotBlank(userCode)?Visibility.HOST_LOGIN:Visibility.ALL;
     }
 
     public static String getCode(String userCode){

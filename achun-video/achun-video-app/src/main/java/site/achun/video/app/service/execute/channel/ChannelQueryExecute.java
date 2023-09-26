@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCode;
 import site.achun.file.client.module.file.response.MediaFileResponse;
+import site.achun.support.api.enums.Visibility;
 import site.achun.support.api.request.ReqPage;
 import site.achun.support.api.response.Rsp;
 import site.achun.support.api.response.RspPage;
 import site.achun.video.app.generator.domain.Channel;
 import site.achun.video.app.generator.service.ChannelService;
 import site.achun.video.app.utils.PageUtil;
+import site.achun.video.app.utils.UserInfo;
 import site.achun.video.client.module.channel.response.ChannelResponse;
+
+import java.sql.Wrapper;
 
 /**
  * Description
@@ -32,8 +36,10 @@ public class ChannelQueryExecute {
     private final MediaFileQueryClient fileQueryClient;
 
     public Rsp<RspPage<ChannelResponse>> queryChannelPage(String userCode, ReqPage reqPage){
+        Visibility visibility = UserInfo.calVisibility(userCode);
         Page<Channel> pageData = channelService.lambdaQuery()
-                .eq(Channel::getUserCode, userCode)
+                .le(Channel::getVisibility,visibility.getLevel())
+                .or().eq(StrUtil.isNotBlank(userCode),Channel::getUserCode,userCode)
                 .orderByDesc(Channel::getAtime)
                 .page(Page.of(reqPage.getPage(), reqPage.getSize()));
         return Rsp.success(PageUtil.parse(pageData,reqPage,this::toResponse));
