@@ -19,8 +19,6 @@ import site.achun.video.app.utils.PageUtil;
 import site.achun.video.app.utils.UserInfo;
 import site.achun.video.client.module.channel.response.ChannelResponse;
 
-import java.sql.Wrapper;
-
 /**
  * Description
  *
