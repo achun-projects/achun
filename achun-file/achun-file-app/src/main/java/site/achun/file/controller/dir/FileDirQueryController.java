@@ -1,0 +1,35 @@
+package site.achun.file.controller.dir;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
+import site.achun.file.client.module.dir.FileDirQueryClient;
+import site.achun.file.client.module.dir.request.ByDirCode;
+import site.achun.file.client.module.dir.request.ByStorageAndPath;
+import site.achun.file.client.module.dir.response.DirResponse;
+import site.achun.file.client.module.dir.response.FileResponse;
+import site.achun.support.api.response.Rsp;
+
+import java.util.List;
+
+@Slf4j
+@Tag(name = "目录查询")
+@RequiredArgsConstructor
+@RestController
+public class FileDirQueryController implements FileDirQueryClient {
+    @Override
+    public Rsp<List<FileResponse>> querySub(ByDirCode req) {
+        return null;
+    }
+
+    @Override
+    public Rsp<DirResponse> queryBy(ByDirCode req) {
+        return null;
+    }
+
+    @Override
+    public Rsp<DirResponse> queryBy(ByStorageAndPath req) {
+        return null;
+    }
+}
