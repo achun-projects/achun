@@ -42,6 +42,11 @@ public class FileInfo implements Serializable {
     private String storageCode;
 
     /**
+     * 所属路径编码
+     */
+    private String dirCode;
+
+    /**
      * 文件名
      */
     private String fileName;
@@ -157,6 +162,7 @@ public class FileInfo implements Serializable {
             && (this.getThirdId() == null ? other.getThirdId() == null : this.getThirdId().equals(other.getThirdId()))
             && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()))
             && (this.getStorageCode() == null ? other.getStorageCode() == null : this.getStorageCode().equals(other.getStorageCode()))
+            && (this.getDirCode() == null ? other.getDirCode() == null : this.getDirCode().equals(other.getDirCode()))
             && (this.getFileName() == null ? other.getFileName() == null : this.getFileName().equals(other.getFileName()))
             && (this.getUnitCode() == null ? other.getUnitCode() == null : this.getUnitCode().equals(other.getUnitCode()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
@@ -186,6 +192,7 @@ public class FileInfo implements Serializable {
         result = prime * result + ((getThirdId() == null) ? 0 : getThirdId().hashCode());
         result = prime * result + ((getMd5() == null) ? 0 : getMd5().hashCode());
         result = prime * result + ((getStorageCode() == null) ? 0 : getStorageCode().hashCode());
+        result = prime * result + ((getDirCode() == null) ? 0 : getDirCode().hashCode());
         result = prime * result + ((getFileName() == null) ? 0 : getFileName().hashCode());
         result = prime * result + ((getUnitCode() == null) ? 0 : getUnitCode().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
@@ -218,6 +225,7 @@ public class FileInfo implements Serializable {
         sb.append(", thirdId=").append(thirdId);
         sb.append(", md5=").append(md5);
         sb.append(", storageCode=").append(storageCode);
+        sb.append(", dirCode=").append(dirCode);
         sb.append(", fileName=").append(fileName);
         sb.append(", unitCode=").append(unitCode);
         sb.append(", type=").append(type);

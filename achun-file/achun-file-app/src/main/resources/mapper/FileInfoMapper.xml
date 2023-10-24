@@ -10,6 +10,7 @@
             <result property="thirdId" column="third_id" jdbcType="VARCHAR"/>
             <result property="md5" column="md5" jdbcType="VARCHAR"/>
             <result property="storageCode" column="storage_code" jdbcType="VARCHAR"/>
+            <result property="dirCode" column="dir_code" jdbcType="VARCHAR"/>
             <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
             <result property="unitCode" column="unit_code" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="INTEGER"/>
@@ -32,13 +33,13 @@
 
     <sql id="Base_Column_List">
         id,file_code,third_id,
-        md5,storage_code,file_name,
-        unit_code,type,suffix,
-        in_storage_path,cover,size,
-        width,height,wh,
-        duration,hidden,origin,
-        deleted,ctime,utime,
-        atime,line_time
+        md5,storage_code,dir_code,
+        file_name,unit_code,type,
+        suffix,in_storage_path,cover,
+        size,width,height,
+        wh,duration,hidden,
+        origin,deleted,ctime,
+        utime,atime,line_time
     </sql>
 
     <insert id="replaceInto" parameterType="site.achun.file.generator.domain.FileInfo">

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
 * @author Administrator
 * @description 针对表【file_info】的数据库操作Service实现
-* @createDate 2023-05-16 14:35:30
+* @createDate 2023-10-24 14:26:55
 */
 @Service
 public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo>
