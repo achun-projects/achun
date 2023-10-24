@@ -8,10 +8,8 @@ import java.io.Serializable;
 
 @Schema(description = "在Storage内探测文件")
 @Data
-@Builder
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class QueryStoragePage extends ReqPage implements Serializable {
 
+    private String bucketCode;
 }

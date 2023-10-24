@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class QueryStorageByCode implements Serializable {
+public class ByStorageCode implements Serializable {
 
     private String code;
 }

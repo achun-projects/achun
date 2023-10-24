@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.storage.StorageQueryClient;
-import site.achun.file.client.module.storage.request.QueryStorageByCode;
+import site.achun.file.client.module.storage.request.ByStorageCode;
 import site.achun.file.client.module.storage.request.QueryStoragePage;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.service.storage.StorageQueryService;
@@ -20,7 +20,7 @@ public class StorageQueryController implements StorageQueryClient {
 
     private final StorageQueryService storageQueryService;
     @Override
-    public Rsp<StorageResponse> queryStorage(QueryStorageByCode query) {
+    public Rsp<StorageResponse> queryStorage(ByStorageCode query) {
         return Rsp.success(storageQueryService.queryStorage(query.getCode()));
     }
 
