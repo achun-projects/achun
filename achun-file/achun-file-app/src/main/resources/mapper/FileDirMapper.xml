@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.file.generator.mapper.FileDirMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.file.generator.domain.FileDir">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="dirCode" column="dir_code" jdbcType="VARCHAR"/>
+            <result property="parentDirCode" column="parent_dir_code" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,dir_code,parent_dir_code,
+        name,path,deleted,
+        ctime
+    </sql>
+</mapper>
