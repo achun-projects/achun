@@ -14,7 +14,7 @@ import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.file.client.module.storage.StorageQueryClient;
-import site.achun.file.client.module.storage.request.QueryStorageByCode;
+import site.achun.file.client.module.storage.request.ByStorageCode;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.support.api.exception.RspException;
 import site.achun.updown.app.runner.DownloadTaskRunner;
@@ -78,7 +78,7 @@ public class DownloadTaskService {
         // 判断文件是否存在，是否需要覆盖
         long begin = System.currentTimeMillis();
         FileTransferInfo fileTransferInfo = new FileTransferInfo();
-        StorageResponse storage = storageQueryClient.queryStorage(QueryStorageByCode.builder().code(task.getStorage()).build()).tryGetData();
+        StorageResponse storage = storageQueryClient.queryStorage(ByStorageCode.builder().code(task.getStorage()).build()).tryGetData();
         result.setStorageLocalDir(storage.getPath());
         fileTransferInfo.setStorage(storage);
 

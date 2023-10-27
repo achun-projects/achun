@@ -15,7 +15,7 @@ import site.achun.file.client.module.file.request.QueryByMD5;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.storage.StorageQueryClient;
-import site.achun.file.client.module.storage.request.QueryStorageByCode;
+import site.achun.file.client.module.storage.request.ByStorageCode;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.client.util.FileCodeGenerator;
 import site.achun.support.api.response.Rsp;
@@ -70,7 +70,7 @@ public class BigFileUploadController {
         log.info("index:{},hash:{},total:{},chunkSize:{},size:{},name:{}",
                 index,hash,total,chunkSize,size,name);
         // 生成上传目录
-        StorageResponse storage = storageQueryClient.queryStorage(QueryStorageByCode.builder().code(DEFAULT_STORAGE_CODE).build()).tryGetData();
+        StorageResponse storage = storageQueryClient.queryStorage(ByStorageCode.builder().code(DEFAULT_STORAGE_CODE).build()).tryGetData();
         Path dirFilePath = Path.of(storage.getPath(),hash.substring(0,2),hash);
         File dirFile = dirFilePath.toFile();
         if(!dirFile.exists()) dirFile.mkdirs();
@@ -94,7 +94,7 @@ public class BigFileUploadController {
                 log.info("正在合并文件...");
                 FileUploadUtil.mergeChunks(request.getName(), request.getHash());
                 // 添加文件信息
-                StorageResponse storage = storageQueryClient.queryStorage(QueryStorageByCode.builder().code(DEFAULT_STORAGE_CODE).build()).tryGetData();
+                StorageResponse storage = storageQueryClient.queryStorage(ByStorageCode.builder().code(DEFAULT_STORAGE_CODE).build()).tryGetData();
                 FileLocalInfoResponse fileResponse = uploadService.uploadBigFile(UploadService.UploadBigFileParams.builder()
                         .storageResponse(storage)
                         .file(Path.of(dirFilePath, request.getName()).toFile())

@@ -11,7 +11,7 @@ import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.CreateFileInfo;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.client.module.storage.StorageQueryClient;
-import site.achun.file.client.module.storage.request.QueryStorageByCode;
+import site.achun.file.client.module.storage.request.ByStorageCode;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.transfer.FileTransferInfo;
@@ -66,7 +66,7 @@ public class UploadService {
                 return Rsp.error("NoSuchFile localFile:" + upload.getPath());
             }
             String md5 = MD5.create().digestHex(localFile);
-            StorageResponse storage = storageQueryClient.queryStorage(QueryStorageByCode.builder().code(upload.getStorageCode()).build()).getData();
+            StorageResponse storage = storageQueryClient.queryStorage(ByStorageCode.builder().code(upload.getStorageCode()).build()).getData();
             File targetFile = new File(storage.getPath()+upload.getKey());
 
             Boolean override = upload.getOverride() == null ? false : upload.getOverride();
