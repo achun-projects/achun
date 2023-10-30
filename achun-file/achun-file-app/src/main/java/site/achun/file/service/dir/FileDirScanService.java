@@ -25,6 +25,7 @@ public class FileDirScanService {
         if(storageFileDir == null){
             FileDir dir = FileDir.builder()
                     .dirCode(storage.getStorageCode())
+                    .storageCode(storage.getStorageCode())
                     .parentDirCode(null)
                     .ctime(LocalDateTime.now())
                     .deleted(Deleted.NO.getStatus())
@@ -32,11 +33,13 @@ public class FileDirScanService {
                     .name(storage.getName())
                     .build();
             fileDirService.save(dir);
+            scan(dir);
+        }else{
+            scan(storageFileDir);
         }
-        scan(storage.getStorageCode());
     }
 
-    public void scan(String dirCode){
+    public void scan(FileDir dir){
 
     }
 }
