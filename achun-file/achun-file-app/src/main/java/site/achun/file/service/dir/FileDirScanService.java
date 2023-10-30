@@ -1,9 +1,11 @@
 package site.achun.file.service.dir;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.crypto.digest.MD5;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.module.dir.beans.DirInfo;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.generator.domain.FileDir;
 import site.achun.file.generator.service.FileDirService;
@@ -12,11 +14,13 @@ import site.achun.support.api.enums.Deleted;
 import site.achun.updown.client.module.file.GetSubDirsReq;
 import site.achun.updown.client.module.file.LocalFileInfoClient;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -50,23 +54,39 @@ public class FileDirScanService {
 
     public void scan(StorageResponse storage,FileDir dir){
         LoopGetDirs loop = new LoopGetDirs(storage,dir);
-        loop.setConsumer(d->log.info("dir:{}",d));
+        loop.setDealDirFunction(this::saveFileDir);
         loop.setFunction(path->localFileInfoClient.getSubDirectoryList(GetSubDirsReq.builder().path(path).build()).getData());
         loop.startLoop();
+    }
+
+    private List<FileDir> saveFileDir(List<DirInfo> dirInfo){
+        List<FileDir> fileDirList = dirInfo.stream()
+                .map(dir -> FileDir.builder()
+                        .name(dir.getName())
+                        .parentDirCode(dir.getParentCode())
+                        .dirCode(dir.getDirCode())
+                        .storageCode(dir.getStorageCode())
+                        .path(dir.getPath())
+                        .ctime(LocalDateTime.now())
+                        .deleted(Deleted.NO.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+        fileDirService.saveBatch(fileDirList);
+        return fileDirList;
     }
 
     public static class LoopGetDirs{
         private StorageResponse storage;
         private FileDir root;
-        private Consumer<String> dealDirconsumer;
+        private Function<List<DirInfo>,List<FileDir>> dealDirFunction;
         private Function<String,List<String>> getDirsFunction;
         public LoopGetDirs(StorageResponse storage,FileDir root){
             this.storage = storage;
             this.root = root;
         }
 
-        public void setConsumer(Consumer<String> consumer) {
-            this.dealDirconsumer = consumer;
+        public void setDealDirFunction(Function<List<DirInfo>, List<FileDir>> dealDirFunction) {
+            this.dealDirFunction = dealDirFunction;
         }
 
         public void setFunction(Function<String, List<String>> function) {
@@ -74,16 +94,29 @@ public class FileDirScanService {
         }
 
         public void startLoop(){
-            Path path = Path.of(storage.getPath(), root.getPath());
-            loop(path.toAbsolutePath().toString());
-
+            loop(root);
         }
 
-        private void loop(String path){
-            List<String> dirs = getDirsFunction.apply(path);
+        private void loop(FileDir fileDir){
+            Path path = Path.of(storage.getPath(), fileDir.getPath());
+            List<String> dirs = getDirsFunction.apply(path.toString());
             if(CollUtil.isNotEmpty(dirs)){
-                dirs.stream().forEach(dealDirconsumer);
-                dirs.stream().forEach(this::loop);
+                List<DirInfo> dirInfoList = dirs.stream()
+                        .map(dir -> {
+                            String halfPathMd5 = MD5.create().digestHex(dir).substring(0, 16);
+                            String dirCode = fileDir.getDirCode().substring(16) + halfPathMd5;
+                            Path dirPath = Path.of(dir);
+                            String dirPathString = dirPath.toString().replace(storage.getPath(), "");
+                            return DirInfo.builder()
+                                    .dirCode(dirCode)
+                                    .parentCode(fileDir.getDirCode())
+                                    .path(dirPathString)
+                                    .name(dirPath.getFileName().toString())
+                                    .storageCode(storage.getStorageCode())
+                                    .build();
+                        })
+                        .collect(Collectors.toList());
+                dealDirFunction.apply(dirInfoList).stream().forEach(this::loop);
             }
         }
     }
