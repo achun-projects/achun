@@ -1,19 +1,25 @@
 package site.achun.file.generator.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
  * @TableName file_dir
  */
-@TableName(value ="file_dir")
 @Data
+@TableName(value ="file_dir")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class FileDir implements Serializable {
     /**
      * 主键

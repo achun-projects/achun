@@ -2,6 +2,7 @@ package site.achun.file.generator.service;
 
 import site.achun.file.generator.domain.FileDir;
 import com.baomidou.mybatisplus.extension.service.IService;
+import site.achun.support.api.enums.Deleted;
 
 /**
 * @author Administrator
@@ -9,5 +10,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-10-24 14:29:37
 */
 public interface FileDirService extends IService<FileDir> {
-
+    default FileDir queryByCode(String dirCode){
+        return this.lambdaQuery()
+                .eq(FileDir::getDirCode,dirCode)
+                .eq(FileDir::getDeleted, Deleted.NO.getStatus())
+                .one();
+    }
 }
