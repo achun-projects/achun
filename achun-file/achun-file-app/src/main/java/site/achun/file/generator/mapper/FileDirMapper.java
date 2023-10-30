@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
 * @author Administrator
 * @description 针对表【file_dir】的数据库操作Mapper
-* @createDate 2023-10-30 15:37:14
+* @createDate 2023-10-30 20:38:41
 * @Entity site.achun.file.generator.domain.FileDir
 */
 public interface FileDirMapper extends BaseMapper<FileDir> {

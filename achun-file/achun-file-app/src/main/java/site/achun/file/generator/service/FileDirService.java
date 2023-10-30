@@ -7,7 +7,7 @@ import site.achun.support.api.enums.Deleted;
 /**
 * @author Administrator
 * @description 针对表【file_dir】的数据库操作Service
-* @createDate 2023-10-24 14:29:37
+* @createDate 2023-10-30 20:38:41
 */
 public interface FileDirService extends IService<FileDir> {
     default FileDir queryByCode(String dirCode){
