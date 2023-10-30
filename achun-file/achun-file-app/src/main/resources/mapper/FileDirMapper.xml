@@ -8,6 +8,7 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="dirCode" column="dir_code" jdbcType="VARCHAR"/>
             <result property="parentDirCode" column="parent_dir_code" jdbcType="VARCHAR"/>
+            <result property="storageCode" column="storage_code" jdbcType="VARCHAR"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="path" column="path" jdbcType="VARCHAR"/>
             <result property="deleted" column="deleted" jdbcType="TINYINT"/>
@@ -16,7 +17,7 @@
 
     <sql id="Base_Column_List">
         id,dir_code,parent_dir_code,
-        name,path,deleted,
-        ctime
+        storage_code,name,path,
+        deleted,ctime
     </sql>
 </mapper>

@@ -38,6 +38,11 @@ public class FileDir implements Serializable {
     private String parentDirCode;
 
     /**
+     * 存储库编码
+     */
+    private String storageCode;
+
+    /**
      * 路径文件夹名称
      */
     private String name;
@@ -75,6 +80,7 @@ public class FileDir implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getDirCode() == null ? other.getDirCode() == null : this.getDirCode().equals(other.getDirCode()))
             && (this.getParentDirCode() == null ? other.getParentDirCode() == null : this.getParentDirCode().equals(other.getParentDirCode()))
+            && (this.getStorageCode() == null ? other.getStorageCode() == null : this.getStorageCode().equals(other.getStorageCode()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getPath() == null ? other.getPath() == null : this.getPath().equals(other.getPath()))
             && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()))
@@ -88,6 +94,7 @@ public class FileDir implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getDirCode() == null) ? 0 : getDirCode().hashCode());
         result = prime * result + ((getParentDirCode() == null) ? 0 : getParentDirCode().hashCode());
+        result = prime * result + ((getStorageCode() == null) ? 0 : getStorageCode().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getPath() == null) ? 0 : getPath().hashCode());
         result = prime * result + ((getDeleted() == null) ? 0 : getDeleted().hashCode());
@@ -104,6 +111,7 @@ public class FileDir implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", dirCode=").append(dirCode);
         sb.append(", parentDirCode=").append(parentDirCode);
+        sb.append(", storageCode=").append(storageCode);
         sb.append(", name=").append(name);
         sb.append(", path=").append(path);
         sb.append(", deleted=").append(deleted);
