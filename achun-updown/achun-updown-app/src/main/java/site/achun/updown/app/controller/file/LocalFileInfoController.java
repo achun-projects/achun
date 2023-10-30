@@ -9,6 +9,7 @@ import site.achun.updown.client.module.file.GetSubDirsReq;
 import site.achun.updown.client.module.file.LocalFileInfoClient;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class LocalFileInfoController implements LocalFileInfoClient {
     @Override
     public Rsp<List<String>> getSubDirectoryList(GetSubDirsReq req) {
-        File file = new File(req.getPath());
+        File file = Path.of(req.getPath()).toFile();
         if(!file.exists()){
             return Rsp.error("file not exist");
         }
