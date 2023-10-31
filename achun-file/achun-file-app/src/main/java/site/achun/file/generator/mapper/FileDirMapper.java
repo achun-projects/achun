@@ -1,5 +1,6 @@
 package site.achun.file.generator.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import site.achun.file.generator.domain.FileDir;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -10,6 +11,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity site.achun.file.generator.domain.FileDir
 */
 public interface FileDirMapper extends BaseMapper<FileDir> {
+
+    int replaceInto(@Param("req") FileDir fileDir);
 
 }
 

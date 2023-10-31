@@ -71,7 +71,7 @@ public class FileDirScanService {
                         .deleted(Deleted.NO.getStatus())
                         .build())
                 .collect(Collectors.toList());
-        fileDirService.saveBatch(fileDirList);
+        fileDirService.batchReplaceInto(fileDirList);
         return fileDirList;
     }
 

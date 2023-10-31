@@ -20,4 +20,16 @@
         storage_code,name,path,
         deleted,ctime
     </sql>
+    <insert id="replaceInto">
+        REPLACE INTO `file_dir` (`dir_code`, `parent_dir_code`, `storage_code`, `name`, `path`, `deleted`, `ctime`)
+            VALUES (
+                #{req.dirCode},
+                #{req.parentDirCode},
+                #{req.storageCode},
+                #{req.name},
+                #{req.path},
+                #{req.deleted},
+                #{req.ctime}
+            );
+    </insert>
 </mapper>
