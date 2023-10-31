@@ -44,14 +44,14 @@
 
     <insert id="replaceInto" parameterType="site.achun.file.generator.domain.FileInfo">
         REPLACE INTO file_info
-        (`file_code`, `md5`, `storage_code`,`third_id`,
+        (`file_code`, `md5`, `storage_code`,`third_id`,`dir_code`,
          `file_name`, `unit_code`, `type`,
          `suffix`, `in_storage_path`,`cover`, `size`,
          `width`, `height`, `wh`,
          `duration`, `hidden`, `origin`,
          `deleted`, `ctime`, `utime`, `atime`,`line_time`)
         VALUES (
-        #{fileCode},#{md5},#{storageCode},#{thirdId},
+        #{fileCode},#{md5},#{storageCode},#{thirdId},#{dirCode},
         #{fileName}, #{unitCode}, #{type},
         #{suffix}, #{inStoragePath},#{cover}, #{size},
         #{width},#{height}, #{wh},
