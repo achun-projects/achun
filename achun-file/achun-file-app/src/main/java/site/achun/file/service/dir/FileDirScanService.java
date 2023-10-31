@@ -14,13 +14,11 @@ import site.achun.support.api.enums.Deleted;
 import site.achun.updown.client.module.file.GetSubDirsReq;
 import site.achun.updown.client.module.file.LocalFileInfoClient;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -33,12 +31,16 @@ public class FileDirScanService {
     private final FileDirService fileDirService;
     private final LocalFileInfoClient localFileInfoClient;
 
-    public void scanFromStorageCode(String storageCode){
-        StorageResponse storage = storageQueryService.queryStorage(storageCode);
-        // 检测storage是否存在于file_dir
-        FileDir storageFileDir = fileDirService.queryByCode(storage.getStorageCode());
-        if(storageFileDir == null){
-            FileDir dir = FileDir.builder()
+    public void scan(String dirCode){
+        FileDir fileDir = fileDirService.queryByCode(dirCode);
+        StorageResponse storage = null;
+        if(fileDir == null){
+            storage = storageQueryService.queryStorage(dirCode);
+            if(storage == null){
+                log.info("dirCode:{},not found fileDir and storage",dirCode);
+                throw new RuntimeException("dir not found");
+            }
+            fileDir = FileDir.builder()
                     .dirCode(storage.getStorageCode())
                     .storageCode(storage.getStorageCode())
                     .parentDirCode(null)
@@ -47,18 +49,22 @@ public class FileDirScanService {
                     .path("")
                     .name(storage.getName())
                     .build();
-            fileDirService.save(dir);
-            scan(storage,dir);
+            fileDirService.save(fileDir);
+            log.info("dirCode:{}，not found fileDir but storage",dirCode);
         }else{
-            scan(storage,storageFileDir);
+            storage = storageQueryService.queryStorage(fileDir.getStorageCode());
+            log.info("dirCode:{} found FileDir",dirCode);
         }
+        scan(storage,fileDir);
     }
 
     public void scan(StorageResponse storage,FileDir dir){
-        LoopGetDirs loop = new LoopGetDirs(storage,dir);
-        loop.setDealDirFunction(this::saveFileDir);
-        loop.setFunction(path->localFileInfoClient.getSubDirectoryList(GetSubDirsReq.builder().path(path).build()).getData());
-        loop.startLoop();
+        new Thread(()->{
+            LoopGetDirs loop = new LoopGetDirs(storage,dir);
+            loop.setDealDirFunction(this::saveFileDir);
+            loop.setFunction(path->localFileInfoClient.getSubDirectoryList(GetSubDirsReq.builder().path(path).build()).getData());
+            loop.startLoop();
+        }).start();
     }
 
     private List<FileDir> saveFileDir(List<DirInfo> dirInfo){

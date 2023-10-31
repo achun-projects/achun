@@ -18,8 +18,9 @@ public class FileDirScanController implements FileDirScanClient {
 
     @Override
     public Rsp<Void> startScan(RequestScanDir req) {
-        fileDirScanService.scanFromStorageCode(req.getDirCode());
+        fileDirScanService.scan(req.getDirCode());
         return Rsp.success(null);
     }
+
 
 }
