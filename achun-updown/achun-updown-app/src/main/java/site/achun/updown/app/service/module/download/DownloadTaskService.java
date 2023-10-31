@@ -109,7 +109,7 @@ public class DownloadTaskService {
 
         if(response.isOk()){
             // 记录日志
-            InitFileInfoResponse fileResponse = fileUpdateClient.initFileInfo(transfer(newFile, task)).tryGetData();
+            InitFileInfoResponse fileResponse = fileUpdateClient.initFileInfoV2(transfer(newFile, task)).tryGetData();
             fileTransferInfo.setFileCode(fileResponse.getFileCode());
             fileTransferInfo.setInStoragePath(fileResponse.getInStoragePath());
             // 设置参数
@@ -132,9 +132,7 @@ public class DownloadTaskService {
     private InitFileInfo transfer(File file, Task task){
         String suffix = FileUtil.getSuffix(file);
         String md5 = MD5.create().digestHex(file);
-        String fileCode = MD5.create().digestHex(md5+task.getUnit());
         InitFileInfo info = InitFileInfo.builder()
-                .fileCode(fileCode)
                 .thirdId(task.getThirdId())
                 .md5(md5)
                 .storageCode(task.getStorage())

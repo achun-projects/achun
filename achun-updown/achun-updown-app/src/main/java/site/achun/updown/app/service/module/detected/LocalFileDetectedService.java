@@ -7,11 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.enums.Type;
+import site.achun.file.client.module.dir.FileDirQueryClient;
+import site.achun.file.client.module.dir.request.ByDirCode;
+import site.achun.file.client.module.dir.response.DirResponse;
 import site.achun.file.client.module.file.FileUpdateClient;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.InitFileInfoResponse;
-import site.achun.file.client.module.unit.UnitUpdateClient;
-import site.achun.file.client.module.unit.request.UpdateUnit;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.app.service.module.transfer.FileTransferInfo;
 import site.achun.updown.app.service.module.transfer.FileTransferService;
@@ -32,12 +33,51 @@ import java.util.stream.Collectors;
 public class LocalFileDetectedService {
 
     private final FileUpdateClient fileUpdateClient;
-    private final UnitUpdateClient unitUpdateClient;
+    private final FileDirQueryClient fileDirQueryClient;
     private final FileTransferService fileTransferService;
 
     public Boolean existFile(String pathString){
         return FileUtil.exist(pathString);
     }
+
+    @Async
+    public void scanFilesByDirCode(ByDirCode byDirCode){
+        DirResponse dirResponse = fileDirQueryClient.queryBy(byDirCode).getData();
+        Path dirPath = Path.of(dirResponse.getStorage().getPath(), dirResponse.getPath());
+        List<Path> subFilePathList = null;
+        try {
+            subFilePathList = Files.list(dirPath)
+                    .filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            log.error("scanFilesByDirCode error,dirCode:{},path:{}",byDirCode.getDirCode(),dirPath.toString(),e);
+        }
+
+        for (Path subFilePath : subFilePathList) {
+            File subFile = subFilePath.toFile();
+            log.info("dirCode,[{}]({})",dirResponse.getDirCode(),subFile.getAbsolutePath());
+            String suffix = FileUtil.getSuffix(subFile);
+            String md5 = MD5.create().digestHex(subFile);
+            InitFileInfo init = InitFileInfo.builder()
+                    .fileCode(MD5.create().digestHex(md5+dirResponse.getDirCode()))
+                    .thirdId(null)
+                    .absolutePath(subFile.getAbsolutePath())
+                    .fileName(subFile.getName())
+                    .size(subFile.length() / 1024)
+                    .md5(md5)
+                    .unitCode(dirResponse.getDirCode())
+                    .unitName(dirResponse.getName())
+                    .storageCode(dirResponse.getStorageCode())
+                    .type(Type.parse(suffix).getCode())
+                    .suffix(suffix)
+                    .build();
+            FileTransferInfo transfer = requestInitFileInfo(init);
+            if(transfer != null){
+                fileTransferService.transfer(transfer);
+            }
+        }
+    }
+
     @Async
     public void detected(RequestLoopAndInitFiles request) {
         // 获取到所有包含文件的目录
@@ -60,26 +100,19 @@ public class LocalFileDetectedService {
         } catch (IOException e) {
             log.error("dealOneUnitFiles error,unitCodes:{},path:{}",unitCode,path,e);
         }
-        String unitName = path.getFileName().toString();
-        UpdateUnit unit = new UpdateUnit();
-        unit.setUnitCode(unitCode);
-        unit.setUnitName(unitName);
-        unitUpdateClient.saveOrUpdateUnit(unit);
-
         for (Path subFilePath : subFilePathList) {
             File subFile = subFilePath.toFile();
             log.info("UnitFiles,[{}]({})",unitCode,subFile.getAbsolutePath());
             String suffix = FileUtil.getSuffix(subFile);
             String md5 = MD5.create().digestHex(subFile);
             InitFileInfo init = InitFileInfo.builder()
-                    .fileCode(MD5.create().digestHex(md5+unitCode))
                     .thirdId(thirdId)
                     .absolutePath(subFile.getAbsolutePath())
                     .fileName(subFile.getName())
                     .size(subFile.length() / 1024)
                     .md5(md5)
                     .unitCode(unitCode)
-                    .unitName(unitName)
+                    .unitName(path.getFileName().toString())
                     .storageCode(storageCode)
                     .type(Type.parse(suffix).getCode())
                     .suffix(suffix)
@@ -94,7 +127,7 @@ public class LocalFileDetectedService {
     private FileTransferInfo requestInitFileInfo(InitFileInfo initFileInfo){
         InitFileInfoResponse response = null;
         try {
-            Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfo(initFileInfo);
+            Rsp<InitFileInfoResponse> rsp = fileUpdateClient.initFileInfoV2(initFileInfo);
             response = rsp.getData();
         }catch (Exception ex){
             log.error("requestInitFileInfo error,initFileInfo:{}",initFileInfo,ex);

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.support.api.response.Rsp;
 import site.achun.updown.client.module.detected.request.QueryFileExist;
 import site.achun.updown.client.module.detected.request.RequestLoopAndInitFiles;
@@ -15,9 +16,11 @@ public interface UpdownDetectedClient {
     @PostMapping("/updown/detected/file-exist")
     Rsp<Boolean> fileExist(@RequestBody QueryFileExist query);
 
-
     @Operation(summary = "探测文件以初始化")
     @PostMapping("/updown/detected/async-loop-and-init-files")
     void asyncLoopAndInitFiles(@RequestBody RequestLoopAndInitFiles request);
 
+    @Operation(summary = "以dir初始化并转化文件")
+    @PostMapping("/updown/detected/scan-files-by-dir-code")
+    void scanFilesByDirCode(@RequestBody ByDirCode dirCode);
 }
