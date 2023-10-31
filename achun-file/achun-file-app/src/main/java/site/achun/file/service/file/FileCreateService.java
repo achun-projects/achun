@@ -2,6 +2,7 @@ package site.achun.file.service.file;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.MD5;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,10 @@ public class FileCreateService {
         if(existFileInfo != null){
             return fileConvert.toInitFileInfoResponse(existFileInfo,initFileInfo,true);
         }else{
+            String code = MD5.create().digestHex16(initFileInfo.getAbsolutePath());
+            String fileCode = storage.getStorageCode().substring(0,4) + initFileInfo.getDirCode().substring(16,20) + code.substring(0,24);
             FileInfo fileInfo = toFileInfo(initFileInfo);
+            fileInfo.setFileCode(fileCode);
             fileInfo.setInStoragePath(inStoragePath);
             fileInfo.setAtime(LocalDateTime.now());
             fileInfo.setCtime(LocalDateTime.now());
@@ -57,7 +61,6 @@ public class FileCreateService {
                 fileInfo.setThirdId("-1");
             }
             int line = fileInfoService.replaceInto(fileInfo);
-
             // 保存分组
             FileUnit fileUnit = new FileUnit();
             fileUnit.setUnitCode(initFileInfo.getUnitCode());
@@ -76,38 +79,38 @@ public class FileCreateService {
         }
     }
 
-    public InitFileInfoResponse initFileInfo(InitFileInfo initFileInfo) {
-        FileInfo fileInfo = toFileInfo(initFileInfo);
-        Storage storage = storageService.getStorage(initFileInfo.getStorageCode());
-        fileInfo.setInStoragePath(initFileInfo.getAbsolutePath().replace(storage.getPath(),""));
-        fileInfo.setAtime(LocalDateTime.now());
-        fileInfo.setCtime(LocalDateTime.now());
-        fileInfo.setUtime(LocalDateTime.now());
-        fileInfo.setLineTime(LocalDateTime.now());
-        fileInfo.setDeleted(Deleted.NO.getStatus());
-        fileInfo.setHidden(Hidden.NO.getStatus());
-        if(StrUtil.isEmpty(fileInfo.getThirdId())){
-            fileInfo.setThirdId("-1");
-        }
-        int line = fileInfoService.replaceInto(fileInfo);
-
-        // 保存分组
-        FileUnit fileUnit = new FileUnit();
-        fileUnit.setUnitCode(initFileInfo.getUnitCode());
-        fileUnit.setUnitName(initFileInfo.getUnitName());
-        fileUnit.setCtime(LocalDateTime.now());
-        fileUnit.setUtime(LocalDateTime.now());
-        fileUnit.setDeleted(Deleted.NO.getStatus());
-        fileUnitService.replaceInto(fileUnit);
-
-        if(line>0){
-            log.info("New:{},line:{}",fileInfo,line);
-            return fileConvert.toInitFileInfoResponse(fileInfo,initFileInfo,null);
-        }else{
-            log.info("save file error,{},line:{}",fileInfo,line);
-            return null;
-        }
-    }
+//    public InitFileInfoResponse initFileInfo(InitFileInfo initFileInfo) {
+//        FileInfo fileInfo = toFileInfo(initFileInfo);
+//        Storage storage = storageService.getStorage(initFileInfo.getStorageCode());
+//        fileInfo.setInStoragePath(initFileInfo.getAbsolutePath().replace(storage.getPath(),""));
+//        fileInfo.setAtime(LocalDateTime.now());
+//        fileInfo.setCtime(LocalDateTime.now());
+//        fileInfo.setUtime(LocalDateTime.now());
+//        fileInfo.setLineTime(LocalDateTime.now());
+//        fileInfo.setDeleted(Deleted.NO.getStatus());
+//        fileInfo.setHidden(Hidden.NO.getStatus());
+//        if(StrUtil.isEmpty(fileInfo.getThirdId())){
+//            fileInfo.setThirdId("-1");
+//        }
+//        int line = fileInfoService.replaceInto(fileInfo);
+//
+//        // 保存分组
+//        FileUnit fileUnit = new FileUnit();
+//        fileUnit.setUnitCode(initFileInfo.getUnitCode());
+//        fileUnit.setUnitName(initFileInfo.getUnitName());
+//        fileUnit.setCtime(LocalDateTime.now());
+//        fileUnit.setUtime(LocalDateTime.now());
+//        fileUnit.setDeleted(Deleted.NO.getStatus());
+//        fileUnitService.replaceInto(fileUnit);
+//
+//        if(line>0){
+//            log.info("New:{},line:{}",fileInfo,line);
+//            return fileConvert.toInitFileInfoResponse(fileInfo,initFileInfo,null);
+//        }else{
+//            log.info("save file error,{},line:{}",fileInfo,line);
+//            return null;
+//        }
+//    }
 
     private FileInfo toFileInfo(InitFileInfo initFileInfo){
         FileInfo fileInfo = new FileInfo();
@@ -148,5 +151,4 @@ public class FileCreateService {
         }
         return Rsp.success(fileConvert.toFileLocalInfoResponse(fileInfo));
     }
-
 }

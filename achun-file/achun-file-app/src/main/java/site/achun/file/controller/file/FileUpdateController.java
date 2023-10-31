@@ -36,7 +36,8 @@ public class FileUpdateController implements FileUpdateClient {
 
     @Override
     public Rsp<InitFileInfoResponse> initFileInfo(InitFileInfo init) {
-        return Rsp.success(fileCreateService.initFileInfo(init));
+//        return Rsp.success(fileCreateService.initFileInfo(init));
+        return Rsp.success(null);
     }
 
     @Override

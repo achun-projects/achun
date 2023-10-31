@@ -15,6 +15,7 @@ public class InitFileInfo implements Serializable {
 
     private String fileCode;
     private String unitCode;
+    private String dirCode;
     private String unitName;
     private String thirdId;
 

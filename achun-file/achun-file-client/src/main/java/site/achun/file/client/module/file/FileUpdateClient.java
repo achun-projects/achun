@@ -19,6 +19,7 @@ public interface FileUpdateClient {
 
     @Operation(summary = "初始化文件")
     @PostMapping("/file/update/init-file-info")
+    @Deprecated
     Rsp<InitFileInfoResponse> initFileInfo(@RequestBody InitFileInfo init);
 
     @Operation(summary = "初始化文件")
