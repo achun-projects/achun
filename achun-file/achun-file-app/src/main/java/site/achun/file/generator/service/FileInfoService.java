@@ -15,6 +15,8 @@ import java.util.List;
 */
 public interface FileInfoService extends IService<FileInfo> {
 
+    int replaceInto(FileInfo fileInfo);
+
     default List<FileInfo> getByUnitCode(String unitCode){
         return this.lambdaQuery()
                 .eq(FileInfo::getUnitCode,unitCode)

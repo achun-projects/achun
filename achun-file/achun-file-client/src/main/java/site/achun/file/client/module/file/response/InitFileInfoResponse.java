@@ -30,4 +30,7 @@ public class InitFileInfoResponse extends InitFileInfo implements Serializable {
     @Schema(name = "文件仓库")
     private StorageResponse storage;
 
+    @Schema(name = "是否存在")
+    private Boolean exist;
+
 }

@@ -21,6 +21,10 @@ public interface FileUpdateClient {
     @PostMapping("/file/update/init-file-info")
     Rsp<InitFileInfoResponse> initFileInfo(@RequestBody InitFileInfo init);
 
+    @Operation(summary = "初始化文件")
+    @PostMapping("/file/update/init-file-info-v2")
+    Rsp<InitFileInfoResponse> initFileInfoV2(@RequestBody InitFileInfo init);
+
     @Operation(summary = "新增一条文件记录")
     @PostMapping("/file/update/create-file")
     Rsp<FileLocalInfoResponse> createFile(@RequestBody CreateFileInfo create);

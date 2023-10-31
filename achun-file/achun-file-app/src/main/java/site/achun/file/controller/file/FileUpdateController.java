@@ -40,6 +40,11 @@ public class FileUpdateController implements FileUpdateClient {
     }
 
     @Override
+    public Rsp<InitFileInfoResponse> initFileInfoV2(InitFileInfo init) {
+        return Rsp.success(fileCreateService.initFileInfoV2(init));
+    }
+
+    @Override
     public Rsp<FileLocalInfoResponse> createFile(CreateFileInfo create) {
         Rsp<FileLocalInfoResponse> rsp = fileCreateService.createFileInfo(create);
         fileUpdateSender.whenFileUpdate(create.getFileCode());

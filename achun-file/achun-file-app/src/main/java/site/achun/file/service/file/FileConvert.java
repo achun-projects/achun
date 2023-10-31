@@ -14,7 +14,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import site.achun.file.beans.file.FileOrigin;
 import site.achun.file.client.enums.Env;
-import site.achun.file.client.enums.Type;
 import site.achun.file.client.module.file.request.InitFileInfo;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
@@ -75,13 +74,14 @@ public class FileConvert {
                 .collect(Collectors.toList());
     }
 
-    public InitFileInfoResponse toInitFileInfoResponse(FileInfo fileInfo, InitFileInfo init){
+    public InitFileInfoResponse toInitFileInfoResponse(FileInfo fileInfo, InitFileInfo init,Boolean exist){
         InitFileInfoResponse response = BeanUtil.toBean(init, InitFileInfoResponse.class);
         response.setFileCode(fileInfo.getFileCode());
         response.setInStoragePath(fileInfo.getInStoragePath());
         response.setCover(fileInfo.getCover());
         response.setUtime(fileInfo.getUtime());
         response.setStorage(storageConvert.toResponse(storageService.getStorage(fileInfo.getStorageCode())));
+        response.setExist(exist);
         return response;
     }
 

@@ -16,6 +16,8 @@ import site.achun.file.generator.domain.FileUnit;
 import site.achun.file.generator.domain.Storage;
 import site.achun.file.generator.mapper.FileInfoMapper;
 import site.achun.file.generator.mapper.FileUnitMapper;
+import site.achun.file.generator.service.FileInfoService;
+import site.achun.file.generator.service.FileUnitService;
 import site.achun.file.generator.service.StorageService;
 import site.achun.support.api.enums.Deleted;
 import site.achun.support.api.response.Rsp;
@@ -27,11 +29,52 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class FileCreateService {
 
-
-    private final FileInfoMapper fileInfoMapper;
-    private final FileUnitMapper fileUnitMapper;
+    private final FileInfoService fileInfoService;
+    private final FileUnitService fileUnitService;
     private final StorageService storageService;
     private final FileConvert fileConvert;
+
+    public InitFileInfoResponse initFileInfoV2(InitFileInfo initFileInfo) {
+        Storage storage = storageService.getByCode(initFileInfo.getStorageCode());
+        String inStoragePath = initFileInfo.getAbsolutePath().replace(storage.getPath(), "");
+        FileInfo existFileInfo = fileInfoService.lambdaQuery()
+                .eq(FileInfo::getStorageCode, initFileInfo.getStorageCode())
+                .eq(FileInfo::getInStoragePath, inStoragePath)
+                .last("limit 1")
+                .one();
+        if(existFileInfo != null){
+            return fileConvert.toInitFileInfoResponse(existFileInfo,initFileInfo,true);
+        }else{
+            FileInfo fileInfo = toFileInfo(initFileInfo);
+            fileInfo.setInStoragePath(inStoragePath);
+            fileInfo.setAtime(LocalDateTime.now());
+            fileInfo.setCtime(LocalDateTime.now());
+            fileInfo.setUtime(LocalDateTime.now());
+            fileInfo.setLineTime(LocalDateTime.now());
+            fileInfo.setDeleted(Deleted.NO.getStatus());
+            fileInfo.setHidden(Hidden.NO.getStatus());
+            if(StrUtil.isEmpty(fileInfo.getThirdId())){
+                fileInfo.setThirdId("-1");
+            }
+            int line = fileInfoService.replaceInto(fileInfo);
+
+            // 保存分组
+            FileUnit fileUnit = new FileUnit();
+            fileUnit.setUnitCode(initFileInfo.getUnitCode());
+            fileUnit.setUnitName(initFileInfo.getUnitName());
+            fileUnit.setCtime(LocalDateTime.now());
+            fileUnit.setUtime(LocalDateTime.now());
+            fileUnit.setDeleted(Deleted.NO.getStatus());
+            fileUnitService.replaceInto(fileUnit);
+            if(line>0){
+                log.info("New:{},line:{}",fileInfo,line);
+                return fileConvert.toInitFileInfoResponse(fileInfo,initFileInfo,false);
+            }else{
+                log.info("save file error,{},line:{}",fileInfo,line);
+                return null;
+            }
+        }
+    }
 
     public InitFileInfoResponse initFileInfo(InitFileInfo initFileInfo) {
         FileInfo fileInfo = toFileInfo(initFileInfo);
@@ -46,7 +89,7 @@ public class FileCreateService {
         if(StrUtil.isEmpty(fileInfo.getThirdId())){
             fileInfo.setThirdId("-1");
         }
-        int line = fileInfoMapper.replaceInto(fileInfo);
+        int line = fileInfoService.replaceInto(fileInfo);
 
         // 保存分组
         FileUnit fileUnit = new FileUnit();
@@ -55,11 +98,11 @@ public class FileCreateService {
         fileUnit.setCtime(LocalDateTime.now());
         fileUnit.setUtime(LocalDateTime.now());
         fileUnit.setDeleted(Deleted.NO.getStatus());
-        fileUnitMapper.replaceInto(fileUnit);
+        fileUnitService.replaceInto(fileUnit);
 
         if(line>0){
             log.info("New:{},line:{}",fileInfo,line);
-            return fileConvert.toInitFileInfoResponse(fileInfo,initFileInfo);
+            return fileConvert.toInitFileInfoResponse(fileInfo,initFileInfo,null);
         }else{
             log.info("save file error,{},line:{}",fileInfo,line);
             return null;
@@ -97,7 +140,7 @@ public class FileCreateService {
         if(StrUtil.isEmpty(fileInfo.getThirdId())){
             fileInfo.setThirdId("-1");
         }
-        int line = fileInfoMapper.replaceInto(fileInfo);
+        int line = fileInfoService.replaceInto(fileInfo);
         if(line>0){
             log.info("New:{},line:{}",fileInfo,line);
         }else{

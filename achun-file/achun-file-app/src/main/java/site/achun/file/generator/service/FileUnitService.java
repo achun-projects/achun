@@ -10,4 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface FileUnitService extends IService<FileUnit> {
 
+    int replaceInto(FileUnit fileUnit);
+
 }
