@@ -21,4 +21,11 @@ public interface FileDirService extends IService<FileDir> {
                 .eq(FileDir::getDeleted, Deleted.NO.getStatus())
                 .one();
     }
+
+    default List<FileDir> queryByParentCode(String parentDirCode){
+        return this.lambdaQuery()
+                .eq(FileDir::getParentDirCode,parentDirCode)
+                .eq(FileDir::getDeleted,Deleted.NO.getStatus())
+                .list();
+    }
 }

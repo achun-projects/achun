@@ -17,7 +17,9 @@ import site.achun.updown.client.module.file.LocalFileInfoClient;
 import java.io.File;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -60,6 +62,10 @@ public class FileDirScanService {
     }
 
     private List<FileDir> saveFileDir(List<DirInfo> dirInfo){
+        if(CollUtil.isEmpty(dirInfo)){
+            return new ArrayList<>();
+        }
+
         List<FileDir> fileDirList = dirInfo.stream()
                 .map(dir -> FileDir.builder()
                         .name(dir.getName())
@@ -71,7 +77,32 @@ public class FileDirScanService {
                         .deleted(Deleted.NO.getStatus())
                         .build())
                 .collect(Collectors.toList());
-        fileDirService.batchReplaceInto(fileDirList);
+
+        String parentDirCode = dirInfo.get(0).getParentCode();
+        List<FileDir> existDirList = fileDirService.queryByParentCode(parentDirCode);
+        if(CollUtil.isEmpty(existDirList)){
+            fileDirService.saveBatch(fileDirList);
+        }else{
+            Map<String, FileDir> dirMap = fileDirList.stream()
+                    .collect(Collectors.toMap(FileDir::getDirCode, v -> v, (v1, v2) -> v1));
+            Map<String, FileDir> existDirMap = existDirList.stream()
+                    .collect(Collectors.toMap(FileDir::getDirCode, v -> v, (v1, v2) -> v1));
+            List<FileDir> needDeleted = existDirList.stream()
+                    .filter(d -> !dirMap.containsKey(d.getDirCode()))
+                    .collect(Collectors.toList());
+            List<FileDir> needInsert = fileDirList.stream()
+                    .filter(d -> !existDirMap.containsKey(d.getDirCode()))
+                    .collect(Collectors.toList());
+            if(CollUtil.isNotEmpty(needDeleted)){
+                fileDirService.lambdaUpdate()
+                        .set(FileDir::getDeleted,Deleted.YES.getStatus())
+                        .in(FileDir::getDirCode,needDeleted.stream().map(FileDir::getDirCode).collect(Collectors.toList()))
+                        .update();
+            }
+            if(CollUtil.isNotEmpty(needInsert)){
+                fileDirService.saveBatch(needInsert);
+            }
+        }
         return fileDirList;
     }
 
