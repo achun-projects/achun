@@ -52,7 +52,6 @@ public class LocalFileDetectedService {
         } catch (IOException e) {
             log.error("scanFilesByDirCode error,dirCode:{},path:{}",byDirCode.getDirCode(),dirPath.toString(),e);
         }
-
         for (Path subFilePath : subFilePathList) {
             File subFile = subFilePath.toFile();
             log.info("dirCode,[{}]({})",dirResponse.getDirCode(),subFile.getAbsolutePath());
@@ -66,6 +65,7 @@ public class LocalFileDetectedService {
                     .size(subFile.length() / 1024)
                     .md5(md5)
                     .unitCode(dirResponse.getDirCode())
+                    .dirCode(dirResponse.getDirCode())
                     .unitName(dirResponse.getName())
                     .storageCode(dirResponse.getStorageCode())
                     .type(Type.parse(suffix).getCode())
