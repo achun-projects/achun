@@ -47,7 +47,7 @@ public class FileCreateService {
             return fileConvert.toInitFileInfoResponse(existFileInfo,initFileInfo,true);
         }else{
             String code = MD5.create().digestHex16(initFileInfo.getAbsolutePath());
-            String fileCode = storage.getStorageCode().substring(0,4) + initFileInfo.getDirCode().substring(16,20) + code.substring(0,24);
+            String fileCode = storage.getStorageCode().substring(0,4) + initFileInfo.getUnitCode().substring(0,4) + code.substring(0,24);
             FileInfo fileInfo = toFileInfo(initFileInfo);
             fileInfo.setFileCode(fileCode);
             fileInfo.setInStoragePath(inStoragePath);
@@ -115,6 +115,7 @@ public class FileCreateService {
     private FileInfo toFileInfo(InitFileInfo initFileInfo){
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileCode(initFileInfo.getFileCode());
+        fileInfo.setDirCode(initFileInfo.getDirCode());
         fileInfo.setUnitCode(initFileInfo.getUnitCode());
         fileInfo.setThirdId(initFileInfo.getThirdId());
         fileInfo.setStorageCode(initFileInfo.getStorageCode());
