@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -48,6 +49,7 @@ public class LocalFileDetectedService {
         try {
             subFilePathList = Files.list(dirPath)
                     .filter(Files::isRegularFile)
+                    .filter(this::isSupportFile)
                     .collect(Collectors.toList());
         } catch (IOException e) {
             log.error("scanFilesByDirCode error,dirCode:{},path:{}",byDirCode.getDirCode(),dirPath.toString(),e);
@@ -76,6 +78,15 @@ public class LocalFileDetectedService {
                 fileTransferService.transfer(transfer);
             }
         }
+    }
+    private boolean isSupportFile(Path path){
+        String pathString = path.toString();
+        if(!pathString.contains(".")){
+            return false;
+        }
+        String suffix = pathString.substring(pathString.lastIndexOf(".")+1).toLowerCase();
+        List<String> supportSuffixList = Arrays.asList("jpg", "jpeg", "gif", "mp4", "png", "flv");
+        return supportSuffixList.contains(suffix);
     }
 
     @Async
