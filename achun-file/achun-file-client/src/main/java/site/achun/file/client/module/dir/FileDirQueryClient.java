@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import site.achun.file.client.configuration.FileFeignConfiguration;
 import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.dir.request.ByStorageAndPath;
 import site.achun.file.client.module.dir.response.DirResponse;

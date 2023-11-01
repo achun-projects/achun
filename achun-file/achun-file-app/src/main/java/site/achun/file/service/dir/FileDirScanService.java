@@ -6,11 +6,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.dir.beans.DirInfo;
+import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.generator.domain.FileDir;
 import site.achun.file.generator.service.FileDirService;
 import site.achun.file.service.storage.StorageQueryService;
 import site.achun.support.api.enums.Deleted;
+import site.achun.updown.client.module.detected.UpdownDetectedClient;
 import site.achun.updown.client.module.file.GetSubDirsReq;
 import site.achun.updown.client.module.file.LocalFileInfoClient;
 
@@ -30,6 +32,7 @@ public class FileDirScanService {
     private final StorageQueryService storageQueryService;
     private final FileDirService fileDirService;
     private final LocalFileInfoClient localFileInfoClient;
+    private final UpdownDetectedClient updownDetectedClient;
 
     public void scan(String dirCode){
         FileDir fileDir = fileDirService.queryByCode(dirCode);
@@ -109,6 +112,10 @@ public class FileDirScanService {
                 fileDirService.saveBatch(needInsert);
             }
         }
+        // 保存路径中的文件
+        dirInfo.stream().forEach(dir->{
+            updownDetectedClient.scanFilesByDirCode(ByDirCode.builder().dirCode(dir.getDirCode()).build());
+        });
         return fileDirList;
     }
 
@@ -140,10 +147,10 @@ public class FileDirScanService {
             if(CollUtil.isNotEmpty(dirs)){
                 List<DirInfo> dirInfoList = dirs.stream()
                         .map(dir -> {
-                            String halfPathMd5 = MD5.create().digestHex(dir).substring(0, 16);
-                            String dirCode = fileDir.getDirCode().substring(16) + halfPathMd5;
                             Path dirPath = Path.of(dir);
                             String dirPathString = dirPath.toString().replace(storage.getPath(), "");
+                            String halfPathMd5 = MD5.create().digestHex(dirPathString).substring(0, 16);
+                            String dirCode = fileDir.getDirCode().substring(16) + halfPathMd5;
                             return DirInfo.builder()
                                     .dirCode(dirCode)
                                     .parentCode(fileDir.getDirCode())
