@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.dir.beans.DirInfo;
 import site.achun.file.client.module.dir.request.ByDirCode;
+import site.achun.file.client.module.dir.request.RequestScanDir;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.generator.domain.FileDir;
 import site.achun.file.generator.service.FileDirService;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,13 +36,13 @@ public class FileDirScanService {
     private final LocalFileInfoClient localFileInfoClient;
     private final UpdownDetectedClient updownDetectedClient;
 
-    public void scan(String dirCode){
-        FileDir fileDir = fileDirService.queryByCode(dirCode);
+    public void scan(RequestScanDir req){
+        FileDir fileDir = fileDirService.queryByCode(req.getDirCode());
         StorageResponse storage = null;
         if(fileDir == null){
-            storage = storageQueryService.queryStorage(dirCode);
+            storage = storageQueryService.queryStorage(req.getDirCode());
             if(storage == null){
-                log.info("dirCode:{},not found fileDir and storage",dirCode);
+                log.info("dirCode:{},not found fileDir and storage",req.getDirCode());
                 throw new RuntimeException("dir not found");
             }
             fileDir = FileDir.builder()
@@ -53,19 +55,29 @@ public class FileDirScanService {
                     .name(storage.getName())
                     .build();
             fileDirService.save(fileDir);
-            log.info("dirCode:{}，not found fileDir but storage",dirCode);
+            log.info("dirCode:{}，not found fileDir but storage",req.getDirCode());
         }else{
             storage = storageQueryService.queryStorage(fileDir.getStorageCode());
-            log.info("dirCode:{} found FileDir",dirCode);
+            log.info("dirCode:{} found FileDir",req.getDirCode());
         }
-        scan(storage,fileDir);
+        scan(storage,fileDir,req.getOnlyDir());
     }
 
-    public void scan(StorageResponse storage,FileDir dir){
+    public void scan(StorageResponse storage,FileDir dir,boolean onlyDir){
         new Thread(()->{
             LoopGetDirs loop = new LoopGetDirs(storage,dir);
             loop.setDealDirFunction(this::saveFileDir);
             loop.setFunction(path->localFileInfoClient.getSubDirectoryList(GetSubDirsReq.builder().path(path).build()).getData());
+            if(!onlyDir){
+                // 保存路径中的文件
+                Consumer<List<FileDir>> scanDirFilesConsumer = (dirInfoList)->{
+                    dirInfoList.stream().forEach(d->{
+                        ByDirCode req = ByDirCode.builder().dirCode(dir.getDirCode()).build();
+                        updownDetectedClient.scanFilesByDirCode(req);
+                    });
+                };
+                loop.setScanDirFilesConsumer(scanDirFilesConsumer);
+            }
             loop.startLoop();
         }).start();
     }
@@ -112,10 +124,6 @@ public class FileDirScanService {
                 fileDirService.saveBatch(needInsert);
             }
         }
-        // 保存路径中的文件
-        dirInfo.stream().forEach(dir->{
-            updownDetectedClient.scanFilesByDirCode(ByDirCode.builder().dirCode(dir.getDirCode()).build());
-        });
         return fileDirList;
     }
 
@@ -123,6 +131,7 @@ public class FileDirScanService {
         private StorageResponse storage;
         private FileDir root;
         private Function<List<DirInfo>,List<FileDir>> dealDirFunction;
+        private Consumer<List<FileDir>> scanDirFilesConsumer;
         private Function<String,List<String>> getDirsFunction;
         public LoopGetDirs(StorageResponse storage,FileDir root){
             this.storage = storage;
@@ -131,6 +140,10 @@ public class FileDirScanService {
 
         public void setDealDirFunction(Function<List<DirInfo>, List<FileDir>> dealDirFunction) {
             this.dealDirFunction = dealDirFunction;
+        }
+
+        public void setScanDirFilesConsumer(Consumer<List<FileDir>> scanDirFilesConsumer) {
+            this.scanDirFilesConsumer = scanDirFilesConsumer;
         }
 
         public void setFunction(Function<String, List<String>> function) {
@@ -160,7 +173,11 @@ public class FileDirScanService {
                                     .build();
                         })
                         .collect(Collectors.toList());
-                dealDirFunction.apply(dirInfoList).stream().forEach(this::loop);
+                List<FileDir> dirInfos = dealDirFunction.apply(dirInfoList);
+                if(CollUtil.isNotEmpty(dirInfos) && scanDirFilesConsumer!=null){
+                    scanDirFilesConsumer.accept(dirInfos);
+                }
+                dirInfos.stream().forEach(this::loop);
             }
         }
     }

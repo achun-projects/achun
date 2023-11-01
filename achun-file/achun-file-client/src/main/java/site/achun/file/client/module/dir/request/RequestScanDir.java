@@ -11,4 +11,5 @@ import lombok.*;
 @AllArgsConstructor
 public class RequestScanDir {
     private String dirCode;
+    private Boolean onlyDir = true;
 }
