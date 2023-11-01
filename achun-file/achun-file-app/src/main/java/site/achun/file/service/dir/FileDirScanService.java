@@ -72,8 +72,8 @@ public class FileDirScanService {
                 // 保存路径中的文件
                 Consumer<List<FileDir>> scanDirFilesConsumer = (dirInfoList)->{
                     dirInfoList.stream().forEach(d->{
-                        log.info("get files from dirCode:{}",dir.getDirCode());
-                        ByDirCode req = ByDirCode.builder().dirCode(dir.getDirCode()).build();
+                        log.info("get files from dirCode:{}",d.getDirCode());
+                        ByDirCode req = ByDirCode.builder().dirCode(d.getDirCode()).build();
                         updownDetectedClient.scanFilesByDirCode(req);
                     });
                 };
