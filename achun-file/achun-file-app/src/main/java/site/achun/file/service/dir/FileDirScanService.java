@@ -163,7 +163,10 @@ public class FileDirScanService {
                             Path dirPath = Path.of(dir);
                             String dirPathString = dirPath.toString().replace(storage.getPath(), "");
                             String halfPathMd5 = MD5.create().digestHex(dirPathString).substring(0, 16);
-                            String dirCode = fileDir.getDirCode().substring(16) + halfPathMd5;
+                            String halfDirCode = fileDir.getDirCode().length() > 16 ?
+                                    fileDir.getDirCode().substring(fileDir.getDirCode().length() - 16)
+                                    : fileDir.getDirCode();
+                            String dirCode = halfDirCode + halfPathMd5;
                             return DirInfo.builder()
                                     .dirCode(dirCode)
                                     .parentCode(fileDir.getDirCode())
