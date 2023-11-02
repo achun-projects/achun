@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.dir.request.ByDirCode;
-import site.achun.file.client.module.file.request.QueryByFileCode;
-import site.achun.file.client.module.file.request.QueryByFileCodes;
-import site.achun.file.client.module.file.request.QueryByMD5;
-import site.achun.file.client.module.file.request.QueryFilePage;
+import site.achun.file.client.module.file.request.*;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
 import site.achun.file.generator.domain.FileInfo;
@@ -53,12 +50,12 @@ public class FileQueryService {
         return fileConvert.toFileResponse(fileInfoList);
     }
 
-    public List<FileInfoResponse> queryFileList(ByDirCode query) {
-        List<FileInfo> fileInfoList = fileInfoService.lambdaQuery()
-                .eq(FileInfo::getDirCode, query.getDirCode())
-                .eq(FileInfo::getDeleted, Deleted.NO.getStatus())
-                .list();
-        return fileConvert.toFileResponse(fileInfoList);
+    public RspPage<FileInfoResponse> queryFileList(QueryFilePageByDirCode query) {
+        Page<FileInfo> pageResult = fileInfoService.lambdaQuery()
+                .eq(FileInfo::getDirCode,query.getDirCode())
+                .orderByDesc(FileInfo::getCtime)
+                .page(Page.of(query.getPage(), query.getSize()));
+        return PageUtil.batchParse(pageResult,query,fileConvert::toFileResponse);
     }
     public List<FileInfoResponse> queryByUnitCodes(Collection<String> unitCodes){
         List<FileInfo> fileInfoList = fileInfoService.lambdaQuery()
