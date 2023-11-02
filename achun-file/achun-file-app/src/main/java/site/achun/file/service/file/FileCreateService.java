@@ -36,7 +36,7 @@ public class FileCreateService {
     private final FileConvert fileConvert;
 
     public InitFileInfoResponse initFileInfoV2(InitFileInfo initFileInfo) {
-        Storage storage = storageService.getByCode(initFileInfo.getStorageCode());
+        Storage storage = storageService.getStorage(initFileInfo.getStorageCode());
         String inStoragePath = initFileInfo.getAbsolutePath().replace(storage.getPath(), "");
         FileInfo existFileInfo = fileInfoService.lambdaQuery()
                 .eq(FileInfo::getStorageCode, initFileInfo.getStorageCode())

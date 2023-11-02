@@ -23,7 +23,7 @@ public class FileDirQueryController implements FileDirQueryClient {
     private final FileDirQueryService fileDirQueryService;
 
     @Override
-    public Rsp<List<FileResponse>> querySub(ByDirCode req) {
+    public Rsp<List<DirResponse>> querySub(ByDirCode req) {
         return null;
     }
 
