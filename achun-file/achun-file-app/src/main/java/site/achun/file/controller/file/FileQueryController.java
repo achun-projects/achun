@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
+import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.file.FileQueryClient;
 import site.achun.file.client.module.file.request.*;
 import site.achun.file.client.module.file.response.FileInfoResponse;
@@ -82,6 +83,11 @@ public class FileQueryController implements FileQueryClient {
 
     @Override
     public Rsp<List<FileInfoResponse>> queryFileList(QueryByMD5 query) {
+        return Rsp.success(fileQueryService.queryFileList(query));
+    }
+
+    @Override
+    public Rsp<List<FileInfoResponse>> queryFileList(ByDirCode query) {
         return Rsp.success(fileQueryService.queryFileList(query));
     }
 

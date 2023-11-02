@@ -5,6 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.file.client.configuration.FileFeignConfiguration;
+import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.file.request.*;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
@@ -38,7 +39,9 @@ public interface FileQueryClient {
     @Operation(summary = "根据MD5查询文件List")
     @PostMapping("/file/query/query-file-list-by-md5")
     Rsp<List<FileInfoResponse>> queryFileList(@RequestBody QueryByMD5 query);
-
+    @Operation(summary = "根据目录查询文件List")
+    @PostMapping("/file/query/query-file-list-by-dir")
+    Rsp<List<FileInfoResponse>> queryFileList(@RequestBody ByDirCode query);
     @Operation(summary = "根据单位唯一标识集合查询文件List")
     @PostMapping("/file/query/query-file-list-by-unit-codes")
     Rsp<List<FileInfoResponse>> queryFileList(@RequestBody QueryByUnitCodes queryByUnitCodes);

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.file.request.QueryByFileCode;
 import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.request.QueryByMD5;
@@ -52,6 +53,13 @@ public class FileQueryService {
         return fileConvert.toFileResponse(fileInfoList);
     }
 
+    public List<FileInfoResponse> queryFileList(ByDirCode query) {
+        List<FileInfo> fileInfoList = fileInfoService.lambdaQuery()
+                .eq(FileInfo::getDirCode, query.getDirCode())
+                .eq(FileInfo::getDeleted, Deleted.NO.getStatus())
+                .list();
+        return fileConvert.toFileResponse(fileInfoList);
+    }
     public List<FileInfoResponse> queryByUnitCodes(Collection<String> unitCodes){
         List<FileInfo> fileInfoList = fileInfoService.lambdaQuery()
                 .in(FileInfo::getUnitCode, unitCodes)
