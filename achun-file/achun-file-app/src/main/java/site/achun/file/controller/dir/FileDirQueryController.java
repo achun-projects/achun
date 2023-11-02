@@ -8,7 +8,6 @@ import site.achun.file.client.module.dir.FileDirQueryClient;
 import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.dir.request.ByStorageAndPath;
 import site.achun.file.client.module.dir.response.DirResponse;
-import site.achun.file.client.module.dir.response.FileResponse;
 import site.achun.file.service.dir.FileDirQueryService;
 import site.achun.support.api.response.Rsp;
 
@@ -24,7 +23,7 @@ public class FileDirQueryController implements FileDirQueryClient {
 
     @Override
     public Rsp<List<DirResponse>> querySub(ByDirCode req) {
-        return null;
+        return Rsp.success(fileDirQueryService.querySub(req));
     }
 
     @Override

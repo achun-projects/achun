@@ -13,5 +13,4 @@ public class ByDirCode {
 
     private String dirCode;
 
-    private Boolean onlyDir = false;
 }
