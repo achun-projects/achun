@@ -7,18 +7,22 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import lombok.*;
+import lombok.experimental.Accessors;
+import site.achun.gallery.app.generator.response.AlbumExtra;
 
 /**
  * 相册表
  * @TableName album
  */
-@TableName(value ="album")
+@TableName(value ="album",autoResultMap = true)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Accessors(chain = true)
 public class Album implements Serializable {
     /**
      * 主键
@@ -91,6 +95,12 @@ public class Album implements Serializable {
      */
     private Integer unitCount;
 
+    /**
+     * 额外数据
+     */
+    @TableField(typeHandler = FastjsonTypeHandler.class)
+    private AlbumExtra extra;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -119,7 +129,8 @@ public class Album implements Serializable {
             && (this.getUtime() == null ? other.getUtime() == null : this.getUtime().equals(other.getUtime()))
             && (this.getRecordUtime() == null ? other.getRecordUtime() == null : this.getRecordUtime().equals(other.getRecordUtime()))
             && (this.getFileCount() == null ? other.getFileCount() == null : this.getFileCount().equals(other.getFileCount()))
-            && (this.getUnitCount() == null ? other.getUnitCount() == null : this.getUnitCount().equals(other.getUnitCount()));
+            && (this.getUnitCount() == null ? other.getUnitCount() == null : this.getUnitCount().equals(other.getUnitCount()))
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()));
     }
 
     @Override
@@ -140,6 +151,7 @@ public class Album implements Serializable {
         result = prime * result + ((getRecordUtime() == null) ? 0 : getRecordUtime().hashCode());
         result = prime * result + ((getFileCount() == null) ? 0 : getFileCount().hashCode());
         result = prime * result + ((getUnitCount() == null) ? 0 : getUnitCount().hashCode());
+        result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
         return result;
     }
 
@@ -163,6 +175,7 @@ public class Album implements Serializable {
         sb.append(", recordUtime=").append(recordUtime);
         sb.append(", fileCount=").append(fileCount);
         sb.append(", unitCount=").append(unitCount);
+        sb.append(", extra=").append(extra);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

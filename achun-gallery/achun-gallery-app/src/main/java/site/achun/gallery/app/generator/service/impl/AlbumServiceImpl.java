@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
 * @author Administrator
 * @description 针对表【album(相册表)】的数据库操作Service实现
-* @createDate 2023-05-29 17:17:29
+* @createDate 2023-11-09 15:30:56
 */
 @Service
 public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album>
