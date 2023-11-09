@@ -48,6 +48,7 @@ public class AlbumUpdateExecute {
             AlbumExtra extra = album.getExtra();
             if(extra == null) extra = new AlbumExtra();
             extra.setDirCode(request.getDirCode());
+            album.setExtra(extra);
             albumService.updateById(album);
         }
         if(StrUtil.isNotEmpty(request.getGroupCode())){
