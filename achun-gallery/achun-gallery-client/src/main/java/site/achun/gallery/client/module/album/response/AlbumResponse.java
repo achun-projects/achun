@@ -80,4 +80,6 @@ public class AlbumResponse implements Serializable {
      * 分组总数
      */
     private Integer unitCount;
+
+    private String dirCode;
 }

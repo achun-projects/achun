@@ -30,6 +30,11 @@ public class AlbumQueryExecute {
         AlbumResponse albumResponse = BeanUtil.toBean(album, AlbumResponse.class);
         albumResponse.setRecentAtime(DateTimeUtil.parse(album.getRecordUtime()));
 
+        // 同步目录编码
+        if(album.getExtra() != null){
+            albumResponse.setDirCode(album.getExtra().getDirCode());
+        }
+
         // 补充分组名
         GalleryGroupResponse galleryGroup = myGroupService.selectForNames(album.getAlbumCode());
         if(galleryGroup == null){
