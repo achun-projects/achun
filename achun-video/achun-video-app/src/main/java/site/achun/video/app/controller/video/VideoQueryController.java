@@ -42,7 +42,6 @@ public class VideoQueryController {
     }
     @Operation(summary = "查询视频分页列表 - 用频道编码")
     @GetMapping("/video/query/by-channel-code")
-//    @NeedLogin
     public Rsp<RspPage<VideoInfoResponse>> queryVideoPagesByChannelCode(
             @RequestParam("page") Integer page,
             @RequestParam("size") Integer size,
@@ -55,7 +54,6 @@ public class VideoQueryController {
         return rsp;
     }
 
-//    @NeedLogin
     @Operation(summary = "查询视频分页列表 - 用播放列表编码")
     @GetMapping("/video/query/by-plist-code")
     public Rsp<RspPage<VideoInfoResponse>> queryVideoPagesByPlistCode(
