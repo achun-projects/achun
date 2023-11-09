@@ -20,8 +20,9 @@ public class AlbumRecordUpdateExecute {
     private final AlbumRecordService albumRecordService;
     private final AlbumRecordMapper albumRecordMapper;
 
-    public void replaceInfo(String albumCode,String fileCode){
-        albumRecordMapper.replaceInto(toAlbumRecord(albumCode,fileCode));
+    public void replaceInfo(String albumCode,String unitCode){
+        log.info("AlbumRecordUpdateExecute.replaceInfo({},{})",albumCode,unitCode);
+        albumRecordMapper.replaceInto(toAlbumRecord(albumCode,unitCode));
     }
     public void createAlbumRecord(String albumCode, String fileSetCode){
         // 删除已存在的关联关系
@@ -44,11 +45,11 @@ public class AlbumRecordUpdateExecute {
                 .collect(Collectors.toList());
     }
 
-    private AlbumRecord toAlbumRecord(String albumCode, String fileSetCode){
+    private AlbumRecord toAlbumRecord(String albumCode, String unitCode){
         return AlbumRecord.builder()
                 .ctime(LocalDateTime.now())
                 .albumCode(albumCode)
-                .setCode(fileSetCode)
+                .setCode(unitCode)
                 .build();
     }
 }

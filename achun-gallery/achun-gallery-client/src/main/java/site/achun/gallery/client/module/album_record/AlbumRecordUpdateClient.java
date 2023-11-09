@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.gallery.client.module.album.request.MoveAlbumRecordRequest;
+import site.achun.gallery.client.module.album_record.request.AlbumRecordAsyncFromDir;
 import site.achun.gallery.client.module.album_record.request.UploadPictures;
 import site.achun.gallery.client.module.pic_unit.request.AnewPicUnit;
 import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
@@ -31,4 +32,8 @@ public interface AlbumRecordUpdateClient {
     @Operation(summary = "批量删除文件")
     @PostMapping("/gallery/album-record/batch-delete")
     Rsp<Boolean> deleteBatchRecords(@RequestBody Collection<String> fileCodes);
+
+    @Operation(summary = "从目录同步")
+    @PostMapping("/gallery/album-record/async-from-dir")
+    Rsp<Void> startAsyncFromDir(@RequestBody AlbumRecordAsyncFromDir req);
 }

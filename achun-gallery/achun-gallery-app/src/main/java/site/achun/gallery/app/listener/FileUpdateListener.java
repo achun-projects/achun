@@ -16,7 +16,7 @@ import site.achun.gallery.app.service.PicturesUpdateService;
 @RequiredArgsConstructor
 public class FileUpdateListener {
 
-    private final MediaFileQueryClient fileQueryClient;
+    private final FileQueryClient fileQueryClient;
 
     private final PicturesUpdateService picturesUpdateService;
 
@@ -24,7 +24,7 @@ public class FileUpdateListener {
     @RabbitListener(queues = "file.update.queue")
     public void whenFileUpdate(String fileCode){
         log.info("fileUpdate :{}",fileCode);
-        MediaFileResponse file = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(fileCode).build()).getData();
+        FileInfoResponse file = fileQueryClient.queryFile(QueryByFileCode.builder().fileCode(fileCode).build()).getData();
         if(!LISTEN_BUCKETS.contains(file.getBucketCode())){
             log.info("fileNotIn,fileCode:{},bucketCode:{}",fileCode,file.getBucketCode());
         }

@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import site.achun.file.client.module.file.response.MediaFileResponse;
+import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.gallery.app.generator.domain.AlbumRecord;
 import site.achun.gallery.app.generator.domain.Pictures;
 import site.achun.gallery.app.generator.mapper.AlbumRecordMapper;
@@ -23,7 +23,7 @@ public class PicturesUpdateService {
     private final AlbumService albumService;
     private final AlbumRecordMapper albumRecordMapper;
 
-    public void update(MediaFileResponse fileInfo){
+    public void update(FileInfoResponse fileInfo){
         // 保存同步文件
         Pictures pic = new Pictures();
         pic.setFileCode(fileInfo.getFileCode());
