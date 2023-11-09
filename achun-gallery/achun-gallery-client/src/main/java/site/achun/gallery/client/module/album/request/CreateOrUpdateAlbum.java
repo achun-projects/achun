@@ -35,4 +35,7 @@ public class CreateOrUpdateAlbum implements Serializable {
     @Schema(title = "用户编码")
     private String userCode;
 
+    @Schema(title = "同步目录编码")
+    private String dirCode;
+
 }

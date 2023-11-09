@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.domain.Album;
 import site.achun.gallery.app.generator.domain.GalleryGroupRecord;
+import site.achun.gallery.app.generator.response.AlbumExtra;
 import site.achun.gallery.app.generator.service.AlbumService;
 import site.achun.gallery.app.generator.service.GalleryGroupRecordService;
 import site.achun.gallery.client.constant.GalleryRC;
@@ -46,16 +47,22 @@ public class AlbumCreateExecute {
     private Album toAlbum(CreateOrUpdateAlbum createRequest){
         String albumCode = StrUtil.isNotEmpty(createRequest.getAlbumCode()) ?
                 createRequest.getAlbumCode() : UUID.randomUUID().toString().replace("-","");
-        return Album.builder()
+        AlbumExtra extra = new AlbumExtra();
+        if(StrUtil.isNotEmpty(createRequest.getDirCode())){
+            extra.setDirCode(createRequest.getDirCode());
+        }
+        Album album = Album.builder()
                 .albumCode(albumCode)
                 .description(createRequest.getDescription())
                 .source(createRequest.getSource())
                 .name(createRequest.getName())
                 .userCode(createRequest.getUserCode())
                 .coverFileCode(createRequest.getCoverFileCode())
+                .extra(extra)
                 .ctime(LocalDateTime.now()).utime(LocalDateTime.now())
                 .recordUtime(LocalDateTime.now())
                 .build();
+        return album;
     }
 
 }

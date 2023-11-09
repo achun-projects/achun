@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.domain.Album;
 import site.achun.gallery.app.generator.domain.GalleryGroupRecord;
+import site.achun.gallery.app.generator.response.AlbumExtra;
 import site.achun.gallery.app.generator.service.AlbumService;
 import site.achun.gallery.app.generator.service.GalleryGroupRecordService;
 import site.achun.gallery.app.service.ablum.AlbumUpdateService;
@@ -42,6 +43,13 @@ public class AlbumUpdateExecute {
                 .set(Album::getUtime, LocalDateTime.now())
                 .set(Album::getRecordUtime,LocalDateTime.now())
                 .update();
+
+        if(StrUtil.isNotEmpty(request.getDirCode())){
+            AlbumExtra extra = album.getExtra();
+            if(extra == null) extra = new AlbumExtra();
+            extra.setDirCode(request.getDirCode());
+            albumService.updateById(album);
+        }
         if(StrUtil.isNotEmpty(request.getGroupCode())){
             groupRecordService.lambdaUpdate()
                     .eq(GalleryGroupRecord::getListCode,album.getAlbumCode())
