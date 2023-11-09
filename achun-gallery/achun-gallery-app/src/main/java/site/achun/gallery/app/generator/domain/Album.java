@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.*;
 import lombok.experimental.Accessors;
 import site.achun.gallery.app.generator.response.AlbumExtra;
@@ -98,7 +99,7 @@ public class Album implements Serializable {
     /**
      * 额外数据
      */
-    @TableField(typeHandler = FastjsonTypeHandler.class)
+    @TableField(typeHandler = JacksonTypeHandler.class)
     private AlbumExtra extra;
 
     @TableField(exist = false)
