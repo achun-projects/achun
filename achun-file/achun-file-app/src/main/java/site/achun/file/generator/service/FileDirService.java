@@ -1,10 +1,14 @@
 package site.achun.file.generator.service;
 
+import cn.hutool.core.collection.CollUtil;
 import site.achun.file.generator.domain.FileDir;
 import com.baomidou.mybatisplus.extension.service.IService;
 import site.achun.support.api.enums.Deleted;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author Administrator
@@ -27,5 +31,36 @@ public interface FileDirService extends IService<FileDir> {
                 .eq(FileDir::getParentDirCode,parentDirCode)
                 .eq(FileDir::getDeleted,Deleted.NO.getStatus())
                 .list();
+    }
+
+    default List<FileDir> queryByParentCodes(List<String> parentDirCodes){
+        return this.lambdaQuery()
+                .in(FileDir::getParentDirCode,parentDirCodes)
+                .eq(FileDir::getDeleted,Deleted.NO.getStatus())
+                .list();
+    }
+    default List<FileDir> queryDeepSub(String parentDirCode){
+        List<FileDir> response = new ArrayList<>();
+        FileDir parent = queryByCode(parentDirCode);
+        if(parent == null){
+            return response;
+        }
+        response.add(parent);
+
+        List<String> parentDirCodes = Arrays.asList(parentDirCode);
+        recursionQuerySub(parentDirCodes,response);
+        return response;
+    }
+
+    default void recursionQuerySub(List<String> parentDirCodes,List<FileDir> response){
+        List<FileDir> list = queryByParentCodes(parentDirCodes);
+        if(CollUtil.isEmpty(list)){
+            return;
+        }
+        response.addAll(list);
+        List<String> dirCodes = list.stream()
+                .map(FileDir::getDirCode)
+                .collect(Collectors.toList());
+        recursionQuerySub(dirCodes, response);
     }
 }

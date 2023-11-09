@@ -35,6 +35,13 @@ public class FileDirQueryService {
         return dirs.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
+    public List<DirResponse> queryDeep(ByDirCode byDirCode){
+        return fileDirService.queryDeepSub(byDirCode.getDirCode()).stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
+
     private DirResponse toResponse(FileDir fileDir){
         return DirResponse.builder()
                 .dirCode(fileDir.getDirCode())
