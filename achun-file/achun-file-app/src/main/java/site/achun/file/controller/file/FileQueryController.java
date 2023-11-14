@@ -87,8 +87,8 @@ public class FileQueryController implements FileQueryClient {
     }
 
     @Override
-    public Rsp<RspPage<FileInfoResponse>> queryFileList(QueryFilePageByDirCode query) {
-        return Rsp.success(fileQueryService.queryFileList(query));
+    public Rsp<RspPage<FileInfoResponse>> queryFilePage(QueryFilePageByDirCode query) {
+        return Rsp.success(fileQueryService.queryFilePage(query));
     }
 
     @Override

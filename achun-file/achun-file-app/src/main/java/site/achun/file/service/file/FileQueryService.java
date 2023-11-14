@@ -55,7 +55,7 @@ public class FileQueryService {
         return fileConvert.toFileResponse(fileInfoList);
     }
 
-    public RspPage<FileInfoResponse> queryFileList(QueryFilePageByDirCode query) {
+    public RspPage<FileInfoResponse> queryFilePage(QueryFilePageByDirCode query) {
         Page<FileInfo> pageResult = null;
         if(query.getOnlyThis()){
             pageResult = fileInfoService.lambdaQuery()
