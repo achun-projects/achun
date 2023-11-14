@@ -3,6 +3,7 @@ package site.achun.video.client.module.video.request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.support.api.deserializer.ToEnumDeserializer;
 import site.achun.video.client.constant.ViewLevelEnum;
@@ -51,7 +52,7 @@ public class CreateOrUpdateVideoRequest implements Serializable {
 
     private Collection<String> tags;
 
-    private Collection<MediaFileResponse> videoFiles;
+    private Collection<FileInfoResponse> videoFiles;
 
     private String userCode;
 

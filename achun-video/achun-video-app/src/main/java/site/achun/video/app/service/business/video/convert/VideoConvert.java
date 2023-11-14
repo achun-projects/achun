@@ -1,6 +1,7 @@
 package site.achun.video.app.service.business.video.convert;
 
 import cn.hutool.core.bean.BeanUtil;
+import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.video.app.generator.domain.TagsMap;
 import site.achun.video.app.generator.domain.VideoFileInfo;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
  */
 public class VideoConvert {
 
-    public static VideoFileInfo toVideoFileInfo(MediaFileResponse fileResponse){
+    public static VideoFileInfo toVideoFileInfo(FileInfoResponse fileResponse){
         VideoFileInfo videoFileInfo = BeanUtil.toBean(fileResponse, VideoFileInfo.class);
         videoFileInfo.setVideoCode(fileResponse.getUnitCode());
         videoFileInfo.setVideoName(fileResponse.getFileName());

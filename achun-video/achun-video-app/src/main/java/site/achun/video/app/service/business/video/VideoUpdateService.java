@@ -5,8 +5,10 @@ import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.module.file.FileQueryClient;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByUnitCode;
+import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.MediaFileResponse;
 import site.achun.support.api.enums.Deleted;
 import site.achun.support.api.enums.Visibility;
@@ -47,14 +49,14 @@ public class VideoUpdateService {
 
     private final VideoQueryExecute videoQueryExecute;
 
-    private final MediaFileQueryClient fileQueryClient;
+    private final FileQueryClient fileQueryClient;
 
     private final PlayListRecordService playListRecordService;
 
 
     public Rsp<VideoInfoResponse> createOrUpdateVideo(CreateOrUpdateVideoRequest createVideo) {
         // 通过视频编码查视频文件信息
-        List<MediaFileResponse> videoFiles = fileQueryClient.queryFileList(QueryByUnitCode.builder().unitCode(createVideo.getVideoCode()).build()).getData();
+        List<FileInfoResponse> videoFiles = fileQueryClient.queryFileList(QueryByUnitCode.builder().unitCode(createVideo.getVideoCode()).build()).getData();
         if(CollUtil.isEmpty(videoFiles)){
             return Rsp.error(RC.PARAMS_IS_NULL,"视频文件信息不能为空");
         }
