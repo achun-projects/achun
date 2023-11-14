@@ -35,6 +35,9 @@ public interface FileQueryClient {
     @Operation(summary = "根据单位唯一标识查询文件List")
     @PostMapping("/file/query/query-file-list-by-unit-code")
     Rsp<List<FileInfoResponse>> queryFileList(@RequestBody QueryByUnitCode queryByUnitCode);
+    @Operation(summary = "根据单位唯一标识查询文件List")
+    @PostMapping("/file/query/query-file-list-by-dir-code")
+    Rsp<List<FileInfoResponse>> queryFileList(@RequestBody QueryByDirCode queryByDirCode);
     @Operation(summary = "根据MD5查询文件List")
     @PostMapping("/file/query/query-file-list-by-md5")
     Rsp<List<FileInfoResponse>> queryFileList(@RequestBody QueryByMD5 query);

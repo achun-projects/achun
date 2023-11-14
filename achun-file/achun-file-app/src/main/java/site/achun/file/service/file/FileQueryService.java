@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.file.request.*;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
@@ -13,10 +12,8 @@ import site.achun.file.generator.domain.FileDir;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.service.FileDirService;
 import site.achun.file.generator.service.FileInfoService;
-import site.achun.file.service.dir.FileDirQueryService;
 import site.achun.file.util.PageUtil;
 import site.achun.support.api.enums.Deleted;
-import site.achun.support.api.response.Rsp;
 import site.achun.support.api.response.RspPage;
 
 import java.util.Collection;
@@ -42,6 +39,14 @@ public class FileQueryService {
     public List<FileInfoResponse> queryByUnitCode(String unitCode){
         List<FileInfo> fileInfoList = fileInfoService.lambdaQuery()
                 .eq(FileInfo::getUnitCode, unitCode)
+                .eq(FileInfo::getDeleted, Deleted.NO.getStatus())
+                .list();
+        return fileConvert.toFileResponse(fileInfoList);
+    }
+
+    public List<FileInfoResponse> queryByDirCode(String dirCode){
+        List<FileInfo> fileInfoList = fileInfoService.lambdaQuery()
+                .eq(FileInfo::getDirCode, dirCode)
                 .eq(FileInfo::getDeleted, Deleted.NO.getStatus())
                 .list();
         return fileConvert.toFileResponse(fileInfoList);
@@ -99,4 +104,5 @@ public class FileQueryService {
     public List<FileLocalInfoResponse> queryFileLocalInfoList(QueryByFileCodes query){
         return fileConvert.toFileLocalInfoResponse(fileInfoService.getByCodes(query.getFileCodes()));
     }
+
 }
