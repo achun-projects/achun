@@ -40,7 +40,8 @@ public class VideoUtil {
         System.out.println("截取视频截图开始："+ System.currentTimeMillis());
         FFmpegFrameGrabber grabber = FFmpegFrameGrabber.createDefault(file);
         // 第一帧图片存储位置
-        Path targetFilePath = Path.of(storagePath.toString(),"_cover",storagePath.relativize(file.toPath()).toString(),".cover.jpg");
+        Path targetFilePath = Path.of(storagePath.toString(),"_cover",storagePath.relativize(file.toPath()).toString());
+        targetFilePath = targetFilePath.getParent().resolveSibling(targetFilePath.getFileName()+".cover.jpg");
         // 视频文件名
         System.out.println("视频路径是：" + file.getAbsolutePath());
         System.out.println("图片名称是：" + targetFilePath.toString());
@@ -66,6 +67,9 @@ public class VideoUtil {
         String imageMat = "jpg";
         //创建文件
         File output = targetFilePath.toFile();
+        if(!output.getParentFile().exists()){
+            output.getParentFile().mkdirs();
+        }
         ImageIO.write(bi, imageMat, output);
 
         //拼接Map信息
