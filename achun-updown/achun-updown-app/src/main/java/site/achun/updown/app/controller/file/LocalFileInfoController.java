@@ -27,7 +27,7 @@ public class LocalFileInfoController implements LocalFileInfoClient {
         File[] listFiles = file.listFiles();
         List<String> response = new ArrayList<>();
         for (File f : listFiles) {
-            if(f.isDirectory()){
+            if(f.isDirectory() && !f.getName().startsWith("_")){
                 response.add(f.getAbsolutePath());
             }
         }
