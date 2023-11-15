@@ -11,6 +11,8 @@ import site.achun.updown.app.service.module.transfer.TransferType;
 import site.achun.updown.app.util.video.VideoUtil;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Description
@@ -39,14 +41,15 @@ public class MP4ParamsStrategy implements FileTransferStrategy {
     public void handler(FileTransferInfo transfer) {
         try {
             // 同目录下生成封面图，并获取视频信息
-            VideoUtil.VideoInfo info = VideoUtil.parse(transfer.getFile());
+            Path storagePath = Paths.get(transfer.getStorage().getPath());
+            VideoUtil.VideoInfo info = VideoUtil.parse(transfer.getFile(), storagePath);
             UpdateFileRequest update = new UpdateFileRequest();
             update.setFileCode(transfer.getFileCode());
             update.setDuration(info.getDuration().intValue());
             update.setHeight(info.getHeight());
             update.setWidth(info.getWidth());
             update.setWh((int) (((float)info.getWidth()/(float)info.getHeight())*100f));
-            update.setCover(transfer.getInStoragePath().replace(".mp4",".cover.jpg").replace(".MP4",".cover.jpg"));
+            update.setCover(storagePath.relativize(info.getCoverPath()).toString());
             fileUpdateClient.updateFileInfo(update);
         } catch (IOException e) {
             e.printStackTrace();

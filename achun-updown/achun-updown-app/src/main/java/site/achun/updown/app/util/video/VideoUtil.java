@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Description
@@ -23,22 +25,25 @@ public class VideoUtil {
     private final static Integer CUT_FRAME = 3;
 
     public static void main(String[] args) throws IOException {
-        VideoInfo info = parse(new File("Y:\\足球宝贝一拳打哭你！ (P1. 横屏版).mp4"));
-        System.out.println(info);
+//        VideoInfo info = parse(new File("Y:\\足球宝贝一拳打哭你！ (P1. 横屏版).mp4"),null);
+//        System.out.println(info);
+        // 创建路径对象
+        Path fullPath = Paths.get("/aaa/bbb/ccc/name.jpg");
+        Path prefixPath = Paths.get("/aaa/bbb");
+
+        // 使用 relativize 方法得到相对路径
+        Path relativePath = prefixPath.relativize(fullPath);
+        System.out.println(relativePath.toString());
     }
 
-    public static VideoInfo parse(File file) throws IOException {
+    public static VideoInfo parse(File file,Path storagePath) throws IOException {
         System.out.println("截取视频截图开始："+ System.currentTimeMillis());
         FFmpegFrameGrabber grabber = FFmpegFrameGrabber.createDefault(file);
         // 第一帧图片存储位置
-        String targetFilePath = file.getParent();
+        Path targetFilePath = Path.of(storagePath.toString(),"_cover",storagePath.relativize(file.toPath()).toString(),".cover.jpg");
         // 视频文件名
-        String fileName = file.getName();
-        // 图片名称
-        String targetFileName = fileName.substring(0, fileName.lastIndexOf("."));
-        System.out.println("视频路径是：" + targetFilePath);
-        System.out.println("视频文件名：" + fileName);
-        System.out.println("图片名称是：" + targetFileName);
+        System.out.println("视频路径是：" + file.getAbsolutePath());
+        System.out.println("图片名称是：" + targetFilePath.toString());
 
         grabber.start();
 
@@ -59,10 +64,8 @@ public class VideoUtil {
         }
         //图片的类型
         String imageMat = "jpg";
-        //图片的完整路径
-        String imagePath = targetFilePath + File.separator + targetFileName + ".cover." + imageMat;
         //创建文件
-        File output = new File(imagePath);
+        File output = targetFilePath.toFile();
         ImageIO.write(bi, imageMat, output);
 
         //拼接Map信息
@@ -74,6 +77,7 @@ public class VideoUtil {
         info.setRotate(rotate==null ? "0" : rotate);
         info.setFormat(grabber.getFormat());
         info.setPath(output.getPath());
+        info.setCoverPath(targetFilePath);
         grabber.stop();
         return info;
     }
@@ -87,6 +91,7 @@ public class VideoUtil {
         private String rotate;
         private String format;
         private String path;
+        private Path coverPath;
     }
 
     /**
