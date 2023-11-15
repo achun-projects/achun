@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
  */
 public class VideoConvert {
 
-    public static VideoFileInfo toVideoFileInfo(FileInfoResponse fileResponse){
+    public static VideoFileInfo toVideoFileInfo(FileInfoResponse fileResponse,String videoCode){
         VideoFileInfo videoFileInfo = BeanUtil.toBean(fileResponse, VideoFileInfo.class);
-        videoFileInfo.setVideoCode(fileResponse.getUnitCode());
+        videoFileInfo.setVideoCode(videoCode);
         videoFileInfo.setVideoName(fileResponse.getFileName());
         videoFileInfo.setCtime(LocalDateTime.now());
         videoFileInfo.setUtime(LocalDateTime.now());

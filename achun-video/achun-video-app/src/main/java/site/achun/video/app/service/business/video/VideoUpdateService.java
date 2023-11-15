@@ -55,12 +55,17 @@ public class VideoUpdateService {
 
 
     public Rsp<VideoInfoResponse> createOrUpdateVideo(CreateOrUpdateVideoRequest createVideo) {
-        // 通过视频编码查视频文件信息
-        List<FileInfoResponse> videoFiles = fileQueryClient.queryFileList(QueryByUnitCode.builder().unitCode(createVideo.getVideoCode()).build()).getData();
-        if(CollUtil.isEmpty(videoFiles)){
-            return Rsp.error(RC.PARAMS_IS_NULL,"视频文件信息不能为空");
+        if(StrUtil.isEmpty(createVideo.getVideoCode())){
+            return Rsp.error(RC.PARAMS_IS_NULL,"视频编码不能为空");
         }
-        createVideo.setVideoFiles(videoFiles);
+        // 通过视频编码查视频文件信息
+        if(CollUtil.isEmpty(createVideo.getVideoFiles())){
+            List<FileInfoResponse> videoFiles = fileQueryClient.queryFileList(QueryByUnitCode.builder().unitCode(createVideo.getVideoCode()).build()).getData();
+            if(CollUtil.isEmpty(videoFiles)){
+                return Rsp.error(RC.PARAMS_IS_NULL,"视频文件信息不能为空");
+            }
+            createVideo.setVideoFiles(videoFiles);
+        }
 
         // 更新视频基本信息
         createOrUpdateVideoInfo(createVideo);
@@ -85,7 +90,7 @@ public class VideoUpdateService {
                 .eq(VideoFileInfo::getVideoCode,createVideo.getVideoCode())
                 .remove();
         List<VideoFileInfo> videoFileInfos = createVideo.getVideoFiles().stream()
-                .map(VideoConvert::toVideoFileInfo)
+                .map(fileInfo->VideoConvert.toVideoFileInfo(fileInfo,createVideo.getVideoCode()))
                 .collect(Collectors.toList());
         videoFileInfoService.saveBatch(videoFileInfos);
 
