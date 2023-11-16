@@ -17,7 +17,7 @@ public interface FileDirQueryClient {
     @PostMapping("/file/dir/query-sub-by-dir-code")
     Rsp<List<DirResponse>> querySub(@RequestBody ByDirCode req);
 
-    @Operation(summary = "根据目录编码便利查询文件和目录")
+    @Operation(summary = "根据目录编码遍历查询文件和目录")
     @PostMapping("/file/dir/query-deep-by-dir-code")
     Rsp<List<DirResponse>> queryDeep(@RequestBody ByDirCode req);
 
