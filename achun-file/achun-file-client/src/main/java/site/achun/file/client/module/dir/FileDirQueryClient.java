@@ -5,6 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.file.client.module.dir.request.ByDirCode;
+import site.achun.file.client.module.dir.request.ByDirCodes;
 import site.achun.file.client.module.dir.request.ByStorageAndPath;
 import site.achun.file.client.module.dir.response.DirResponse;
 import site.achun.support.api.response.Rsp;
@@ -20,6 +21,10 @@ public interface FileDirQueryClient {
     @Operation(summary = "根据目录编码遍历查询文件和目录")
     @PostMapping("/file/dir/query-deep-by-dir-code")
     Rsp<List<DirResponse>> queryDeep(@RequestBody ByDirCode req);
+
+    @Operation(summary = "根据批量目录编码遍历查询文件和目录")
+    @PostMapping("/file/dir/query-deep-by-dir-codes")
+    Rsp<List<DirResponse>> queryDeep(@RequestBody ByDirCodes req);
 
     @Operation(summary = "查询目录详情")
     @PostMapping("/file/dir/query-dir-by-dir-code")

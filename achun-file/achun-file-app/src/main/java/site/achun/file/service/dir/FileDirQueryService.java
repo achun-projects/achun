@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.module.dir.request.ByDirCode;
+import site.achun.file.client.module.dir.request.ByDirCodes;
 import site.achun.file.client.module.dir.response.DirResponse;
 import site.achun.file.client.module.dir.response.FileResponse;
 import site.achun.file.client.module.storage.response.StorageResponse;
@@ -12,6 +13,7 @@ import site.achun.file.generator.domain.Storage;
 import site.achun.file.generator.service.FileDirService;
 import site.achun.file.service.storage.StorageQueryService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +43,16 @@ public class FileDirQueryService {
                 .collect(Collectors.toList());
     }
 
+    public List<DirResponse> queryDeep(ByDirCodes byDirCodes){
+        List<FileDir> list = new ArrayList<>();
+        for (String dirCode : byDirCodes.getDirCodes()) {
+            list.addAll(fileDirService.queryDeepSub(dirCode));
+        }
+        return list.stream()
+                .distinct()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
 
     private DirResponse toResponse(FileDir fileDir){
         return DirResponse.builder()

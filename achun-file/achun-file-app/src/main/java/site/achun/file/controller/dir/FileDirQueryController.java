@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.file.client.module.dir.FileDirQueryClient;
 import site.achun.file.client.module.dir.request.ByDirCode;
+import site.achun.file.client.module.dir.request.ByDirCodes;
 import site.achun.file.client.module.dir.request.ByStorageAndPath;
 import site.achun.file.client.module.dir.response.DirResponse;
 import site.achun.file.service.dir.FileDirQueryService;
@@ -28,6 +29,11 @@ public class FileDirQueryController implements FileDirQueryClient {
 
     @Override
     public Rsp<List<DirResponse>> queryDeep(ByDirCode req) {
+        return Rsp.success(fileDirQueryService.queryDeep(req));
+    }
+
+    @Override
+    public Rsp<List<DirResponse>> queryDeep(ByDirCodes req) {
         return Rsp.success(fileDirQueryService.queryDeep(req));
     }
 
