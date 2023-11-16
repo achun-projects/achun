@@ -48,12 +48,17 @@ public class VideoUpdateController implements VideoUpdateClient {
             return Rsp.error("编码集合不同为空");
         }
         req.setUserCode(UserInfo.getCode(req::getUserCode));
-        if(CreateVideoFromCode.Type.DIRS.getType().equals(req.getType())){
-            videoCreateFromCodeService.createFromDirCodes(req);
-        }else if(CreateVideoFromCode.Type.FILES.getType().equals(req.getType())){
-            videoCreateFromCodeService.createFromFileCodes(req);
-        }else{
-            return Rsp.error("type错误");
+        switch (req.getType()) {
+            case DIRS:
+                videoCreateFromCodeService.createFromDirCodes(req);
+                break;
+            case FILES:
+                videoCreateFromCodeService.createFromFileCodes(req);
+                break;
+            case PARENT_DIR:
+                videoCreateFromCodeService.createFromParentDirCodes(req);
+                break;
+            default:return Rsp.error("type错误");
         }
         return null;
     }

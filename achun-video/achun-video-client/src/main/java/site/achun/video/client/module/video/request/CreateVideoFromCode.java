@@ -20,7 +20,9 @@ public class CreateVideoFromCode implements Serializable {
     private List<String> codes;
 
     // 1. 文件编码， 2. 目录编码
-    private Integer type;
+    @Schema(title = "类型")
+    @JsonDeserialize(using = ToEnumDeserializer.class)
+    private CreateVideoFromCodeType type;
 
     @Schema(title = "频道编码")
     private String channelCode;
@@ -29,18 +31,7 @@ public class CreateVideoFromCode implements Serializable {
     @JsonDeserialize(using = ToEnumDeserializer.class)
     private ViewLevelEnum viewLevel;
 
+    @Schema(title = "用户编码")
     private String userCode;
 
-    public enum Type{
-        DIRS(1),
-        FILES(2);
-        private Integer type;
-
-        Type(Integer type) {
-            this.type = type;
-        }
-        public Integer getType() {
-            return type;
-        }
-    }
 }
