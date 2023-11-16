@@ -27,6 +27,11 @@ public class FileDirQueryController implements FileDirQueryClient {
     }
 
     @Override
+    public Rsp<List<DirResponse>> queryDeep(ByDirCode req) {
+        return Rsp.success(fileDirQueryService.queryDeep(req));
+    }
+
+    @Override
     public Rsp<DirResponse> queryBy(ByDirCode req) {
         return Rsp.success(fileDirQueryService.query(req));
     }
