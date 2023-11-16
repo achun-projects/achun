@@ -52,7 +52,7 @@ public class AlbumRecordAsyncFromDirService {
         req.setOnlyThis(false);
         req.setPage(page);
         req.setSize(size);
-        Rsp<RspPage<FileInfoResponse>> response = fileQueryClient.queryFileList(req);
+        Rsp<RspPage<FileInfoResponse>> response = fileQueryClient.queryFilePage(req);
         if(response.hasData() && CollUtil.isNotEmpty(response.getData().getRows())){
             return response.getData().getRows();
         }else{
