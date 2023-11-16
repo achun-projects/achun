@@ -1,6 +1,8 @@
-package site.achun.gallery.app.service.rules.beans;
+package site.achun.gallery.client.module.rules.beans;
 
-public class BaseRule {
+import java.io.Serializable;
+
+public class BaseRule implements Serializable {
     private Integer weight;
     private String type;
 

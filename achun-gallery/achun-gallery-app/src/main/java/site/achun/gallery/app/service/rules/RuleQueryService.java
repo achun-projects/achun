@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.WeightRandom;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -11,8 +12,13 @@ import org.springframework.stereotype.Service;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCodes;
 import site.achun.file.client.module.file.response.MediaFileResponse;
-import site.achun.gallery.app.service.rules.beans.BaseRule;
-import site.achun.gallery.app.service.rules.beans.RuleType;
+import site.achun.gallery.app.generator.domain.QueryRule;
+import site.achun.gallery.app.generator.service.QueryRuleService;
+import site.achun.gallery.client.module.rules.beans.BaseRule;
+import site.achun.gallery.client.module.rules.beans.RuleType;
+import site.achun.gallery.app.utils.PageUtil;
+import site.achun.gallery.client.module.rules.requset.QueryRulesPage;
+import site.achun.support.api.response.RspPage;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,6 +33,8 @@ public class RuleQueryService {
     private final MediaFileQueryClient mediaFileQueryClient;
 
     private final StringRedisTemplate redisTemplate;
+
+    private final QueryRuleService queryRuleService;
     private final static String RULES_KEY = "GALLERY:RULES:%s";
 
 
@@ -57,5 +65,12 @@ public class RuleQueryService {
                 .map(fileCode -> fileMap.get(fileCode))
                 .collect(Collectors.toList());
 
+    }
+
+    public RspPage<QueryRule> queryRulesPage(QueryRulesPage req){
+        Page<QueryRule> page = queryRuleService.lambdaQuery()
+                .eq(QueryRule::getUserCode, req.getUserCode())
+                .page(Page.of(req.getPage().getPage(), req.getPage().getSize()));
+        return PageUtil.parse(page,req.getPage());
     }
 }

@@ -9,12 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.achun.file.client.module.file.MediaFileQueryClient;
 import site.achun.file.client.module.file.request.QueryByFileCode;
 import site.achun.file.client.module.file.response.MediaFileResponse;
+import site.achun.gallery.app.generator.domain.QueryRule;
 import site.achun.gallery.app.service.list.ListRandomQueryService;
 import site.achun.gallery.app.service.rules.RandomRules;
 import site.achun.gallery.app.service.rules.Rule;
@@ -23,7 +22,9 @@ import site.achun.gallery.app.service.rules.RuleUtil;
 import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.rules.RuleQueryClient;
 import site.achun.gallery.client.module.rules.requset.QueryFileByRuleCode;
+import site.achun.gallery.client.module.rules.requset.QueryRulesPage;
 import site.achun.support.api.response.Rsp;
+import site.achun.support.api.response.RspPage;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -58,6 +59,12 @@ public class RuleQueryController implements RuleQueryClient {
         String url = fileResponse.getUrl();
         // 重定向到url
         response.sendRedirect(url);
+    }
+
+    @Operation(summary = "根据规则编码查询一组文件")
+    @PostMapping("/gallery/rules/query-rules-page")
+    public Rsp<RspPage<QueryRule>> queryRulesPage(@RequestBody QueryRulesPage req){
+        return ruleQueryService.queryRulesPage(req);
     }
 
 }

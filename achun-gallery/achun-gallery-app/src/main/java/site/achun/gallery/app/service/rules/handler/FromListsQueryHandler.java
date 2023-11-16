@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import site.achun.gallery.app.generator.domain.Pictures;
 import site.achun.gallery.app.service.list.ListRandomQueryService;
 import site.achun.gallery.app.service.rules.QueryHandler;
-import site.achun.gallery.app.service.rules.beans.FromLists;
-import site.achun.gallery.app.service.rules.beans.RuleType;
+import site.achun.gallery.client.module.rules.beans.FromLists;
+import site.achun.gallery.client.module.rules.beans.RuleType;
 
 import java.util.ArrayList;
 import java.util.List;

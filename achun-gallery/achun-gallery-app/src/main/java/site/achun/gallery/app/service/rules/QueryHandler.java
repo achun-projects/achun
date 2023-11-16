@@ -1,6 +1,6 @@
 package site.achun.gallery.app.service.rules;
 
-import site.achun.gallery.app.service.rules.beans.RuleType;
+import site.achun.gallery.client.module.rules.beans.RuleType;
 
 import java.util.List;
 

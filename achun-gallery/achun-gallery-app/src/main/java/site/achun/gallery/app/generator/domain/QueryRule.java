@@ -6,14 +6,20 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
+import lombok.experimental.Accessors;
+import site.achun.gallery.client.module.rules.beans.BaseRule;
 
 /**
  * 
  * @TableName query_rule
  */
-@TableName(value ="query_rule")
+@TableName(value ="query_rule",autoResultMap = true)
 @Data
+@Accessors(chain = true)
 public class QueryRule implements Serializable {
     /**
      * ID
@@ -44,7 +50,8 @@ public class QueryRule implements Serializable {
     /**
      * 规则内容
      */
-    private Object rules;
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<BaseRule> rules;
 
     /**
      * 创建时间

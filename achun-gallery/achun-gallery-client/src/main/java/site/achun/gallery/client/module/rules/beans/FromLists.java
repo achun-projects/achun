@@ -1,4 +1,4 @@
-package site.achun.gallery.app.service.rules.beans;
+package site.achun.gallery.client.module.rules.beans;
 
 import lombok.Data;
 

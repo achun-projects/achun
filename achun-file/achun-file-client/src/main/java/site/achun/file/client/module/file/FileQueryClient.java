@@ -5,7 +5,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import site.achun.file.client.configuration.FileFeignConfiguration;
-import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.file.request.*;
 import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.file.client.module.file.response.FileLocalInfoResponse;
