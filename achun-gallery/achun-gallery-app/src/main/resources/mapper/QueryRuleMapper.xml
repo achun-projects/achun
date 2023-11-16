@@ -9,7 +9,7 @@
             <result property="ruleCode" column="rule_code" jdbcType="VARCHAR"/>
             <result property="userCode" column="user_code" jdbcType="VARCHAR"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="desc" column="desc" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="rules" column="rules" jdbcType="OTHER"/>
             <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
             <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
@@ -17,7 +17,7 @@
 
     <sql id="Base_Column_List">
         id,rule_code,user_code,
-        name,desc,rules,
+        name,description,rules,
         ctime,utime
     </sql>
 </mapper>

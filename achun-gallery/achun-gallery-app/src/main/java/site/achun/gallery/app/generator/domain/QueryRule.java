@@ -39,7 +39,7 @@ public class QueryRule implements Serializable {
     /**
      * 详细描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 规则内容
@@ -75,7 +75,7 @@ public class QueryRule implements Serializable {
             && (this.getRuleCode() == null ? other.getRuleCode() == null : this.getRuleCode().equals(other.getRuleCode()))
             && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getDesc() == null ? other.getDesc() == null : this.getDesc().equals(other.getDesc()))
+            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getRules() == null ? other.getRules() == null : this.getRules().equals(other.getRules()))
             && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()))
             && (this.getUtime() == null ? other.getUtime() == null : this.getUtime().equals(other.getUtime()));
@@ -89,7 +89,7 @@ public class QueryRule implements Serializable {
         result = prime * result + ((getRuleCode() == null) ? 0 : getRuleCode().hashCode());
         result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getDesc() == null) ? 0 : getDesc().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getRules() == null) ? 0 : getRules().hashCode());
         result = prime * result + ((getCtime() == null) ? 0 : getCtime().hashCode());
         result = prime * result + ((getUtime() == null) ? 0 : getUtime().hashCode());
@@ -106,7 +106,7 @@ public class QueryRule implements Serializable {
         sb.append(", ruleCode=").append(ruleCode);
         sb.append(", userCode=").append(userCode);
         sb.append(", name=").append(name);
-        sb.append(", desc=").append(desc);
+        sb.append(", description=").append(description);
         sb.append(", rules=").append(rules);
         sb.append(", ctime=").append(ctime);
         sb.append(", utime=").append(utime);
