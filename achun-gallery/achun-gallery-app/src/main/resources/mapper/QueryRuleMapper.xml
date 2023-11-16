@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.achun.gallery.app.generator.mapper.QueryRuleMapper">
+
+    <resultMap id="BaseResultMap" type="site.achun.gallery.app.generator.domain.QueryRule">
+            <id property="id" column="id" jdbcType="OTHER"/>
+            <result property="ruleCode" column="rule_code" jdbcType="VARCHAR"/>
+            <result property="userCode" column="user_code" jdbcType="VARCHAR"/>
+            <result property="rules" column="rules" jdbcType="OTHER"/>
+            <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+            <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,rule_code,user_code,
+        rules,ctime,utime
+    </sql>
+</mapper>
