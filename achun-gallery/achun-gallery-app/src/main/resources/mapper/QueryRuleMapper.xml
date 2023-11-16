@@ -5,9 +5,11 @@
 <mapper namespace="site.achun.gallery.app.generator.mapper.QueryRuleMapper">
 
     <resultMap id="BaseResultMap" type="site.achun.gallery.app.generator.domain.QueryRule">
-            <id property="id" column="id" jdbcType="OTHER"/>
+            <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="ruleCode" column="rule_code" jdbcType="VARCHAR"/>
             <result property="userCode" column="user_code" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="desc" column="desc" jdbcType="VARCHAR"/>
             <result property="rules" column="rules" jdbcType="OTHER"/>
             <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
             <result property="utime" column="utime" jdbcType="TIMESTAMP"/>
@@ -15,6 +17,7 @@
 
     <sql id="Base_Column_List">
         id,rule_code,user_code,
-        rules,ctime,utime
+        name,desc,rules,
+        ctime,utime
     </sql>
 </mapper>
