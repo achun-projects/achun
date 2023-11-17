@@ -2,8 +2,10 @@ package site.achun.gallery.client.module.rules.requset;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import site.achun.gallery.client.module.rules.beans.BaseRule;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class CreateRule implements Serializable {
@@ -21,5 +23,5 @@ public class CreateRule implements Serializable {
     private String description;
 
     @Schema(description = "规则内容")
-    private Object rules;
+    private List<BaseRule> rules;
 }

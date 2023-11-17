@@ -10,4 +10,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface QueryRuleService extends IService<QueryRule> {
 
+    default QueryRule queryBy(String ruleCode,String userCode){
+        return this.lambdaQuery()
+                .eq(QueryRule::getRuleCode,ruleCode)
+                .eq(QueryRule::getUserCode,userCode)
+                .one();
+    }
+
 }

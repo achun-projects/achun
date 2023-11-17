@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import site.achun.gallery.app.service.rules.RuleUpdateService;
 import site.achun.gallery.client.module.rules.requset.CreateRule;
 import site.achun.gallery.client.module.rules.requset.UpdateRule;
 import site.achun.gallery.client.module.rules.response.RuleResponse;
@@ -18,15 +19,17 @@ import site.achun.support.api.response.Rsp;
 @RequiredArgsConstructor
 public class RuleUpdateController {
 
+    private final RuleUpdateService ruleUpdateService;
+
     @Operation(summary = "根据规则编码查询一组文件")
     @PostMapping("/gallery/rules/create-rule")
     public Rsp<RuleResponse> createRule(@RequestBody CreateRule req){
-        return null;
+        return Rsp.success(ruleUpdateService.createRule(req));
     }
 
     @Operation(summary = "根据规则编码查询一组文件")
     @PostMapping("/gallery/rules/update-rule")
     public Rsp<RuleResponse> updateRule(@RequestBody UpdateRule req){
-        return null;
+        return Rsp.success(ruleUpdateService.updateRule(req));
     }
 }
