@@ -61,11 +61,11 @@ public class RuleQueryController implements RuleQueryClient {
         response.sendRedirect(url);
     }
 
-    @Operation(summary = "根据规则编码查询一组文件")
+    @Operation(summary = "分页查询规则")
     @PostMapping("/gallery/rules/query-rules-page")
     public Rsp<RspPage<QueryRule>> queryRulesPage(@RequestBody QueryRulesPage req){
         req.setUserCode(UserInfo.getCode(req::getUserCode));
-        return ruleQueryService.queryRulesPage(req);
+        return Rsp.success(ruleQueryService.queryRulesPage(req));
     }
 
 }
