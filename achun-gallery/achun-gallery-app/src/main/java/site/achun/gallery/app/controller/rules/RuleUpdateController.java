@@ -21,13 +21,13 @@ public class RuleUpdateController {
 
     private final RuleUpdateService ruleUpdateService;
 
-    @Operation(summary = "根据规则编码查询一组文件")
+    @Operation(summary = "创建规则")
     @PostMapping("/gallery/rules/create-rule")
     public Rsp<RuleResponse> createRule(@RequestBody CreateRule req){
         return Rsp.success(ruleUpdateService.createRule(req));
     }
 
-    @Operation(summary = "根据规则编码查询一组文件")
+    @Operation(summary = "更新规则")
     @PostMapping("/gallery/rules/update-rule")
     public Rsp<RuleResponse> updateRule(@RequestBody UpdateRule req){
         return Rsp.success(ruleUpdateService.updateRule(req));

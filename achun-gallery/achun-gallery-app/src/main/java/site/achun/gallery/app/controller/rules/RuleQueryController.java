@@ -64,6 +64,7 @@ public class RuleQueryController implements RuleQueryClient {
     @Operation(summary = "根据规则编码查询一组文件")
     @PostMapping("/gallery/rules/query-rules-page")
     public Rsp<RspPage<QueryRule>> queryRulesPage(@RequestBody QueryRulesPage req){
+        req.setUserCode(UserInfo.getCode(req::getUserCode));
         return ruleQueryService.queryRulesPage(req);
     }
 
