@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import site.achun.file.client.module.file.FileQueryClient;
 import site.achun.file.client.module.file.request.QueryFilePageByDirCode;
 import site.achun.file.client.module.file.response.FileInfoResponse;
+import site.achun.gallery.app.generator.service.PicturesService;
 import site.achun.gallery.app.service.PicturesUpdateService;
+import site.achun.gallery.app.service.pictures.PicturesQueryService;
 import site.achun.support.api.response.Rsp;
 import site.achun.support.api.response.RspPage;
 
@@ -26,6 +28,7 @@ public class AlbumRecordAsyncFromDirService {
     private final FileQueryClient fileQueryClient;
 
     private final PicturesUpdateService picturesUpdateService;
+    private final PicturesService picturesService;
     private final AlbumRecordUpdateExecute albumRecordUpdateExecute;
     @Async
     public void startAsync(String albumCode,String dirCode){
@@ -40,7 +43,9 @@ public class AlbumRecordAsyncFromDirService {
                 albumRecordUpdateExecute.replaceInfo(albumCode,unitCode);
             }
             for (FileInfoResponse fileInfoResponse : list) {
-                picturesUpdateService.update(fileInfoResponse);
+                if(picturesService.getByFileCode(fileInfoResponse.getFileCode())==null){
+                    picturesUpdateService.update(fileInfoResponse);
+                }
             }
         }
         log.info("同步任务执行结束，albumCode:{},dirCode:{},page:{},size:{}",albumCode,dirCode,page,size);
