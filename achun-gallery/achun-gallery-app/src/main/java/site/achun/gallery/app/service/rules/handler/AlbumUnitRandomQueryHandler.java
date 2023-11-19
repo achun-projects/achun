@@ -33,8 +33,8 @@ public class AlbumUnitRandomQueryHandler implements QueryHandler {
     }
 
     @Override
-    public List<String> query(String rule) {
-        FromUnit fromUnit = JSON.parseObject(rule, FromUnit.class);
+    public List<String> query(Object rule) {
+        FromUnit fromUnit = JSON.parseObject(rule.toString(), FromUnit.class);
         String randomUnitCode = albumRecordService.randomQuery(fromUnit.getAlbumCodes()).getSetCode();
         List<Pictures> pics = picturesService.lambdaQuery()
                 .eq(Pictures::getSetCode, randomUnitCode)

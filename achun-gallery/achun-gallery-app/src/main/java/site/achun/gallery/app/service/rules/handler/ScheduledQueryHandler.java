@@ -33,8 +33,8 @@ public class ScheduledQueryHandler implements QueryHandler {
     }
 
     @Override
-    public List<String> query(String rule) {
-        List<Scheduled> scheduledList = JSONArray.parseArray(rule, Scheduled.class);
+    public List<String> query(Object rule) {
+        List<Scheduled> scheduledList = JSONArray.parseArray(rule.toString(), Scheduled.class);
         LocalDateTime now = LocalDateTime.now();
         Date dateTime = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
         Date dateTimePlus = Date.from(now.plusMinutes(1).atZone(ZoneId.systemDefault()).toInstant());

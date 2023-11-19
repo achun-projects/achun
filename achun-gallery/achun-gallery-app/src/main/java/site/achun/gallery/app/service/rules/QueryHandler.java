@@ -8,5 +8,5 @@ public interface QueryHandler {
 
     boolean match(RuleType type);
 
-    List<String> query(String rule);
+    List<String> query(Object rule);
 }

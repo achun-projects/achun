@@ -28,8 +28,8 @@ public class FromListsQueryHandler implements QueryHandler {
     }
 
     @Override
-    public List<String> query(String rule) {
-        List<FromLists> fromLists = JSON.parseArray(rule, FromLists.class);
+    public List<String> query(Object rule) {
+        List<FromLists> fromLists = JSON.parseArray(rule.toString(), FromLists.class);
         List<String> respList = new ArrayList<>();
         for (FromLists list : fromLists) {
             List<Pictures> files = listRandomQueryService.randomQuery(list.getValues(),list.getCount());
