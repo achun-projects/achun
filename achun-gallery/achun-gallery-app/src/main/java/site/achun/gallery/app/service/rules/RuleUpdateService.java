@@ -28,6 +28,11 @@ public class RuleUpdateService {
     private final RuleCacheService ruleCacheService;
 
     public RuleResponse createRule(CreateRule req){
+        // 检查是否存在code
+        QueryRule existRule = queryRuleService.queryBy(req.getRuleCode());
+        if(existRule!=null){
+            throw new RspException(RC.EXISTS);
+        }
         QueryRule rule = BeanUtil.toBean(req,QueryRule.class);
         rule.setCtime(LocalDateTime.now());
         rule.setUtime(LocalDateTime.now());
