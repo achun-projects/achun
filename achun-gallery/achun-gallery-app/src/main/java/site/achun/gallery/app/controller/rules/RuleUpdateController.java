@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.gallery.app.service.rules.RuleUpdateService;
+import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.rules.requset.CreateRule;
 import site.achun.gallery.client.module.rules.requset.UpdateRule;
 import site.achun.gallery.client.module.rules.response.RuleResponse;
@@ -24,12 +25,14 @@ public class RuleUpdateController {
     @Operation(summary = "创建规则")
     @PostMapping("/gallery/rules/create-rule")
     public Rsp<RuleResponse> createRule(@RequestBody CreateRule req){
+        req.setUserCode(UserInfo.getCode(req::getUserCode));
         return Rsp.success(ruleUpdateService.createRule(req));
     }
 
     @Operation(summary = "更新规则")
     @PostMapping("/gallery/rules/update-rule")
     public Rsp<RuleResponse> updateRule(@RequestBody UpdateRule req){
+        req.setUserCode(UserInfo.getCode(req::getUserCode));
         return Rsp.success(ruleUpdateService.updateRule(req));
     }
 }
