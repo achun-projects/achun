@@ -33,18 +33,14 @@ public class RuleQueryService {
     private final MediaFileQueryClient mediaFileQueryClient;
 
     private final StringRedisTemplate redisTemplate;
+    private final RuleCacheService ruleCacheService;
 
     private final QueryRuleService queryRuleService;
     private final static String RULES_KEY = "GALLERY:RULES:%s";
 
 
     public List<String> queryFileCodesByRuleCode(String ruleCode){
-        String key = String.format(RULES_KEY,ruleCode);
-        if(!redisTemplate.hasKey(key)){
-            throw new RuntimeException("不存在该规则");
-        }
-        String rule = redisTemplate.opsForValue().get(key);
-        List<BaseRule> baseRule = JSON.parseArray(rule, BaseRule.class);
+        List<BaseRule> baseRule = ruleCacheService.get(ruleCode);
         List<WeightRandom.WeightObj<BaseRule>> weights = baseRule.stream()
                 .map(r -> new WeightRandom.WeightObj<>(r, r.getWeight()))
                 .collect(Collectors.toList());

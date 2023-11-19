@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 public class RuleUpdateService {
 
     private final QueryRuleService queryRuleService;
+    private final RuleCacheService ruleCacheService;
 
     public RuleResponse createRule(CreateRule req){
         QueryRule rule = BeanUtil.toBean(req,QueryRule.class);
@@ -32,6 +33,7 @@ public class RuleUpdateService {
         rule.setUtime(LocalDateTime.now());
         queryRuleService.save(rule);
         // TODO 需要添加到Redis中
+        ruleCacheService.set(req.getRuleCode(), req.getRules());
         return BeanUtil.toBean(rule,RuleResponse.class);
     }
 
@@ -42,11 +44,13 @@ public class RuleUpdateService {
         }
         if(StrUtil.isNotEmpty(req.getName())) existRule.setName(req.getName());
         if(StrUtil.isNotEmpty(req.getDescription())) existRule.setDescription(req.getDescription());
-        if(req.getRules()!=null){
+        if(req.getRules()!=null && req.getRules().size() > 0){
             existRule.setRules(req.getRules());
         }
         queryRuleService.updateById(existRule);
-        // TODO 需要添加到Redis中
+        if(req.getRules()!=null && req.getRules().size() > 0){
+            ruleCacheService.set(req.getRuleCode(), req.getRules());
+        }
         return BeanUtil.toBean(existRule,RuleResponse.class);
     }
 
