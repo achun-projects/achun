@@ -91,7 +91,8 @@ public class FileDirScanService {
                 Consumer<List<FileDir>> scanDirFilesConsumer = (dirInfoList)->{
                     dirInfoList.stream().forEach(d->{
                         log.info("get files from dirCode:{}",d.getDirCode());
-                        FSListResponse resp = aListService.list(d.getPath());
+                        String dirPath = Path.of(storage.getPath(), d.getPath()).toString();
+                        FSListResponse resp = aListService.list(dirPath);
                         List<FSResponse> list = new ArrayList<>();
                         if(resp!=null && CollUtil.isNotEmpty(resp.getContent())) {
                             list = resp.getContent().stream()
