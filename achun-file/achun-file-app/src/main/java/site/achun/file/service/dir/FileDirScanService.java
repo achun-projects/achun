@@ -5,12 +5,15 @@ import cn.hutool.crypto.digest.MD5;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.alist.response.FSListResponse;
+import site.achun.file.client.alist.response.FSResponse;
 import site.achun.file.client.module.dir.beans.DirInfo;
 import site.achun.file.client.module.dir.request.ByDirCode;
 import site.achun.file.client.module.dir.request.RequestScanDir;
 import site.achun.file.client.module.storage.response.StorageResponse;
 import site.achun.file.generator.domain.FileDir;
 import site.achun.file.generator.service.FileDirService;
+import site.achun.file.service.alist.AListService;
 import site.achun.file.service.storage.StorageQueryService;
 import site.achun.support.api.enums.Deleted;
 import site.achun.updown.client.module.detected.UpdownDetectedClient;
@@ -35,6 +38,7 @@ public class FileDirScanService {
     private final FileDirService fileDirService;
     private final LocalFileInfoClient localFileInfoClient;
     private final UpdownDetectedClient updownDetectedClient;
+    private final AListService aListService;
 
     public void scan(RequestScanDir req){
         FileDir fileDir = fileDirService.queryByCode(req.getDirCode());
@@ -60,7 +64,54 @@ public class FileDirScanService {
             storage = storageQueryService.queryStorage(fileDir.getStorageCode());
             log.info("dirCode:{} found FileDir",req.getDirCode());
         }
-        scan(storage,fileDir,req.getOnlyDir());
+        if(storage.getBucketCode().equals("10115")){
+            scanAList(storage,fileDir,req.getOnlyDir());
+        }else{
+            scan(storage,fileDir,req.getOnlyDir());
+        }
+    }
+
+    public void scanAList(StorageResponse storage,FileDir dir,boolean onlyDir){
+        new Thread(()->{
+            LoopGetDirs loop = new LoopGetDirs(storage,dir);
+            loop.setDealDirFunction(this::saveFileDir);
+            loop.setFunction(path->{
+                FSListResponse resp = aListService.list(path);
+                if(resp!=null && CollUtil.isNotEmpty(resp.getContent())){
+                    return resp.getContent().stream()
+                            .filter(fs -> fs.getIs_dir())
+                            .map(fs->Path.of(path,fs.getName()).toString())
+                            .collect(Collectors.toList());
+                }else{
+                    return new ArrayList<>();
+                }
+            });
+            if(!onlyDir){
+                // 保存路径中的文件
+                Consumer<List<FileDir>> scanDirFilesConsumer = (dirInfoList)->{
+                    dirInfoList.stream().forEach(d->{
+                        log.info("get files from dirCode:{}",d.getDirCode());
+                        FSListResponse resp = aListService.list(d.getPath());
+                        List<FSResponse> list = new ArrayList<>();
+                        if(resp!=null && CollUtil.isNotEmpty(resp.getContent())) {
+                            list = resp.getContent().stream()
+                                    .filter(fs -> !fs.getIs_dir())
+                                    .collect(Collectors.toList());
+                        }
+                        save(list,d);
+                    });
+                };
+                loop.setScanDirFilesConsumer(scanDirFilesConsumer);
+            }
+            loop.startLoop();
+        }).start();
+    }
+
+    private void save(List<FSResponse> list,FileDir dir){
+        for (FSResponse fsResponse : list) {
+            String path = Path.of(dir.getPath(), fsResponse.getName()).toString();
+            log.info("save file:{},",path);
+        }
     }
 
     public void scan(StorageResponse storage,FileDir dir,boolean onlyDir){
