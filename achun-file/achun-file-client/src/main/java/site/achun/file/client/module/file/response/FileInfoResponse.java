@@ -23,6 +23,9 @@ public class FileInfoResponse implements Serializable {
     @Schema(description = "分组ID，当group相同时，视为一组资源。")
     private String unitCode;
 
+    @Schema(description = "目录编码")
+    private String dirCode;
+
     @Schema(description = "Bucket编码")
     private String bucketCode;
 

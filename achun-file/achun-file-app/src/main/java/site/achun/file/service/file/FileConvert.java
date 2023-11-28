@@ -134,6 +134,7 @@ public class FileConvert {
                 .suffix(fileInfo.getSuffix())
                 .thirdId(fileInfo.getThirdId())
                 .unitCode(fileInfo.getUnitCode())
+                .dirCode(fileInfo.getDirCode())
                 .type(fileInfo.getType())
                 .size(fileInfo.getSize())
                 .utime(fileInfo.getUtime())
