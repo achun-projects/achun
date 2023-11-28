@@ -6,10 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import site.achun.gallery.app.service.unit.PicUnitQueryExecute;
 import site.achun.gallery.app.utils.UserInfo;
+import site.achun.gallery.client.module.pic_unit.request.QueryByFileCodes;
 import site.achun.gallery.client.module.pic_unit.request.QueryPicUnitDetail;
 import site.achun.gallery.client.module.pic_unit.response.PicUnitResponse;
 import site.achun.gallery.client.module.pic_unit.PicUnitQueryClient;
 import site.achun.support.api.response.Rsp;
+
+import java.util.List;
 
 @Slf4j
 @Tag(name = "图片单元查询")
@@ -25,4 +28,11 @@ public class UnitQueryController implements PicUnitQueryClient {
         request.setUserCode(UserInfo.getCode(request::getUserCode));
         return Rsp.success(picUnitQueryExecute.query(request));
     }
+
+    @Override
+    public Rsp<List<PicUnitResponse>> queryByFileCodes(QueryByFileCodes request) {
+        request.setUserCode(UserInfo.getCode(request::getUserCode));
+        return Rsp.success(picUnitQueryExecute.queryByFileCodes(request));
+    }
+
 }

@@ -3,6 +3,7 @@ package site.achun.gallery.app.generator.service;
 import site.achun.gallery.app.generator.domain.Pictures;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,6 +17,12 @@ public interface PicturesService extends IService<Pictures> {
         return this.lambdaQuery()
                 .eq(Pictures::getFileCode,fileCode)
                 .one();
+    }
+
+    default List<Pictures> getByFileCodes(Collection<String> fileCodes){
+        return this.lambdaQuery()
+                .in(Pictures::getFileCode,fileCodes)
+                .list();
     }
 
     default List<Pictures> getByFileSetCode(String setCode){
