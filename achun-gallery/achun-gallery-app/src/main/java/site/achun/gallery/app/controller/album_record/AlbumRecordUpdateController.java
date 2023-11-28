@@ -79,7 +79,7 @@ public class AlbumRecordUpdateController implements AlbumRecordUpdateClient {
         if(StrUtil.isEmpty(albumDetail.getDirCode())){
             return Rsp.error("相册不存在同步目录编码，请先设置");
         }
-        albumRecordAsyncFromDirService.startAsync(req.getAlbumCode(),albumDetail.getDirCode());
+        albumRecordAsyncFromDirService.startAsync(req.getAlbumCode(),albumDetail.getDirCode(),userCode);
         return Rsp.success(null,"任务触发，开始异步执行");
     }
 }

@@ -8,8 +8,8 @@ import site.achun.file.client.module.file.response.FileInfoResponse;
 import site.achun.gallery.app.generator.domain.AlbumRecord;
 import site.achun.gallery.app.generator.domain.Pictures;
 import site.achun.gallery.app.generator.mapper.AlbumRecordMapper;
-import site.achun.gallery.app.generator.mapper.PicturesMapper;
 import site.achun.gallery.app.generator.service.AlbumService;
+import site.achun.gallery.app.generator.service.PicturesService;
 import site.achun.support.api.enums.Deleted;
 
 import java.time.LocalDateTime;
@@ -19,28 +19,43 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class PicturesUpdateService {
 
-    private final PicturesMapper picturesMapper;
+    private final PicturesService picturesService;
     private final AlbumService albumService;
     private final AlbumRecordMapper albumRecordMapper;
 
     public void update(FileInfoResponse fileInfo){
         // 保存同步文件
-        Pictures pic = new Pictures();
-        pic.setFileCode(fileInfo.getFileCode());
-        pic.setFileName(fileInfo.getFileName());
-        pic.setSetCode(fileInfo.getUnitCode());
-        pic.setSuffix(fileInfo.getSuffix());
-        pic.setSize(fileInfo.getSize());
-        pic.setDeleted(Deleted.NO.getStatus());
-        pic.setWidth(fileInfo.getWidth());
-        pic.setHeight(fileInfo.getHeight());
-        pic.setWh(fileInfo.getWh());
-        pic.setDuration(fileInfo.getDuration());
-        pic.setAtime(LocalDateTime.now());
-        pic.setCtime(LocalDateTime.now());
-        pic.setUtime(LocalDateTime.now());
-        int result = picturesMapper.replaceInto(pic);
-        log.info("fileCode:{},replaceInto picture:{}",pic.getFileCode(),result);
+        Pictures picture = picturesService.getByFileCode(fileInfo.getFileCode());
+        if(picture != null ){
+            picture.setFileName(fileInfo.getFileName());
+            picture.setSuffix(fileInfo.getSuffix());
+            picture.setSize(fileInfo.getSize());
+            picture.setWidth(fileInfo.getWidth());
+            picture.setHeight(fileInfo.getHeight());
+            picture.setWh(fileInfo.getWh());
+            picture.setDuration(fileInfo.getDuration());
+            picture.setAtime(LocalDateTime.now());
+            picture.setUtime(LocalDateTime.now());
+            picturesService.updateById(picture);
+            log.info("update pictures,fileCode:{}",picture.getFileCode());
+        }else{
+            picture = new Pictures();
+            picture.setFileCode(fileInfo.getFileCode());
+            picture.setFileName(fileInfo.getFileName());
+            picture.setSetCode(fileInfo.getUnitCode());
+            picture.setSuffix(fileInfo.getSuffix());
+            picture.setSize(fileInfo.getSize());
+            picture.setDeleted(Deleted.NO.getStatus());
+            picture.setWidth(fileInfo.getWidth());
+            picture.setHeight(fileInfo.getHeight());
+            picture.setWh(fileInfo.getWh());
+            picture.setDuration(fileInfo.getDuration());
+            picture.setAtime(LocalDateTime.now());
+            picture.setCtime(LocalDateTime.now());
+            picture.setUtime(LocalDateTime.now());
+            picturesService.save(picture);
+            log.info("save new pictures,fileCode:{}",picture.getFileCode());
+        }
         // 创建关联关系
         if(StrUtil.isNotBlank(fileInfo.getThirdId())
                 && !fileInfo.getThirdId().equals("-1")
@@ -49,10 +64,11 @@ public class PicturesUpdateService {
             AlbumRecord albumRecord = new AlbumRecord();
             albumRecord.setAlbumCode(fileInfo.getThirdId());
             albumRecord.setSetCode(fileInfo.getUnitCode());
-            result = albumRecordMapper.replaceInto(albumRecord);
+            int result = albumRecordMapper.replaceInto(albumRecord);
             log.info("fileCode:{},replaceInto album_record:{},albumCode:{},unitCode:{}",
-                    pic.getFileCode(),result,fileInfo.getThirdId(),fileInfo.getUnitCode());
+                    picture.getFileCode(),result,fileInfo.getThirdId(),fileInfo.getUnitCode());
         }
+
     }
 
 }
