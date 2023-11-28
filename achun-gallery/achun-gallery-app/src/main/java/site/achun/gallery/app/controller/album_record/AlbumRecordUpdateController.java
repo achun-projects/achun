@@ -56,6 +56,7 @@ public class AlbumRecordUpdateController implements AlbumRecordUpdateClient {
 
     @Override
     public Rsp<Boolean> anewFileSet(AnewPicUnit anewGroup) {
+        anewGroup.setUserCode(UserInfo.getCode(anewGroup::getUserCode));
         anewFileSetService.anewFileset(anewGroup);
         return Rsp.success(true);
     }

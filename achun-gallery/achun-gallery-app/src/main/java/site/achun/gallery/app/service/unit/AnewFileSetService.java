@@ -42,6 +42,7 @@ public class AnewFileSetService {
             FileSet fileSet = FileSet.builder()
                     .name(anewFileset.getName())
                     .code(anewFileset.getSetCode())
+                    .userCode(anewFileset.getUserCode())
                     .build();
             fileSetService.save(fileSet);
             // 更新file表fileset_code字段

@@ -1,5 +1,6 @@
 package site.achun.gallery.client.module.pic_unit.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
@@ -13,6 +14,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnewPicUnit implements Serializable {
+
+    @Schema(title = "用户code")
+    private String userCode;
+
     /**
      * 相册编码，对应album表
      */
