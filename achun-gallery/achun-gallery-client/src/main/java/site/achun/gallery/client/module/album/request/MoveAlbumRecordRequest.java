@@ -21,7 +21,7 @@ public class MoveAlbumRecordRequest implements Serializable {
 
     // 文件集合
     private Collection<String> setCodes;
-
+    private Collection<String> fileCodes;
     // 到哪儿去
     private String albumCode;
 }

@@ -45,7 +45,7 @@ public class AlbumQueryService {
         Map<String, MediaFileResponse> coverFileMap = fileQueryClient.queryFileMap(queryFileMap).tryGetData();
         rspPage.getRows().stream().forEach(a->{
             if(coverFileMap != null && coverFileMap.containsKey(a.getCoverFileCode())){
-                a.setCover(coverFileMap.get(a.getCoverFileCode()).getMediumUrl());
+                a.setCover(coverFileMap.get(a.getCoverFileCode()).getCover());
             }
         });
         return rspPage;
