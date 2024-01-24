@@ -122,7 +122,7 @@
         </if>
         ORDER BY
         <if test = "query.likeTop"> pl.ctime DESC, </if>
-        ar.ctime DESC,pi.file_name
+        pi.set_code DESC,pi.file_name
     </select>
 
     <select id="selectBoardFiles"
