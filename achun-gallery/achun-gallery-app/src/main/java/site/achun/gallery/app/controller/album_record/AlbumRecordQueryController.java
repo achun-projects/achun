@@ -10,7 +10,9 @@ import site.achun.gallery.app.service.album_record.AlbumRecordQueryService;
 import site.achun.gallery.app.service.list.ListRandomQueryService;
 import site.achun.gallery.app.utils.UserInfo;
 import site.achun.gallery.client.module.album_record.AlbumRecordQueryClient;
+import site.achun.gallery.client.module.album_record.request.QueryPageOfSetWithPics;
 import site.achun.gallery.client.module.album_record.request.RandomQueryFromAlbum;
+import site.achun.gallery.client.module.album_record.response.SetWithPicsResponse;
 import site.achun.gallery.client.module.pictures.request.QueryRecord;
 import site.achun.gallery.client.module.pictures.response.Photo;
 import site.achun.support.api.response.Rsp;
@@ -51,5 +53,10 @@ public class AlbumRecordQueryController implements AlbumRecordQueryClient {
             return Rsp.error("Not found");
         }
         return Rsp.success(photo);
+    }
+
+    @Override
+    public Rsp<RspPage<SetWithPicsResponse>> queryPageOfSet(QueryPageOfSetWithPics req) {
+        return Rsp.success(recordQueryService.queryPageOfSet(req));
     }
 }

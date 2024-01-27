@@ -23,4 +23,15 @@
             (#{ar.albumCode}, #{ar.setCode}, now());
     </insert>
 
+    <select id="selectPageOfSet" resultType="site.achun.gallery.app.generator.domain.FileSet">
+        SELECT
+            b.*
+        FROM
+            album_record a
+                LEFT JOIN file_set b ON a.set_code = b.code
+        WHERE
+            a.album_code = #{query.albumCode}
+        ORDER BY b.utime desc
+    </select>
+
 </mapper>

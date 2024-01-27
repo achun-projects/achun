@@ -30,4 +30,10 @@ public interface PicturesService extends IService<Pictures> {
                 .eq(Pictures::getSetCode,setCode)
                 .list();
     }
+
+    default List<Pictures> getByFileSetCodes(Collection<String> setCodes){
+        return this.lambdaQuery()
+                .in(Pictures::getSetCode,setCodes)
+                .list();
+    }
 }
