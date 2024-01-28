@@ -57,4 +57,6 @@ public class QueryRecord implements Serializable {
 
     // 排除喜欢的图片
     private Boolean excludeLike = false;
+
+    private String setCode;
 }

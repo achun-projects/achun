@@ -111,6 +111,9 @@
         <if test="query.minWH != null and query.minWH > 0">
             AND pi.wh >= #{query.minWH}
         </if>
+        <if test="query.setCode != null and query.setCode != ''">
+            AND pi.set_code = #{query.setCode}
+        </if>
         <if test = "query.justQueryLike">
             and pl.ctime is not null
         </if>
