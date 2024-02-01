@@ -23,6 +23,7 @@ import site.achun.updown.client.module.file.LocalFileInfoClient;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -204,6 +205,9 @@ public class FileDirScanService {
         }
 
         public void startLoop(){
+            if(scanDirFilesConsumer!=null){
+                scanDirFilesConsumer.accept(Arrays.asList(root));
+            }
             loop(root);
         }
 
