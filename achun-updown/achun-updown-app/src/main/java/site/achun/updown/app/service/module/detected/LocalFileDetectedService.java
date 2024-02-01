@@ -144,6 +144,10 @@ public class LocalFileDetectedService {
             log.error("requestInitFileInfo error,initFileInfo:{}",initFileInfo,ex);
             return null;
         }
+        if(response.getExist()){
+            // 文件已经存在，不存在再次初始化
+            return null;
+        }
         FileTransferInfo transfer = new FileTransferInfo();
         transfer.setFileCode(response.getFileCode());
         transfer.setInStoragePath(response.getInStoragePath());
