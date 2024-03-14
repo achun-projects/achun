@@ -140,6 +140,7 @@ public class DownloadTaskService {
         String suffix = FileUtil.getSuffix(file);
         String md5 = MD5.create().digestHex(file);
         InitFileInfo info = InitFileInfo.builder()
+                .fileCode(task.getFileCode())
                 .thirdId(task.getThirdId())
                 .md5(md5)
                 .storageCode(task.getStorage())
