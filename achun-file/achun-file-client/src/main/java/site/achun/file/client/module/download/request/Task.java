@@ -23,4 +23,7 @@ public class Task implements Serializable {
     private String unit;
     private Boolean override;
 
+    private String proxyHost;
+    private Integer proxyPort;
+
 }
