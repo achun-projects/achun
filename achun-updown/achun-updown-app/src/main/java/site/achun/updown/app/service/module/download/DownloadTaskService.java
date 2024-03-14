@@ -1,6 +1,7 @@
 package site.achun.updown.app.service.module.download;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import cn.hutool.http.HttpResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ import site.achun.updown.app.service.module.transfer.FileTransferService;
 import site.achun.updown.app.util.HttpUtilPlus;
 
 import java.io.File;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 
 @Slf4j
 @Service
@@ -99,12 +102,16 @@ public class DownloadTaskService {
         }
 
         // 开始下载文件
+        Proxy proxy = null;
+        if(StrUtil.isNotEmpty(task.getProxyHost())){
+            proxy = new Proxy(Proxy.Type.HTTP, InetSocketAddress.createUnresolved(task.getProxyHost(),task.getProxyPort()));
+        }
         HttpResponse response = HttpUtilPlus.downloadFile(
                 task.getUrl(),
                 newFile,
                 -1,
                 null,
-                null);
+                proxy);
         result.setHttpStatus(response.getStatus());
 
         if(response.isOk()){
