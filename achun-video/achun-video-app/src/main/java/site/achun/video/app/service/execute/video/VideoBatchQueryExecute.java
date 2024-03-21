@@ -78,12 +78,14 @@ public class VideoBatchQueryExecute {
                 .filter(video -> StrUtil.isEmpty(video.getCoverFileUrl()))
                 .map(VideoInfoResponse::getVideoCode)
                 .collect(Collectors.toSet());
-        Map<String, List<VideoFileInfoResponse>> fileInfoMap = fileInfoQueryExecute.queryByVideoCodes(noCoverVideos).stream()
-                .collect(Collectors.groupingBy(VideoFileInfoResponse::getVideoCode));
-        videoInfoResponseList.stream()
-                .filter(video -> StrUtil.isEmpty(video.getCoverFileUrl()))
-                .filter(video -> fileInfoMap.containsKey(video.getVideoCode()))
-                .forEach(video -> video.setCoverFileUrl(fileInfoMap.get(video.getVideoCode()).get(0).getCover()));
+        if(CollUtil.isNotEmpty(noCoverVideos)){
+            Map<String, List<VideoFileInfoResponse>> fileInfoMap = fileInfoQueryExecute.queryByVideoCodes(noCoverVideos).stream()
+                    .collect(Collectors.groupingBy(VideoFileInfoResponse::getVideoCode));
+            videoInfoResponseList.stream()
+                    .filter(video -> StrUtil.isEmpty(video.getCoverFileUrl()))
+                    .filter(video -> fileInfoMap.containsKey(video.getVideoCode()))
+                    .forEach(video -> video.setCoverFileUrl(fileInfoMap.get(video.getVideoCode()).get(0).getCover()));
+        }
         // 补充点击量
         Map<String, Integer> clickNumMap = videoClickRecordQueryExecute.queryVideoClickNum(videoCodes);
         videoInfoResponseList.stream()
