@@ -5,6 +5,7 @@ import cn.hutool.crypto.digest.MD5;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.achun.file.client.alist.exception.AListException;
 import site.achun.file.client.alist.response.FSListResponse;
 import site.achun.file.client.alist.response.FSResponse;
 import site.achun.file.client.module.dir.beans.DirInfo;
@@ -45,11 +46,14 @@ public class FileDirScanService {
         FileDir fileDir = fileDirService.queryByCode(req.getDirCode());
         StorageResponse storage = null;
         if(fileDir == null){
+            // 如果要扫描的文件目录为空，则查询是否是storage
             storage = storageQueryService.queryStorage(req.getDirCode());
             if(storage == null){
+                // storage也找不到，说明这个要扫描的目录不存在
                 log.info("dirCode:{},not found fileDir and storage",req.getDirCode());
                 throw new RuntimeException("dir not found");
             }
+            // 找到了storage，则为这个storage新建一个目录
             fileDir = FileDir.builder()
                     .dirCode(storage.getStorageCode())
                     .storageCode(storage.getStorageCode())
@@ -62,10 +66,12 @@ public class FileDirScanService {
             fileDirService.save(fileDir);
             log.info("dirCode:{}，not found fileDir but storage",req.getDirCode());
         }else{
+            // 查询目录对应的storage
             storage = storageQueryService.queryStorage(fileDir.getStorageCode());
             log.info("dirCode:{} found FileDir",req.getDirCode());
         }
         if(storage.getBucketCode().equals("10115")){
+            // 如果是115的buckets，则从alist中扫描
             scanAList(storage,fileDir,req.getOnlyDir());
         }else{
             scan(storage,fileDir,req.getOnlyDir());
@@ -77,7 +83,12 @@ public class FileDirScanService {
             LoopGetDirs loop = new LoopGetDirs(storage,dir);
             loop.setDealDirFunction(this::saveFileDir);
             loop.setFunction(path->{
-                FSListResponse resp = aListService.list(path);
+                FSListResponse resp = null;
+                try{
+                    resp = aListService.list(path);
+                }catch (AListException ex){
+                    log.info("scan alist exception code:{},message:{}",ex.getResp().getCode(),ex.getResp().getMessage());
+                }
                 if(resp!=null && CollUtil.isNotEmpty(resp.getContent())){
                     return resp.getContent().stream()
                             .filter(fs -> fs.getIs_dir())

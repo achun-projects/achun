@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.achun.file.client.alist.AListAuthFeign;
 import site.achun.file.client.alist.AListFSFeign;
+import site.achun.file.client.alist.exception.AListException;
 import site.achun.file.client.alist.request.FSGet;
 import site.achun.file.client.alist.request.Login;
 import site.achun.file.client.alist.response.FSListResponse;
@@ -53,7 +54,7 @@ public class AListService {
         }else{
             log.error("alist请求失败，返回为空");
         }
-        throw new RuntimeException("alist请求失败");
+        throw new AListException(resp);
     }
 
 

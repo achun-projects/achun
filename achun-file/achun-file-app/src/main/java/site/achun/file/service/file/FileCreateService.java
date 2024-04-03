@@ -15,8 +15,6 @@ import site.achun.file.client.module.file.response.InitFileInfoResponse;
 import site.achun.file.generator.domain.FileInfo;
 import site.achun.file.generator.domain.FileUnit;
 import site.achun.file.generator.domain.Storage;
-import site.achun.file.generator.mapper.FileInfoMapper;
-import site.achun.file.generator.mapper.FileUnitMapper;
 import site.achun.file.generator.service.FileInfoService;
 import site.achun.file.generator.service.FileUnitService;
 import site.achun.file.generator.service.StorageService;
