@@ -66,7 +66,7 @@ public class MyAlbumService {
         }
         rspPage.setTotal(pageData.getTotal());
         rspPage.setRows(pageData.getRecords().stream()
-                .map(albumQueryExecute::toAlbumResponse)
+                .map(album -> albumQueryExecute.toAlbumResponse(album,false))
                 .collect(Collectors.toList())
         );
         // 补充相册图片数量

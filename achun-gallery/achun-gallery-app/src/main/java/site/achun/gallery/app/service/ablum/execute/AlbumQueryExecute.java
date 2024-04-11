@@ -27,6 +27,10 @@ public class AlbumQueryExecute {
         return toAlbumResponse(albumService.getByCode(albumCode));
     }
     public AlbumResponse toAlbumResponse(Album album){
+        return toAlbumResponse(album,true);
+    }
+
+    public AlbumResponse toAlbumResponse(Album album,boolean needGroupInfo){
         AlbumResponse albumResponse = BeanUtil.toBean(album, AlbumResponse.class);
         albumResponse.setRecentAtime(DateTimeUtil.parse(album.getRecordUtime()));
 
@@ -36,13 +40,15 @@ public class AlbumQueryExecute {
         }
 
         // 补充分组名
-        GalleryGroupResponse galleryGroup = myGroupService.selectForNames(album.getAlbumCode());
-        if(galleryGroup == null){
-            throw new RspException(GalleryRC.GROUP_NOT_EXIST,"相册编码：%s对应的分组不存在",album.getAlbumCode());
+        if(needGroupInfo){
+            GalleryGroupResponse galleryGroup = myGroupService.selectForNames(album.getAlbumCode());
+            if(galleryGroup == null){
+                throw new RspException(GalleryRC.GROUP_NOT_EXIST,"相册编码：%s对应的分组不存在",album.getAlbumCode());
+            }
+            albumResponse.setGroupNames(galleryGroup.getGroupNames());
+            albumResponse.setGroupCode(galleryGroup.getGroupCode());
+            albumResponse.setGroupCodes(galleryGroup.getGroupCodes());
         }
-        albumResponse.setGroupNames(galleryGroup.getGroupNames());
-        albumResponse.setGroupCode(galleryGroup.getGroupCode());
-        albumResponse.setGroupCodes(galleryGroup.getGroupCodes());
         return albumResponse;
     }
 }
