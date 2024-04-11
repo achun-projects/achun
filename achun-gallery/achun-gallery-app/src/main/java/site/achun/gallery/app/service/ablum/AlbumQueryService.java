@@ -31,6 +31,7 @@ public class AlbumQueryService {
     public RspPage<AlbumResponse> page(QueryAlbumPage query){
         // 获取相册分页数据
         RspPage<AlbumResponse> rspPage = myAlbumService.page(query);
+
         if(CollectionUtil.isEmpty(rspPage.getRows())){
             return rspPage;
         }

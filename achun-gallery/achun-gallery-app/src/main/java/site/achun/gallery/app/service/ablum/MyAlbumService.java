@@ -14,6 +14,7 @@ import site.achun.gallery.app.generator.mapper.AlbumMapper;
 import site.achun.gallery.app.generator.service.AlbumService;
 import site.achun.gallery.app.generator.service.GalleryGroupRecordService;
 import site.achun.gallery.app.service.ablum.execute.AlbumQueryExecute;
+import site.achun.gallery.app.service.ablum.execute.AsyncFillFileCountExecute;
 import site.achun.gallery.app.service.pictures.MyPictureService;
 import site.achun.gallery.client.module.album.request.QueryAlbumPage;
 import site.achun.gallery.client.module.album.response.AlbumResponse;
@@ -38,29 +39,13 @@ public class MyAlbumService {
 
     private final AlbumMapper albumMapper;
 
-    private final GalleryGroupRecordService groupRecordService;
-
-    private final MyPictureService myPictureService;
-
     private final AlbumQueryExecute albumQueryExecute;
 
+    private final AsyncFillFileCountExecute asyncFillFileCountExecute;
+
     public RspPage<AlbumResponse> page(QueryAlbumPage query){
-        // 如果分组不为空，先查分组列表集合
-        Set<String> listCodes = null;
-        if(StrUtil.isNotEmpty(query.getGroupCode())){
-            listCodes = groupRecordService.queryListCodes(query.getGroupCode());
-            // 分组列表集合为空，说明此分组无数据，返回空
-            if(CollUtil.isEmpty(listCodes)){
-                return query.getReqPage().createPageRsp();
-            }
-        }
         RspPage<AlbumResponse> rspPage = query.getReqPage().createPageRsp();
-        Page<Album> pageData = new LambdaQueryChainWrapper<>(albumMapper)
-                .eq(Album::getUserCode, query.getUserCode())
-                .like(StrUtil.isNotEmpty(query.getLikeName()),Album::getName,query.getLikeName())
-                .in(CollUtil.isNotEmpty(listCodes), Album::getAlbumCode,listCodes)
-                .orderByDesc(Album::getRecordUtime)
-                .page(Page.of(query.getReqPage().getPage(), query.getReqPage().getSize()));
+        Page<Album> pageData = albumMapper.queryPage(Page.of(query.getReqPage().getPage(), query.getReqPage().getSize()), query);
         if(pageData == null || CollectionUtil.isEmpty(pageData.getRecords())){
             return rspPage;
         }
@@ -73,19 +58,8 @@ public class MyAlbumService {
         Set<String> albumCodes = pageData.getRecords().stream()
                 .map(Album::getAlbumCode)
                 .collect(Collectors.toSet());
-        asyncFillFileCount(albumCodes);
+        asyncFillFileCountExecute.asyncFillFileCount(albumCodes);
         return rspPage;
-    }
-
-    @Async
-    public void asyncFillFileCount(Set<String> albumCodes){
-        Map<String, Integer> albumCountMap = myPictureService.queryAlbumFileCounts(albumCodes);
-        for (String albumCode : albumCodes) {
-            albumSerivce.lambdaUpdate()
-                    .eq(Album::getAlbumCode,albumCode)
-                    .set(Album::getFileCount,albumCountMap.get(albumCode))
-                    .update();
-        }
     }
 
     public AlbumResponse queryDetail(String albumCode,String userCode){
